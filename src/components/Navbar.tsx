@@ -1,17 +1,18 @@
 import { FaAngleDown } from "react-icons/fa6";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
     <nav className="flex w-[100%] justify-between  border-b-2 p-2 items-center">
-      <span className="ml-8 font-bold">LOGO</span>
+      <Link href="/" className="ml-8 font-bold">LOGO</Link>
 
       <ul className="flex w-[50%] justify-around font-medium items-center">
         <li>
-          <a href="#">About US</a>
+          <Link href="/">About US</Link>
         </li>
         <li>
-          <a href="#">Job Listings</a>
+          <Link href="/jobListings">Job Listings</Link>
         </li>
         <li className=" flex ">
           <span>More</span>

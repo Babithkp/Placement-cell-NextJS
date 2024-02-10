@@ -53,7 +53,7 @@ const students = [
 export default function PlacedStudent() {
   return (
     <section className="mt-32 flex h-full w-[90%] flex-col items-center bg-white p-6 ">
-      <h2 className="text-3xl font-bold mb-4">Our Top Placed Student</h2>
+      <h2 className="text-3xl font-medium mb-4">Our Top Placed Student</h2>
       <Swiper
         loop={true}
         spaceBetween={20}

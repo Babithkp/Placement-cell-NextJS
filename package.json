@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^14.1.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@splidejs/react-splide": "^0.7.12",
     "class-variance-authority": "^0.7.0",

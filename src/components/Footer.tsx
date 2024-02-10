@@ -2,12 +2,13 @@ import React from "react";
 import { FaTwitter } from "react-icons/fa";
 import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
 export default function Footer() {
   return (
     <div>
       <div className="my-8 grid grid-cols-[2rem,1fr,2rem]">
         <div className="col-start-2 flex justify-between border-b-2 p-4">
-          <span className="text-2xl font-medium">LOGO</span>
+          <Link href="/" className="text-2xl font-medium">LOGO</Link>
           <ul className="flex gap-8">
             <li>Contact US</li>
             <li>FAQ&apos;s</li>
