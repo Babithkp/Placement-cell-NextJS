@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdDescription } from "react-icons/md";
@@ -7,108 +8,75 @@ import { GoDotFill } from "react-icons/go";
 import comapanyImg from "../../../public/Images/companies/client-2.png";
 import Image from "next/image";
 import Link from "next/link";
+import { getJobInfo } from "@/lib/controller/getJobInfo";
+import Jobs,{ jobs } from "@/lib/models/newForm";
 
-const skillList = [
-  "MS SQL",
-  "jQuery",
-  "GIT",
-  "MVVM",
-  "coding",
-  "MySQL",
-  "JavaScript",
-  "CMS",
-];
-
-const jobLists = [
-  {
-    title: "Web Full Stack Developer",
-    comapany: "Husys Consuling",
-    package: "Not disclosed",
-    location: "Bengaluru",
-    description:
-      "Key Responsibilities Participate in product development process architectur...",
-    addedOn: 30,
-  },
-  {
-    title: "Web Full Stack Developer",
-    comapany: "Husys Consuling",
-    package: "Not disclosed",
-    location: "Bengaluru",
-    description:
-      "Key Responsibilities Participate in product development process architectur...",
-    addedOn: 30,
-  },
-  {
-    title: "Web Full Stack Developer",
-    comapany: "Husys Consuling",
-    package: "Not disclosed",
-    location: "Bengaluru",
-    description:
-      "Key Responsibilities Participate in product development process architectur...",
-    addedOn: 30,
-  },
-  {
-    title: "Web Full Stack Developer",
-    comapany: "Husys Consuling",
-    package: "Not disclosed",
-    location: "Bengaluru",
-    description: "Key Responsibilities Participate in product development process architectur...",
-    addedOn: 30
-},
-{
-    title: "Web Full Stack Developer",
-    comapany: "Husys Consuling",
-    package: "Not disclosed",
-    location: "Bengaluru",
-    description: "Key Responsibilities Participate in product development process architectur...",
-    addedOn: 30
-},
-];
+interface Job {
+  companyWebsite: string;
+  jobtTitle: string;
+  companyName: string;
+  package: string;
+  comapanyLocation: string;
+  jobDescription: string;
+  skills: string[];
+}
 
 export default function Results() {
+  const [jobList,setJobList] = useState<Job[]>([])
+  useEffect(()=>{
+    const fetch =async()=>{
+      const newjob:any = await getJobInfo()
+      const response = JSON.parse(newjob)
+      setJobList(response)
+    }
+    
+    fetch()
+  },[])
   return (
     <>
-      {jobLists.map((job, i) => (
+      {jobList && jobList.map((job, i) => (
         <Link href="/detailedPage"
           key={i}
-          className="mb-4 flex rounded-md bg-slate-500 p-8 text-sm "
+          className="mb-4 flex rounded-md bg-stone-200 p-8 text-sm justify-between"
         >
           <span className=" flex items-center">
             <Image
-              src={comapanyImg}
+              src={job.companyWebsite}
               alt="image"
-              className="h-20 w-20 rounded-lg"
+              className="rounded-lg object-cover"
+              width={120}
+              height={100}
             />
           </span>
 
           <div className="px-4">
-            <h4 className="text-xl">{job.title}</h4>
-            <p>{job.comapany}</p>
+            <h4 className="text-xl">{job.jobtTitle}</h4>
+            <p>{job.companyName}</p>
             <div>
-              <p className="flex items-center">
+              <p className="flex items-center gap-2">
                 <span>
                   <FaIndianRupeeSign />
                 </span>
                 <span>{job.package}</span>
               </p>
-              <p className="flex items-center">
+              <p className="flex items-center gap-2">
                 <span>
                   <FaLocationDot />
                 </span>
-                <span>{job.location}</span>
+                <span>{job.comapanyLocation}</span>
               </p>
             </div>
 
-            <p className="flex items-center">
+            <p className="flex items-center gap-2">
               <span>
                 <MdDescription />
               </span>
-              <span>{job.description}</span>
+              <span>{job.jobDescription.substring(0, 70)}...</span>
             </p>
-            <ul className="flex">
-              {skillList.map((skill, i) => (
+            <ul className="flex flex-wrap">
+              {job.skills.map((skill, i) => (
                 <li key={i}>
-                  <p className="flex items-center">
+                  <p className="flex">
                     {skill}
                     <GoDotFill />
                   </p>
@@ -116,14 +84,14 @@ export default function Results() {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col justify-between ">
             <p className="flex items-center gap-1">
               <span>
                 <FaRegBookmark />
               </span>
               <span>Save</span>
             </p>
-            <p>{job.addedOn}+ Days Ago</p>
+            <p>30+ Days Ago</p>
           </div>
         </Link>
       ))}

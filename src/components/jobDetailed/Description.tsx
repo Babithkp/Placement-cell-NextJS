@@ -4,7 +4,7 @@ import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
 export default function Description() {
   return (
-    <section className="my-4  flex h-fit flex-col rounded-md bg-slate-500 p-6">
+    <section className="my-4  flex h-fit flex-col rounded-md bg-stone-200 p-6">
       <h3 className="text-xl">Job description</h3>
       <article className="prose ">
         Software Engineer : Full Stack Web Developer Primary responsibility

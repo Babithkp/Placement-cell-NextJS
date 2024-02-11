@@ -57,7 +57,7 @@ export default function page() {
       <SearchSection />
       <div className="flex w-[90%] justify-between mt-8">
         <Filters /> 
-        <div>
+        <div className="w-[70%]">
         <Results />
         </div>
       </div>

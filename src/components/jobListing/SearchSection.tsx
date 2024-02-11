@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 
 export default function SearchSection() {
   return (
-    <section className=" w-[90%] rounded-md bg-slate-500 py-8">
+    <section className=" w-[90%] rounded-md bg-stone-200 py-8">
       <div className="flex items-center justify-around">
         <div className="flex">
           <label htmlFor="search" className="mr-4 text-lg">

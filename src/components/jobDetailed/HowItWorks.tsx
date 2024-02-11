@@ -5,7 +5,7 @@ import { TbCircleNumber3 } from "react-icons/tb";
 import { TbCircleNumber4 } from "react-icons/tb";
 export default function HowItWorks() {
   return (
-    <section className=" ml-4 flex h-fit flex-col rounded-md bg-slate-500 p-6">
+    <section className=" ml-4 flex h-fit flex-col rounded-md bg-stone-200 p-6">
       <div className="flex flex-col gap-3 text-xs">
         <h4 className="text-center font-semibold text-xl">How it Works?</h4>
         <div className="flex items-center justify-between">

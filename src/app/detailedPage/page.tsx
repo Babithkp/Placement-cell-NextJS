@@ -8,8 +8,8 @@ import React from "react";
 export default function page() {
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="mb-4 flex min-h-[60vh]  w-full items-center justify-center bg-slate-500">
-        <p className="w-60 text-2xl font-bold">
+      <div className="mb-4 flex min-h-[60vh]  w-full items-center justify-center bg-stone-200">
+        <p className="w-[25rem] text-4xl font-bold">
           Full Stack Web Developer -
           <span className="text-blue-700"> Google</span>
         </p>

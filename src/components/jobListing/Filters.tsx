@@ -2,8 +2,9 @@ import React from 'react'
 import { FaFilter } from "react-icons/fa";
 
 export default function Filters() {
+  
   return (
-    <section className="w-[25%] h-full  rounded-md bg-slate-500 p-4 flex flex-col gap-4 ">
+    <section className="w-[25%] h-full  rounded-md bg-stone-200 p-4 flex flex-col gap-4 ">
           <div className="flex w-full justify-between ">
             <h4 className="text-lg">Filter by</h4>
             <span>

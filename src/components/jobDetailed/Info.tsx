@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 export default function Info() {
   return (
-    <section className="mb-4 flex flex-col rounded-md bg-slate-500 p-8 text-sm ">
+    <section className="mb-4 flex flex-col rounded-md bg-stone-200 p-8 text-sm ">
       <div className="flex">
         <span className=" mr-4 flex items-center">
           <Image

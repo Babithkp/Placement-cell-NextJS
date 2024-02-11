@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+
+
 const kanit = Kanit({ subsets: ["latin"], weight: ["100","200","300","400","600", "700"] });
 
 export const metadata: Metadata = {
