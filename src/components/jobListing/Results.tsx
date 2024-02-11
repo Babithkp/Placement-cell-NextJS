@@ -6,6 +6,7 @@ import { FaRegBookmark } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import comapanyImg from "../../../public/Images/companies/client-2.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const skillList = [
   "MS SQL",
@@ -68,7 +69,7 @@ export default function Results() {
   return (
     <>
       {jobLists.map((job, i) => (
-        <section
+        <Link href="/detailedPage"
           key={i}
           className="mb-4 flex rounded-md bg-slate-500 p-8 text-sm "
         >
@@ -124,7 +125,7 @@ export default function Results() {
             </p>
             <p>{job.addedOn}+ Days Ago</p>
           </div>
-        </section>
+        </Link>
       ))}
     </>
   );

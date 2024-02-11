@@ -1,7 +1,9 @@
+"use client"
 import React from "react";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const availableJobList = [
   {
@@ -23,6 +25,7 @@ const availableJobList = [
 ];
 
 export default function AvailableJobs() {
+  const router = useRouter()
   return (
     <section className="mt-8 w-[70%] font-medium">
       <h2 className="text-center text-3xl">Available Jobs</h2>
@@ -60,7 +63,7 @@ export default function AvailableJobs() {
         ))}
       </div>
       <div className="flex w-full justify-center">
-        <Button>More</Button>
+        <Button type="button" onClick={()=> router.replace("/jobListings")}>More</Button>
       </div>
     </section>
   );

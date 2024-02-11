@@ -4,7 +4,51 @@ import SearchSection from "@/components/jobListing/SearchSection";
 
 
 
-
+const jobLists = [
+  {
+    title: "Web Full Stack Developer",
+    comapany: "Husys Consuling",
+    package: "Not disclosed",
+    location: "Bengaluru",
+    description:
+      "Key Responsibilities Participate in product development process architectur...",
+    addedOn: 30,
+  },
+  {
+    title: "Web Full Stack Developer",
+    comapany: "Husys Consuling",
+    package: "Not disclosed",
+    location: "Bengaluru",
+    description:
+      "Key Responsibilities Participate in product development process architectur...",
+    addedOn: 30,
+  },
+  {
+    title: "Web Full Stack Developer",
+    comapany: "Husys Consuling",
+    package: "Not disclosed",
+    location: "Bengaluru",
+    description:
+      "Key Responsibilities Participate in product development process architectur...",
+    addedOn: 30,
+  },
+  {
+    title: "Web Full Stack Developer",
+    comapany: "Husys Consuling",
+    package: "Not disclosed",
+    location: "Bengaluru",
+    description: "Key Responsibilities Participate in product development process architectur...",
+    addedOn: 30
+},
+{
+    title: "Web Full Stack Developer",
+    comapany: "Husys Consuling",
+    package: "Not disclosed",
+    location: "Bengaluru",
+    description: "Key Responsibilities Participate in product development process architectur...",
+    addedOn: 30
+},
+];
 
 
 export default function page() {
@@ -14,7 +58,7 @@ export default function page() {
       <div className="flex w-[90%] justify-between mt-8">
         <Filters /> 
         <div>
-        <Results/>
+        <Results />
         </div>
       </div>
     </div>

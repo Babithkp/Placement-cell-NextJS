@@ -9,7 +9,7 @@ export default function Navbar() {
 
       <ul className="flex w-[50%] justify-around font-medium items-center">
         <li>
-          <Link href="/">About US</Link>
+          <Link href="/adminDashboard">Admin Dashboard</Link>
         </li>
         <li>
           <Link href="/jobListings">Job Listings</Link>
