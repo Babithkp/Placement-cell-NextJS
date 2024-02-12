@@ -63,7 +63,7 @@ export default function AddDrives() {
     }
     
     try {
-      const response: null | Boolean = await addNewJobs(data as jobs);
+      const response: null | Boolean | undefined = await addNewJobs(data as jobs);
       setisSubmitted(response);
     } catch (err) {
       console.log(err);
