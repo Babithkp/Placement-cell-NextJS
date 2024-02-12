@@ -30,7 +30,7 @@ export default function AddDrives() {
   const [newSkills, setSkills] = useState<string[]>([]);
   const [isSkillEntered,setIsSkillEntered] = useState(true)
 
-  const [isSubmitted, setisSubmitted] = useState<null | Boolean>(null);
+  const [isSubmitted, setisSubmitted] = useState<undefined | Boolean>(false);
 
   const onSkillSubmit = (event: React.FormEvent<HTMLButtonElement>) =>{
     event.preventDefault();
@@ -47,7 +47,7 @@ export default function AddDrives() {
 
   if (isSubmitted === false) {
     const timer = setTimeout(() => {
-      setisSubmitted(null);
+      setisSubmitted(false);
     }, 3000);
   }
   const {
@@ -63,7 +63,7 @@ export default function AddDrives() {
     }
     
     try {
-      const response: null | Boolean | undefined = await addNewJobs(data as jobs);
+      const response: Boolean | undefined= await addNewJobs(data as jobs);
       setisSubmitted(response);
     } catch (err) {
       console.log(err);
@@ -290,11 +290,11 @@ export default function AddDrives() {
         </div>
         <div className=" col-start-2 mr-4 pt-8 text-right">
           <Button> {isSubmitting ? "submitting" : "Submit"}</Button>
-          {isSubmitted == false ? (
+          {/* {isSubmitted == false && isSkillEntered ? (
             <p className="text-red-600">Failed to submit, Try again</p>
           ) : (
             ""
-          )}
+          )} */}
         </div>
       </form>
     </section>
