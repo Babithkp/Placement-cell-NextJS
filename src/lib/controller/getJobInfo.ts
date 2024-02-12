@@ -12,3 +12,19 @@ export const getJobInfo = async () => {
     console.log(err);
   }
 };
+
+export const getJobById = async (jobId:string) => {
+  try{
+    await connectDB();
+    const job = await Jobs.findById(jobId)
+    if(job.length === 0) {
+      console.error("Failed to find job");
+      return
+    }
+    const serializedData = JSON.stringify(job);
+    return serializedData;
+  }catch(err){
+    console.log(err);
+    
+  }
+}

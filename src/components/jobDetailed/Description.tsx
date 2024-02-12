@@ -2,7 +2,7 @@ import React from "react";
 import { FaTwitter } from "react-icons/fa";
 import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
-export default function Description() {
+export default function Description(job:any) {
   return (
     <section className="my-4  flex h-fit flex-col rounded-md bg-stone-200 p-6">
       <h3 className="text-xl">Job description</h3>

@@ -12,6 +12,7 @@ import { getJobInfo } from "@/lib/controller/getJobInfo";
 import Jobs,{ jobs } from "@/lib/models/newForm";
 
 interface Job {
+  _id: string;
   companyWebsite: string;
   jobtTitle: string;
   companyName: string;
@@ -35,7 +36,7 @@ export default function Results() {
   return (
     <>
       {jobList && jobList.map((job, i) => (
-        <Link href="/detailedPage"
+        <Link href={`/detailedPage/${job._id}`}
           key={i}
           className="mb-4 flex rounded-md bg-stone-200 p-8 text-sm justify-between"
         >
