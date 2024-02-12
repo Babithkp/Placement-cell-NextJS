@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = 'mongodb+srv://babithkullachetti44:babith@learn-nextjs.5haci8o.mongodb.net/placement-cell?retryWrites=true&w=majority';
-
+const MONGODB_URI = process.env.MONGODB_URI ;
+if (!MONGODB_URI) {
+  throw new Error(
+    "Please define the MONGODB_URI environment variable inside .env.local",
+  );
+}
 export const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI);
