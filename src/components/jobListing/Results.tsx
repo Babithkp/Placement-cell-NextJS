@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getJobInfo } from "@/lib/controller/getJobInfo";
 import Jobs,{ jobs } from "@/lib/models/newForm";
+import defaultImg from "../../../public/Images/companies/default.jpg"
 
 interface Job {
   _id: string;
@@ -38,20 +39,20 @@ export default function Results() {
       {jobList && jobList.map((job, i) => (
         <Link href={`/detailedPage/${job._id}`}
           key={i}
-          className="mb-4 flex rounded-md bg-stone-200 p-8 text-sm justify-between"
+          className="mb-4 flex rounded-md bg-stone-200 p-8 text-sm justify-between max-sm:p-3"
         >
           <span className=" flex items-center">
             <Image
-              src={job.companyWebsite}
+              src={job.companyWebsite || defaultImg}
               alt="image"
-              className="rounded-lg object-cover"
+              className="rounded-lg object-cover max-sm:w-[10rem]"
               width={120}
               height={100}
             />
           </span>
 
           <div className="px-4">
-            <h4 className="text-xl">{job.jobtTitle}</h4>
+            <h4 className="text-xl max-sm:text-base max-sm:font-semibold">{job.jobtTitle}</h4>
             <p>{job.companyName}</p>
             <div>
               <p className="flex items-center gap-2">
@@ -68,11 +69,11 @@ export default function Results() {
               </p>
             </div>
 
-            <p className="flex items-center gap-2">
+            <p className="flex items-center gap-2 max-sm:hidden">
               <span>
                 <MdDescription />
               </span>
-              <span>{job.jobDescription.substring(0, 70)}...</span>
+              <span >{job.jobDescription.substring(0, 70)}...</span>
             </p>
             <ul className="flex flex-wrap">
               {job.skills.map((skill, i) => (
@@ -85,8 +86,8 @@ export default function Results() {
               ))}
             </ul>
           </div>
-          <div className="flex flex-col justify-between ">
-            <p className="flex items-center gap-1">
+          <div className="flex flex-col justify-between w-[5.5rem] max-sm:text-xs max-sm:w-[7rem]">
+            <p className="flex items-center gap-1 ">
               <span>
                 <FaRegBookmark />
               </span>

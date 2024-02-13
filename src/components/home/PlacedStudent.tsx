@@ -1,5 +1,6 @@
 "use client";
-// Import Swiper React components
+import { GrNext } from "react-icons/gr";
+import { GrPrevious } from "react-icons/gr";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import "swiper/css";
@@ -52,24 +53,26 @@ const students = [
 
 export default function PlacedStudent() {
   return (
-    <section className="mt-32 flex h-full w-[90%] flex-col items-center bg-white p-6 ">
+    <section className="mt-32 flex h-full w-[100%] flex-col items-center bg-white p-6 relative">
       <h2 className="text-3xl font-medium mb-4">Our Top Placed Student</h2>
+      <div className="button-prev-slide absolute bottom-[40%] hover:scale-125 transition right-2 active:scale-100"><GrNext size={40}/></div>
       <Swiper
         loop={true}
         spaceBetween={20}
-        centeredSlides={true}
-        slidesPerView={3}
+        // centeredSlides={true}
+        slidesPerView={4}
         scrollbar={{ draggable: true }}
         pagination={{
           clickable: true,
         }}
         navigation={{
-          nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
+          nextEl: ".button-next-slide",
+          prevEl: ".button-prev-slide"
         }}
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        className="mySwiper w-full"
+        className="mySwiper w-[90%] "
       >
+        
         {students.map((students, i) => (
           <SwiperSlide key={i}>
             <div
@@ -94,7 +97,9 @@ export default function PlacedStudent() {
             </div>
           </SwiperSlide>
         ))}
+        
       </Swiper>
+        <div className="button-next-slide absolute bottom-[40%] hover:scale-125 transition left-0 active:scale-100"><GrPrevious size={40}/></div>
     </section>
   );
 }

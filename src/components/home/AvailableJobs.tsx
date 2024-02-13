@@ -34,7 +34,7 @@ export default function AvailableJobs() {
       </p>
       <div className="p-4">
         {availableJobList.map((job, i) => (
-          <div className="mb-4 flex border-2 p-6 text-sm" key={i}>
+          <div className="mb-4 flex border-2 p-6 text-sm justify-between" key={i}>
             <div className="flex flex-col gap-2 ">
               <h3 className="text-2xl ">{job.title} </h3>
               <p>
@@ -52,7 +52,7 @@ export default function AvailableJobs() {
                 </span>
                 <span className="ml-2">{job.contract}</span>
               </p>
-              <Button variant="outline" className="w-[6rem]">
+              <Button variant="outline" className="w-[6rem]" onClick={()=> router.push("/jobListings")}>
                 Apply Now
               </Button>
             </div>
@@ -63,7 +63,7 @@ export default function AvailableJobs() {
         ))}
       </div>
       <div className="flex w-full justify-center">
-        <Button type="button" onClick={()=> router.replace("/jobListings")}>More</Button>
+        <Button type="button" onClick={()=> router.push("/jobListings")}>More</Button>
       </div>
     </section>
   );

@@ -6,9 +6,11 @@ import HowItWorks from "@/components/jobDetailed/HowItWorks";
 import Info from "@/components/jobDetailed/Info";
 import React, { useEffect, useState } from "react";
 import { getJobById } from '@/lib/controller/getJobInfo';
+import { jobs } from '@/lib/models/newForm';
+
 
 export default function Page() {
-    const [job,setJob] = useState([])
+    const [job,setJob] = useState<jobs | []>([])
     const params = usePathname()
     const numbersOnly = params.split("/")
     const index = numbersOnly.length
@@ -20,11 +22,10 @@ export default function Page() {
             if(jobInfo) {
                 const stringtojson = JSON.parse(jobInfo)
                 setJob(stringtojson)
-                console.log(job);
             }
         }
         fetch()
-    },[])
+    },[jobId])
     return (
         <div className="flex w-full flex-col items-center">
           <div className="mb-4 flex min-h-[60vh]  w-full items-center justify-center bg-stone-200">

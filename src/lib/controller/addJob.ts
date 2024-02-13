@@ -1,7 +1,7 @@
 "use server";
-import { redirect } from "next/navigation";
 import { connectDB } from "../dbConnect";
 import Jobs, { jobs } from "../models/newForm";
+import { revalidatePath } from "next/cache";
 
 export const addNewJobs = async (newJobs: jobs) => {
   try {
@@ -13,11 +13,13 @@ export const addNewJobs = async (newJobs: jobs) => {
     if (isFound.length > 0) {
       console.error("JOb Already exists");
       return false;
+    } else {
+      const newjob = new Jobs(newJobs);
+      await newjob.save();
+      console.log("data saved!");
+      revalidatePath("/jobListings");
+      return true;
     }
-    const newjob = new Jobs(newJobs);
-    await newjob.save();
-    console.log("data saved!");
-    redirect("/jobListings");
   } catch (err) {
     console.error(err);
   }
@@ -27,7 +29,7 @@ export const addNewJobs = async (newJobs: jobs) => {
 //   try {
 //     await connectDB();
 //     console.log("connection to database");
-    
+
 //   } catch (err) {
 //     console.log(err);
 //   }

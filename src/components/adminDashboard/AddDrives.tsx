@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { addNewJobs } from "@/lib/controller/addJob";
 import { jobs } from "@/lib/models/newForm";
 import { FaPlusCircle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface Inputs {
   jobtTitle: string;
@@ -30,7 +31,8 @@ export default function AddDrives() {
   const [newSkills, setSkills] = useState<string[]>([]);
   const [isSkillEntered,setIsSkillEntered] = useState(true)
 
-  const [isSubmitted, setisSubmitted] = useState<undefined | Boolean>(false);
+  const [isSubmitted, setisSubmitted] = useState<undefined | Boolean>(undefined);
+  const router = useRouter()
 
   const onSkillSubmit = (event: React.FormEvent<HTMLButtonElement>) =>{
     event.preventDefault();
@@ -69,6 +71,14 @@ export default function AddDrives() {
       console.log(err);
     }
   };
+
+  let state
+  if (isSubmitted === false){
+    state = <p className="text-red-600">Failed to submit, Try again</p>
+  }else if(isSubmitted === true){
+    router.replace("/jobListings")
+  }
+
   return (
     <section
       className="rounded-lg bg-gray-200 "
@@ -120,10 +130,10 @@ export default function AddDrives() {
             type="text"
             className="rounded-md border border-black p-2 placeholder:text-base"
             placeholder="www.company.com"
-            {...register("companyWebsite", { required: true, minLength: 5 })}
+            {...register("companyWebsite", { pattern: /^(https?:\/\/).+\.(png|jpe?g|gif|svg)$/})}
           />
           {errors.companyWebsite && (
-            <p className="text-red-600">Please enter a vaild Date</p>
+            <p className="text-red-600">Please enter a vaild image URL</p>
           )}
         </div>
         <div className="flex flex-col rounded-md bg-gray-300 p-2">
@@ -290,11 +300,7 @@ export default function AddDrives() {
         </div>
         <div className=" col-start-2 mr-4 pt-8 text-right">
           <Button> {isSubmitting ? "submitting" : "Submit"}</Button>
-          {/* {isSubmitted == false && isSkillEntered ? (
-            <p className="text-red-600">Failed to submit, Try again</p>
-          ) : (
-            ""
-          )} */}
+          {state}
         </div>
       </form>
     </section>

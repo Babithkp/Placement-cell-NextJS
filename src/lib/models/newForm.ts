@@ -22,7 +22,6 @@ export interface jobs extends mongoose.Document {
 
 /* PetSchema will correspond to a collection in your MongoDB database. */
 const JobSchema = new mongoose.Schema<jobs>({
-  _id: mongoose.Schema.Types.ObjectId,
     jobtTitle: {
     type: String,
     required: [true, "Please provide a name for this job Title."],
