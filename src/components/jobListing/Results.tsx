@@ -5,11 +5,9 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdDescription } from "react-icons/md";
 import { FaRegBookmark } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
-import comapanyImg from "../../../public/Images/companies/client-2.png";
 import Image from "next/image";
 import Link from "next/link";
 import { getJobInfo } from "@/lib/controller/getJobInfo";
-import Jobs,{ jobs } from "@/lib/models/newForm";
 import defaultImg from "../../../public/Images/companies/default.jpg"
 
 interface Job {

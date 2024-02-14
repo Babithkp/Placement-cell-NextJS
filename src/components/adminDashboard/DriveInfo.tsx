@@ -7,7 +7,7 @@ import { IoIosGitBranch } from "react-icons/io";
 
 export default function DriveInfo() {
   return (
-    <section className="rounded-lg flex bg-gray-200">
+    <section className="rounded-lg flex bg-gray-200 max-sm:text-sm">
       <SearchArea/>
       <div className="p-4 text-white w-full flex flex-col gap-4">
         <div className="bg-black p-2 rounded-xl ">

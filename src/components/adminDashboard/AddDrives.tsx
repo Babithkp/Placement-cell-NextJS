@@ -84,15 +84,15 @@ export default function AddDrives() {
   }
 
   return (
-    <section className="w-full rounded-lg bg-gray-200">
+    <section className="w-full rounded-lg bg-gray-200 max-sm:w-[25rem] ">
       <div className="w-full rounded-t-lg bg-black  text-center text-2xl text-white">
         <h4>Add Drive</h4>
       </div>
       <form
-        className="grid w-full grid-cols-2 gap-2 p-6 text-lg "
+        className="grid w-full grid-cols-2 gap-2 p-6 text-lg text-left max-sm:flex max-sm:flex-col "
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col rounded-md bg-gray-300 p-2">
+        <div className="flex flex-col rounded-md bg-gray-300 p-2 ">
           <label>Job Title</label>
           <input
             type="text"
@@ -129,11 +129,11 @@ export default function AddDrives() {
           )}
         </div>
         <div className="flex flex-col rounded-md bg-gray-300 p-2">
-          <label>Company Icon</label>
+          <label>Company Icon URL</label>
           <input
             type="text"
             className="rounded-md border border-black p-2 placeholder:text-base"
-            placeholder="www.company.com"
+            placeholder="https://www.companyIcon.jpg"
             {...register("companyWebsite", {
               pattern: /^(https?:\/\/).+\.(png|jpe?g|gif|svg)$/,
             })}
@@ -219,7 +219,7 @@ export default function AddDrives() {
           <textarea
             className="rounded-md border border-black p-2 placeholder:text-base"
             placeholder="UG / B.tech/ BE in any tech"
-            {...register("education", { required: true, minLength: 10 })}
+            {...register("education", { required: true, minLength: 5 })}
           ></textarea>
           {errors.education && (
             <p className="text-red-600">Please enter a vaild category</p>

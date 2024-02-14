@@ -18,10 +18,10 @@ export default function NewDialog() {
       <DialogTrigger >
       <FaPlus size={25} />
       </DialogTrigger>
-      <DialogContent className=" w-100rem -mx-40">
-        <DialogHeader className="w-100rem">
-          <DialogDescription className=" w-100rem">
-          <ScrollArea className="h-[30rem] w-[50rem] rounded-md border ">
+      <DialogContent className=" -ml-[10.5rem] max-sm:ml-[3rem] ">
+        <DialogHeader className="w-[100rem]">
+          <DialogDescription className=" w-[100rem]  ">
+          <ScrollArea className="h-[30rem] w-[50rem] rounded-md border max-sm:w-[25rem]">
             <AddDrives/>
           </ScrollArea>
           </DialogDescription>

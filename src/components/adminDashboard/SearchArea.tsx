@@ -8,7 +8,7 @@ export default function SearchArea() {
   return (
     <div className="flex w-[40%] flex-col rounded-lg bg-gray-400 p-4 ">
       <div className=" flex justify-between ">
-        <h4 className="text-xl font-semibold">All drives</h4>
+        <h4 className="text-xl font-semibold max-sm:text-sm">All drives</h4>
         <ul className="flex gap-4">
           <li>
             <BiSearchAlt size={25} />
@@ -28,14 +28,14 @@ export default function SearchArea() {
         <ul className="flex flex-col gap-4">
           <li className="flex cursor-pointer items-center justify-between rounded-xl bg-slate-300 p-2">
             <div>
-              <h5 className="text-lg">Full stack wev dev</h5>
+              <h5 className="text-lg max-sm:text-base font-semibold">Full stack wev dev</h5>
               <p className="text-sm">Google</p>
             </div>
             <FaArrowRightLong />
           </li>
           <li className="flex cursor-pointer items-center justify-between rounded-xl p-2 hover:bg-slate-300">
             <div>
-              <h5 className="text-lg">Full stack wev dev</h5>
+              <h5 className="text-lg max-sm:text-base font-semibold">Full stack wev dev</h5>
               <p className="text-sm">Google</p>
             </div>
             <FaArrowRightLong />
