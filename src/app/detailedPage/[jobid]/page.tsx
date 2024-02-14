@@ -34,7 +34,7 @@ export default function Page() {
               <span className="text-blue-700"> Google</span>
             </p>
           </div>
-          <div className="flex w-[80%] ">
+          <div className="flex w-[80%] max-sm:flex-col ">
             <div>
               <Info job={job}/>
               <CompanyAbout job={job}/>

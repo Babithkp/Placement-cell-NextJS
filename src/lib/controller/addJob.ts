@@ -18,7 +18,7 @@ export const addNewJobs = async (newJobs: jobs) => {
       await newjob.save();
       console.log("data saved!");
       revalidatePath("/jobListings");
-      return true;
+      return true
     }
   } catch (err) {
     console.error(err);

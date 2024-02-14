@@ -27,25 +27,27 @@ interface Inputs {
 }
 
 export default function AddDrives() {
-  const skillRef = useRef<HTMLInputElement>(null)
+  const skillRef = useRef<HTMLInputElement>(null);
   const [newSkills, setSkills] = useState<string[]>([]);
-  const [isSkillEntered,setIsSkillEntered] = useState(true)
+  const [isSkillEntered, setIsSkillEntered] = useState(true);
 
-  const [isSubmitted, setisSubmitted] = useState<undefined | Boolean>(undefined);
-  const router = useRouter()
+  const [isSubmitted, setisSubmitted] = useState<undefined | Boolean>(
+    undefined,
+  );
+  const router = useRouter();
 
-  const onSkillSubmit = (event: React.FormEvent<HTMLButtonElement>) =>{
+  const onSkillSubmit = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const newskill = skillRef.current?.value
-    if(!newskill){
-      setIsSkillEntered(false)
-      return
-    }else{
-      setSkills([...newSkills,newskill])
-      skillRef.current.value = ""
-      setIsSkillEntered(true)
+    const newskill = skillRef.current?.value;
+    if (!newskill) {
+      setIsSkillEntered(false);
+      return;
+    } else {
+      setSkills([...newSkills, newskill]);
+      skillRef.current.value = "";
+      setIsSkillEntered(true);
     }
-  }
+  };
 
   if (isSubmitted === false) {
     const timer = setTimeout(() => {
@@ -58,36 +60,38 @@ export default function AddDrives() {
     formState: { errors, isSubmitting },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    data.skills = newSkills
-    if(data.skills.length == 0){
-      setIsSkillEntered(false)
-      return
+    data.skills = newSkills;
+    if (data.skills.length == 0) {
+      setIsSkillEntered(false);
+      return;
     }
-    
+
     try {
-      const response: Boolean | undefined= await addNewJobs(data as jobs);
+      const response: Boolean | undefined = await addNewJobs(data as jobs);
       setisSubmitted(response);
     } catch (err) {
       console.log(err);
     }
   };
 
-  let state
-  if (isSubmitted === false){
-    state = <p className="text-red-600">Failed to submit, Try again</p>
-  }else if(isSubmitted === true){
-    router.replace("/jobListings")
+  let state;
+  if (isSubmitted === false) {
+    state = (
+      <p className="text-red-600">This Job is already Excist, Try again</p>
+    );
+  } else if (isSubmitted === true) {
+    router.replace("/jobListings");
   }
 
   return (
-    <section
-      className="rounded-lg bg-gray-200 "
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <section className="w-full rounded-lg bg-gray-200">
       <div className="w-full rounded-t-lg bg-black  text-center text-2xl text-white">
         <h4>Add Drive</h4>
       </div>
-      <form className="grid grid-cols-2 gap-2 p-6 text-lg">
+      <form
+        className="grid w-full grid-cols-2 gap-2 p-6 text-lg "
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex flex-col rounded-md bg-gray-300 p-2">
           <label>Job Title</label>
           <input
@@ -130,7 +134,9 @@ export default function AddDrives() {
             type="text"
             className="rounded-md border border-black p-2 placeholder:text-base"
             placeholder="www.company.com"
-            {...register("companyWebsite", { pattern: /^(https?:\/\/).+\.(png|jpe?g|gif|svg)$/})}
+            {...register("companyWebsite", {
+              pattern: /^(https?:\/\/).+\.(png|jpe?g|gif|svg)$/,
+            })}
           />
           {errors.companyWebsite && (
             <p className="text-red-600">Please enter a vaild image URL</p>
@@ -228,7 +234,12 @@ export default function AddDrives() {
               placeholder="SQL / data science"
               ref={skillRef}
             />
-            <Button onClick={onSkillSubmit} type="button"  variant="ghost" className="rounded-full">
+            <Button
+              onClick={onSkillSubmit}
+              type="button"
+              variant="ghost"
+              className="rounded-full"
+            >
               <FaPlusCircle size={30} />
             </Button>
           </div>
@@ -242,7 +253,7 @@ export default function AddDrives() {
               </span>
             ))}
           </div>
-          {!isSkillEntered  && (
+          {!isSkillEntered && (
             <p className="text-red-600">Please enter a vaild Skills</p>
           )}
         </div>
