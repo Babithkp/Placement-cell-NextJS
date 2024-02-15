@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { addNewJobs } from "@/lib/controller/addJob";
-import { jobs } from "@/lib/models/newForm";
+import { jobs } from "@/lib/models/jobs";
 import { FaPlusCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
@@ -30,6 +30,7 @@ export default function AddDrives() {
   const skillRef = useRef<HTMLInputElement>(null);
   const [newSkills, setSkills] = useState<string[]>([]);
   const [isSkillEntered, setIsSkillEntered] = useState(true);
+  const [newError, setNewError] = useState<string>("");
 
   const [isSubmitted, setisSubmitted] = useState<undefined | Boolean>(
     undefined,
@@ -70,7 +71,9 @@ export default function AddDrives() {
       const response: Boolean | undefined = await addNewJobs(data as jobs);
       setisSubmitted(response);
     } catch (err) {
-      console.log(err);
+      if (err) {
+        setNewError(`failed to upload  ${(err as {message?: string })?.message}`);
+      }
     }
   };
 
@@ -89,7 +92,7 @@ export default function AddDrives() {
         <h4>Add Drive</h4>
       </div>
       <form
-        className="grid w-full grid-cols-2 gap-2 p-6 text-lg text-left max-sm:flex max-sm:flex-col "
+        className="grid w-full grid-cols-2 gap-2 p-6 text-left text-lg max-sm:flex max-sm:flex-col "
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col rounded-md bg-gray-300 p-2 ">
@@ -312,6 +315,7 @@ export default function AddDrives() {
         <div className=" col-start-2 mr-4 pt-8 text-right">
           <Button> {isSubmitting ? "submitting" : "Submit"}</Button>
           {state}
+          {newError && <p className="text-red-600">{newError} + try again </p>}
         </div>
       </form>
     </section>

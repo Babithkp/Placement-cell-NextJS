@@ -1,6 +1,6 @@
 "use server";
 import { connectDB } from "../dbConnect";
-import Jobs, { jobs } from "../models/newForm";
+import Jobs, { jobs } from "../models/jobs";
 import { revalidatePath } from "next/cache";
 
 export const addNewJobs = async (newJobs: jobs) => {

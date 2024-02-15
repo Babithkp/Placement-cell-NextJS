@@ -2,7 +2,7 @@ import React from "react";
 import { FaTwitter } from "react-icons/fa";
 import { AiFillFacebook } from "react-icons/ai";
 import { FaLinkedin } from "react-icons/fa";
-import { jobs } from "@/lib/models/newForm";
+import { jobs } from "@/lib/models/jobs";
 
 export default function Description({job}:any) {
   return (

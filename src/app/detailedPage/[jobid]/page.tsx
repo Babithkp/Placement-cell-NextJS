@@ -6,7 +6,7 @@ import HowItWorks from "@/components/jobDetailed/HowItWorks";
 import Info from "@/components/jobDetailed/Info";
 import React, { useEffect, useState } from "react";
 import { getJobById } from '@/lib/controller/getJobInfo';
-import { jobs } from '@/lib/models/newForm';
+import { jobs } from '@/lib/models/jobs';
 
 
 export default function Page() {

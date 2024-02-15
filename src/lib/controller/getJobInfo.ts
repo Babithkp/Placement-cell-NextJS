@@ -1,6 +1,6 @@
 "use server";
 import { connectDB } from "../dbConnect";
-import Jobs from "../models/newForm";
+import Jobs from "../models/jobs";
 
 export const getJobInfo = async () => {
   try {

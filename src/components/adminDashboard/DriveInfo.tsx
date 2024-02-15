@@ -1,18 +1,25 @@
-import React from "react";
+"use client"
 import SearchArea from "./SearchArea";
 import { FaMoneyBill } from "react-icons/fa6";
 import { IoEye } from "react-icons/io5";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosGitBranch } from "react-icons/io";
+import { useState } from "react";
+
 
 export default function DriveInfo() {
+  const [jobId,setJobId] = useState("")
+
+  function getJobId(id: string) {
+    setJobId(id)
+  }
   return (
     <section className="rounded-lg flex bg-gray-200 max-sm:text-sm">
-      <SearchArea/>
+      <SearchArea getId={getJobId}/>
       <div className="p-4 text-white w-full flex flex-col gap-4">
         <div className="bg-black p-2 rounded-xl ">
             <h4 className="text-lg">Full Stack Web Development</h4>
-            <p className="text-sm">Google</p>
+            <p className="text-sm">Google + {jobId}</p>
             <p>Posted on <span>30 + </span> Days Ago</p>
         </div>
         <div className="text-sm grid grid-cols-2 gap-4 grid-rows-[repeat(2,10rem)]">
@@ -39,6 +46,7 @@ export default function DriveInfo() {
             <p>Skills: <span>Frontend, Backend</span></p>
             <p>Category: <span> Software Development</span></p>
             </div>
+     
         </div>
       </div>
     </section>

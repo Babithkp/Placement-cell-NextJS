@@ -1,17 +1,95 @@
 import mongoose from "mongoose";
+import { jobs } from "./jobs";
+import User,{user} from "./user";
+import {announcement} from "./announcement";
 
-const UserDetails = new mongoose.Schema({
-     name: {
-        type: String,
-        required: true,
-        minlength: [3, "name cannot be less than 3 characters"]
-     },
-     gender:{
-        type: String,
-        enum: ["male", "female"],
-        required: true
-     },
-     phone: {
-        
-     }
-})
+export interface userDetails extends mongoose.Document {
+  user: user,
+  name: string;
+  gender: string;
+  phone: Number;
+  sslcMarks: Number;
+  twelvesMarks: Number;
+  BEMarks: Number;
+  backlogs: Number;
+  collegeName: string;
+  historyBacklogs: Number;
+  passOutYear: Date;
+  batch: String;
+  address: string;
+  resume: Buffer;
+  announcement: [announcement];
+  savedJobs: [jobs];
+  appliedJobs: [jobs];
+}
+
+const UserDetails = new mongoose.Schema<userDetails>({
+  user: User,
+  name: {
+    type: String,
+    required: true,
+    minlength: [3, "name cannot be less than 3 characters"],
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female"],
+    required: true,
+  },
+  phone: {
+    type: Number,
+    minlength: [10, "phone cannot be less than 10 characters"],
+    maxlength: [10, "phone cannot be more than 10 characters"],
+  },
+  sslcMarks: {
+    type: Number,
+    minlength: [1, "Aggregate cannot be less than 1 characters"],
+  },
+  twelvesMarks: {
+    type: Number,
+    minlength: [1, "Aggregate cannot be less than 1 characters"],
+  },
+  BEMarks: {
+    type: Number,
+    minlength: [1, "BEMarks cannot be less than 1 characters"],
+  },
+  backlogs: {
+    type: Number,
+    minlength: [1, "Backlogs cannot be less than 1 characters"],
+  },
+  collegeName: {
+    type: String,
+    minlength: [10, "College name cannot be less than 10 characters"],
+  },
+  historyBacklogs: {
+    type: Number,
+    minlength: [1, "Backlogs cannot be less than 1 characters"],
+  },
+  passOutYear: {
+    type: Date,
+    required: true,
+  },
+  batch: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    minlength: [10, "Address cannot be less than 10 characters"],
+  },
+  resume: {
+    type: Buffer,
+    required: true,
+  },
+  announcement:[{
+    type: mongoose.Types.ObjectId, req: "Announcement"
+  }],
+  savedJobs:[{
+    type: mongoose.Types.ObjectId, ref:"Jobs"
+  }],
+  appliedJobs:[{
+    type: mongoose.Types.ObjectId,ref: 'Jobs'
+  }]
+});
+
+export default mongoose.models.UserDetails ||
+  mongoose.model<userDetails>("UserDetails", UserDetails);

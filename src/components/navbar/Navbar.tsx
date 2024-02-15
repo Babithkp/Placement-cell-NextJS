@@ -12,12 +12,12 @@ export default function Navbar() {
     setISDropdown(value);
   }
   return (
-    <nav className="relative flex  w-[100%] items-center justify-between border-b-2 ">
+    <nav className="relative flex  w-[100%] items-center justify-between border-b-2 bg-[#1c4980] ">
       <Link href="/" className="ml-8 font-bold ">
         LOGO
       </Link>
 
-      <ul className="flex w-[50%] items-center justify-around font-medium">
+      <ul className="flex w-[50%] items-center justify-around font-medium text-white">
         <li>
           <Link href="/adminDashboard">Admin Dashboard</Link>
         </li>
