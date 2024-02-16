@@ -39,10 +39,10 @@ export default function Navbar() {
           {isDropdown && <Dropdown />}
         </li>
         <li>
-          <Link href="/signing">
+          <Link href="/signing?sign=false">
             <Button variant="outline" className="text-black">Sign Up</Button>
           </Link>
-          <Link href="/signing" className="ml-4">
+          <Link href="/signing?sign=true" className="ml-4">
             <Button>Login</Button>
           </Link>
         </li>
