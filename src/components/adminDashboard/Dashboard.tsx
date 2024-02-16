@@ -7,7 +7,7 @@ export default function Dashboard() {
   return (
     <section className="flex flex-col items-center p-4 ">
       <h2 className="py-4 text-3xl">Admin Dashboard</h2>
-      <div className="my-4 flex w-full  scale-125 justify-around  max-sm:flex-wrap max-sm:gap-4 max-sm:justify-center max-sm:mt-10">
+      <div className="my-4 grid w-full grid-cols-4  scale-125 justify-items-center max-sm:grid-cols-2 max-sm:gap-4 max-sm:justify-center max-sm: max-sm:scale-110 font-medium">
         <div className="rounded-lg bg-green-200 p-4 ">
           <div>
             <MdPeopleAlt size={30} />

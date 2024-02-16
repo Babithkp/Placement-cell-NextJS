@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 export interface jobs extends mongoose.Document {
+    _id: string;
     jobtTitle: string;
     companyName: string;
     deadline: Date;
     companyWebsite: string;
-    comapanyLocation: string;
+    comapanyLocation: string
     role: string;
     indrustryType: string;
     workMode: string;

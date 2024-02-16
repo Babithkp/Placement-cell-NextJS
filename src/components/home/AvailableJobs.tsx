@@ -15,12 +15,12 @@ const availableJobList = [
     department: "Auto Components",
   },
   {
-    title: "Senior Software Engineer",
+    title: "Application Developer: Google Gloud Full Stack",
     type: "Engineering - Software & QA",
     location:
-      "Kolkata, Mumbai, New Delhi, Hyderabad/Secunderabad, Pune, Chennai, Bangalore/Bengaluru",
+      "Bangalore/Bengaluru",
     contract: "Full time | work from Home",
-    department: "Auto Components",
+    department: "Engineering - Software & QA",
   },
 ];
 
@@ -34,7 +34,7 @@ export default function AvailableJobs() {
       </p>
       <div className="p-4">
         {availableJobList.map((job, i) => (
-          <div className="mb-4 flex border-2 p-6 text-sm justify-between" key={i}>
+          <div className="mb-4 flex border-2 p-6 text-sm justify-between border-[#719CEC]" key={i}>
             <div className="flex flex-col gap-2 ">
               <h3 className="text-2xl ">{job.title} </h3>
               <p>
@@ -52,18 +52,18 @@ export default function AvailableJobs() {
                 </span>
                 <span className="ml-2">{job.contract}</span>
               </p>
-              <Button variant="outline" className="w-[6rem]" onClick={()=> router.push("/jobListings")}>
+              <Button  className="w-[6rem] bg-[#00448E]" onClick={()=> router.push("/jobListings")}>
                 Apply Now
               </Button>
             </div>
             <div>
-              <Button className="cursor-default">{job.department}</Button>
+              <Button className="cursor-default bg-[#cad5ea] text-black" disabled>{job.department}</Button>
             </div>
           </div>
         ))}
       </div>
       <div className="flex w-full justify-center">
-        <Button type="button" onClick={()=> router.push("/jobListings")}>More</Button>
+        <Button type="button" className="bg-[#00448E]" onClick={()=> router.push("/jobListings")}>More</Button>
       </div>
     </section>
   );

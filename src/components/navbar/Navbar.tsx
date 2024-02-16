@@ -12,12 +12,15 @@ export default function Navbar() {
     setISDropdown(value);
   }
   return (
-    <nav className="relative flex  w-[100%] items-center justify-between border-b-2 bg-[#1c4980] ">
+    <nav className="relative flex  w-[100%] items-center justify-between border-b-2 bg-[#2560a9] ">
       <Link href="/" className="ml-8 font-bold ">
         LOGO
       </Link>
 
       <ul className="flex w-[50%] items-center justify-around font-medium text-white">
+        <li>
+          <Link href="/adminDashboard">About Us</Link>
+        </li>
         <li>
           <Link href="/adminDashboard">Admin Dashboard</Link>
         </li>
@@ -37,7 +40,7 @@ export default function Navbar() {
         </li>
         <li>
           <Link href="/signing">
-            <Button variant="outline">Sign Up</Button>
+            <Button variant="outline" className="text-black">Sign Up</Button>
           </Link>
           <Link href="/signing" className="ml-4">
             <Button>Login</Button>

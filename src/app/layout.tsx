@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Kanit } from "next/font/google";
+import { Kanit,Livvic } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 
 
 const kanit = Kanit({ subsets: ["latin"], weight: ["100","200","300","400","600", "700"] });
+const livvic = Livvic({ subsets: ["latin"], weight: ["100","200","300","400","600", "700"] });
 
 export const metadata: Metadata = {
   title: "Placement cell App",

@@ -40,7 +40,7 @@ export default function Info({job}:any) {
             </p>
           </div>
         </div>
-        <Button>Apply</Button>
+        <Button className="bg-[#00448E]">Apply</Button>
       </div>
       <div className="ml-[6rem] -mb-4">
         <p>
