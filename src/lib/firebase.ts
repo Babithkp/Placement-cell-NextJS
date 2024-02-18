@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getStorage} from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_APIKEY,
-  authDomain: process.env.FIREBASE_AUTHDOMAIN,
-  databaseURL: process.env.FIREBASE_DATABASEURL,
-  projectId: process.env.FIREBASE_PROJECTID,
-  storageBucket: process.env.FIREBASE_APIKEY,
-  messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
-  appId: process.env.FIREBASE_APPID
+  apiKey: "AIzaSyD4T3YpmTIUmlNCEuh_9nWKUQrNYhIbkYE",
+  authDomain: "react-native-9d3cc.firebaseapp.com",
+  databaseURL: "https://react-native-9d3cc-default-rtdb.firebaseio.com",
+  projectId: "react-native-9d3cc",
+  storageBucket: "react-native-9d3cc.appspot.com",
+  messagingSenderId: "382886181635",
+  appId: "1:382886181635:web:3bf5fe587e38e830ec4736"
 };
 
 // Initialize Firebase
