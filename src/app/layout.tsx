@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Kanit,Livvic } from "next/font/google";
+import { Kanit, Livvic } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
+import { FormContextProvider } from "@/store/contextForm";
 
-
-
-const kanit = Kanit({ subsets: ["latin"], weight: ["100","200","300","400","600", "700"] });
-const livvic = Livvic({ subsets: ["latin"], weight: ["100","200","300","400","600", "700"] });
+const kanit = Kanit({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "600", "700"],
+});
+const livvic = Livvic({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Placement cell App",
@@ -22,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <Navbar />
-        {children}
-        <Footer />
+        <FormContextProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </FormContextProvider>
       </body>
     </html>
   );

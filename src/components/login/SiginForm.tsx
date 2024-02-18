@@ -7,7 +7,7 @@ import Sigin from "./Sigin";
 import SignUp from "./SignUp";
 import { useSearchParams } from "next/navigation";
 
-export default function Sigining() {
+export default function SiginForm({onclicks}:any) {
   const params = useSearchParams();
   const [sliderState, setSliderState] = useState(false);
   const path = params.get("sign");
@@ -24,21 +24,21 @@ export default function Sigining() {
     setSliderState(!sliderState);
   }
   return (
-    <div className=" relative flex w-full rounded-3xl bg-slate-100 drop-shadow-2xl">
+    <div className=" relative flex w-full  bg-slate-100 drop-shadow-2xl">
       <div
         className={clsx(
           "absolute right-0 z-10 h-full w-[50%] transform drop-shadow-lg  duration-1000 ease-out ",
-          sliderState && "-translate-x-[34rem]",
+          sliderState && "-translate-x-[100%]",
         )}
       >
         <Image
-          className="h-full w-full rounded-2xl"
+          className={clsx("h-full w-full  ",sliderState ? "rounded-r-2xl ":"rounded-l-2xl" )}
           src={image}
           alt="logging"
         />
       </div>
       <Sigin onClicks={changeSlider} />
-      <SignUp onClicks={changeSlider} />
+      <SignUp onClicks={changeSlider} onclicking={onclicks}/>
     </div>
   );
 }

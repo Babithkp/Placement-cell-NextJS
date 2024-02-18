@@ -10,6 +10,12 @@ const config = {
   ],
   prefix: "",
   theme: {
+    rotate: {
+      '30': '30deg',
+      '60': '60deg',
+      '90': '90deg',
+      '180': '180deg',
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -74,7 +80,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography"),require('tailwindcss-3d'),],
 } satisfies Config;
 
 export default config;

@@ -25,12 +25,4 @@ export const addNewJobs = async (newJobs: jobs) => {
   }
 };
 
-// export const databaseInital = async () => {
-//   try {
-//     await connectDB();
-//     console.log("connection to database");
 
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };

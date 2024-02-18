@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { jobs } from "./jobs";
 import User,{user} from "./user";
 import {announcement} from "./announcement";
@@ -17,14 +17,14 @@ export interface userDetails extends mongoose.Document {
   passOutYear: Date;
   batch: String;
   address: string;
-  resume: Buffer;
+  resumeURL: string;
   announcement: [announcement];
   savedJobs: [jobs];
   appliedJobs: [jobs];
 }
 
-const UserDetails = new mongoose.Schema<userDetails>({
-  user: User,
+const UserDetails = new Schema<userDetails>({
+  user: {type: Schema.Types.ObjectId,ref: "User"},
   name: {
     type: String,
     required: true,
@@ -76,18 +76,18 @@ const UserDetails = new mongoose.Schema<userDetails>({
     type: String,
     minlength: [10, "Address cannot be less than 10 characters"],
   },
-  resume: {
-    type: Buffer,
+  resumeURL: {
+    type: String,
     required: true,
   },
   announcement:[{
-    type: mongoose.Types.ObjectId, req: "Announcement"
+    type: Schema.Types.ObjectId, req: "Announcement"
   }],
   savedJobs:[{
-    type: mongoose.Types.ObjectId, ref:"Jobs"
+    type: Schema.Types.ObjectId, ref:"Jobs"
   }],
   appliedJobs:[{
-    type: mongoose.Types.ObjectId,ref: 'Jobs'
+    type: Schema.Types.ObjectId,ref: 'Jobs'
   }]
 });
 

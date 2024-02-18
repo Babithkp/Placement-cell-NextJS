@@ -1,3 +1,4 @@
+
 import AvailableJobs from "@/components/home/AvailableJobs";
 import Partners from "@/components/home/Partners";
 import PlacedStudent from "@/components/home/PlacedStudent";
@@ -9,7 +10,7 @@ export default function Home() {
       <Screen />
       <Partners />
       <PlacedStudent />
-      <AvailableJobs/>
+      <AvailableJobs />
     </main>
   );
 }

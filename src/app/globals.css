@@ -74,3 +74,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.card{
+  transform-style: preserve-3d;
+  background-color: blue;
+}
+.font{
+  backface-visibility: hidden;
+}

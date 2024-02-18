@@ -7,11 +7,12 @@ import { IoEyeOff } from "react-icons/io5";
 import clsx from "clsx";
 
 export default function Sigin({ onClicks }: any) {
-  const [adminState, setAdminState] = useState(false);
+  const [adminState, setAdminState] = useState(true);
   const [admin, setAdmin] = useState(false);
+  const [passwordOn,setPasswordOn] = useState(false);
 
   return (
-    <div className=" flex w-[50%] items-center justify-center rounded-l-3xl p-8">
+    <div className=" flex w-[50%] items-center justify-center rounded-l-3xl px-8 py-4">
       <div className="flex w-[60%] flex-col gap-3">
         <h2 className="text-2xl">Login!</h2>
         {admin && (
@@ -40,7 +41,7 @@ export default function Sigin({ onClicks }: any) {
           </div>
         )}
         <p className="text-base">How do I get started ?</p>
-        <Button className="flex items-center justify-center gap-3 rounded-full border bg-transparent px-6 py-1 text-black drop-shadow-sm">
+        <Button className="flex hover:bg-slate-200 items-center justify-center gap-3 rounded-full border bg-transparent px-6 py-1 text-black drop-shadow-sm">
           <FcGoogle size={30} />
           <p>Sign in with Google</p>
         </Button>
@@ -54,7 +55,7 @@ export default function Sigin({ onClicks }: any) {
           <div className="my-2 flex flex-col gap-2">
             <label>Email</label>
             <input
-              className="w-full rounded-full border bg-transparent p-2 px-4 drop-shadow-sm"
+              className="w-full rounded-full border bg-transparent p-2 px-4 drop-shadow-sm outline-none"
               placeholder="Enter Your Email address"
             />
           </div>
@@ -62,12 +63,13 @@ export default function Sigin({ onClicks }: any) {
             <label>Password</label>
             <div className="border-full flex w-full items-center justify-between rounded-full border bg-transparent p-2 px-4 ">
               <input
-                className="bg-transparent "
-                placeholder="Enter Your Email address"
+                className="bg-transparent outline-none"
+                placeholder="Enter Your Password"
+                type={passwordOn ? "password" : "text"}
               />
               <div>
-                <IoEye size={22} />
-                {/* <IoEyeOff /> */}
+               {!passwordOn && <IoEye size={22} onClick={()=>setPasswordOn(true)}/>}
+                {passwordOn && <IoEyeOff size={22} onClick={()=>setPasswordOn(false)}/>}
               </div>
             </div>
           </div>

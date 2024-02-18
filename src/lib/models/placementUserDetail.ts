@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { jobs } from "./jobs";
 import User,{user} from "./user";
 
@@ -8,50 +8,44 @@ export interface placementUserDetais extends mongoose.Document {
   gender: String;
   phone: Number;
   companyName: String;
-  companyLocation: String;
   twitterLink: String;
   fackbookLink: String;
   linkdenInLink: String;
+  comapanyLink: String;
   aboutCompany: String;
   companyAddress: String;
   jobList: jobs;
 }
 
-const PlacementUserDetais = new mongoose.Schema<placementUserDetais>({
-  user: User,
+const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
+  user: {type: Schema.Types.ObjectId,ref: "User"},
   name: {
     type: String,
-    minlength: [3, "name cannot be less than 3 characters"],
+    minlength: [5, "name cannot be less than 5 characters"],
   },
   gender: {
     type: String,
-    enum: ["male", "female"],
     required: true,
   },
   phone: {
     type: Number,
-    minlength: [10, "Phone number must be at least 9 characters"],
-    maxlength: [10, "Phone number should not exceed 10 characters"],
+    minlength: [10, "Phone number must be at least 10 characters"],
   },
   companyName: {
     type: String,
-    minlength: [3, "company name cannot be less than 3 characters"],
-  },
-  companyLocation: {
-    type: String,
-    minlength: [3, "company location cannot be less than 3 characters"],
+    minlength: [5, "company name cannot be less than 5 characters"],
   },
   twitterLink: {
     type: String,
-    minlength: [5, "twitter link cannot be less than 5 characters"],
   },
   fackbookLink: {
     type: String,
-    minlength: [5, "fackbook link cannot be less than 5 characters"],
   },
   linkdenInLink: {
     type: String,
-    minlength: [5, "linkdenIn Link cannot be lesser than 5 characters"],
+  },
+  comapanyLink: {
+    type: String,
   },
   aboutCompany: {
     type: String,
@@ -62,9 +56,9 @@ const PlacementUserDetais = new mongoose.Schema<placementUserDetais>({
     minlength: [10, "Company address cannot be lesser than 10 characters"],
   },
   jobList: [{
-    type: mongoose.Types.ObjectId, ref: "Jobs"
+    type: Schema.Types.ObjectId, ref: "Jobs"
   }],
 });
 
 export default mongoose.models.PlacementUserDetais ||
-  mongoose.model<placementUserDetais>("Announcement", PlacementUserDetais);
+  mongoose.model<placementUserDetais>("PlacementUserDetais", PlacementUserDetaisSchema);
