@@ -1,8 +1,12 @@
 import CardContainer from "@/components/login/CardContainer";
-export default function Page() {
+import React from "react";
+import { Suspense } from "react";
+export default function page() {
   return (
-    <div className="flex items-center justify-center rounded-3xl drop-shadow-2xl" >
-      <CardContainer/>
-    </div>
+    <Suspense fallback={<p>Loading...</p>}>
+      <div className='drop-shadow-2xl" flex items-center justify-center rounded-3xl'>
+        <CardContainer />
+      </div>
+    </Suspense>
   );
 }
