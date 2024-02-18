@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import image from "../../../public/Images/signin.png";
+import image from "../../../public/Images/logingImage.png";
 import Image from "next/image";
 import clsx from "clsx";
-import Sigin from "./Sigin";
+import Sigin from "./Sigin"; 
 import SignUp from "./SignUp";
 import { useSearchParams } from "next/navigation";
 
@@ -24,10 +24,10 @@ export default function SiginForm({ onclicks }: any) {
     setSliderState(!sliderState);
   }
   return (
-    <div className=" relative flex w-full  bg-slate-100 drop-shadow-2xl">
+    <div className=" relative flex w-full  bg-[#FFFFFF] border-[#719CEC] border drop-shadow-2xl">
       <div
         className={clsx(
-          "absolute right-0 z-10 h-full w-[50%] drop-shadow-lg duration-1000  ease-out transform ",
+          "absolute right-0 z-10 h-full w-[50%] drop-shadow-lg duration-2000  ease-in-out transform ",
           sliderState && "-translate-x-[100%]",
         )}
       >

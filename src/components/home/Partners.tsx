@@ -35,7 +35,7 @@ export default function Partners() {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper bg-white "
+        className="mySwiper bg-white drop-shadow-md"
       >
         {AllImages.map((image, i) => (
           <SwiperSlide key={i}>

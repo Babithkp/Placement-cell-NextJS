@@ -6,7 +6,7 @@ import { jobs } from "@/lib/models/jobs";
 
 export default function Description({job}:any) {
   return (
-    <section className="my-4  flex h-fit flex-col rounded-md bg-stone-200 p-6">
+    <section className="my-4  flex h-fit flex-col rounded-md bg-[#FFFFFF] border-[#719CEC] border p-6">
       <h3 className="text-xl">Job description</h3>
       <article className="prose ">
         {job.jobDescription}

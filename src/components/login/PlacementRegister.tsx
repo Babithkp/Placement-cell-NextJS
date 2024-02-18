@@ -51,7 +51,7 @@ export default function PlacementRegister() {
 
   return (
     <div className="rounded-3xl">
-      <h3 className="bg-slate-400 p-1 text-center text-xl font-medium ">
+      <h3 className="bg-[#2560a9] p-1 text-center text-xl font-medium text-white">
         Create Placement-cell profile
       </h3>
       <form

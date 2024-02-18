@@ -4,7 +4,7 @@ import { FaFilter } from "react-icons/fa";
 export default function Filters() {
   
   return (
-    <section className="w-[25%] h-full  rounded-md bg-stone-200 p-4 flex sm:flex-col gap-4 max-md:text-sm max-sm:w-full">
+    <section className="w-[25%] h-full  rounded-md bg-[#FFFFFF] border-[#719CEC] border p-4 flex sm:flex-col gap-4 max-md:text-sm max-sm:w-full">
           <div className="flex w-full justify-between ">
             <h4 className="text-lg">Filter by</h4>
             <span>

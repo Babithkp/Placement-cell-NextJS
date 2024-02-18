@@ -88,7 +88,7 @@ export default function AddDrives() {
 
   return (
     <section className="w-full rounded-lg bg-gray-200 max-sm:w-[25rem] ">
-      <div className="w-full rounded-t-lg bg-black  text-center text-2xl text-white">
+      <div className="w-full rounded-t-lg bg-[#2560a9] text-center text-2xl text-white">
         <h4>Add Drive</h4>
       </div>
       <form
@@ -241,7 +241,7 @@ export default function AddDrives() {
               onClick={onSkillSubmit}
               type="button"
               variant="ghost"
-              className="rounded-full"
+              className="rounded-full "
             >
               <FaPlusCircle size={30} />
             </Button>
@@ -313,7 +313,7 @@ export default function AddDrives() {
           )}
         </div>
         <div className=" col-start-2 mr-4 pt-8 text-right">
-          <Button> {isSubmitting ? "submitting" : "Submit"}</Button>
+          <Button className="bg-[#00448E]"> {isSubmitting ? "submitting" : "Submit"}</Button>
           {state}
           {newError && <p className="text-red-600">{newError} + try again </p>}
         </div>

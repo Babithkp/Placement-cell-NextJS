@@ -82,3 +82,6 @@
 .font{
   backface-visibility: hidden;
 }
+.swiper-wrapper{
+  display: flex;
+}

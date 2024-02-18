@@ -19,7 +19,7 @@ export default function Sigin({ onClicks }: any) {
           <div className="relative flex justify-between rounded-full border">
             <div
               className={clsx(
-                "absolute flex h-full w-[50%] transform items-center  justify-center rounded-full bg-slate-300 duration-1000 ease-out hover:bg-slate-400 ",
+                "absolute flex h-full w-[50%] transform items-center  justify-center rounded-full bg-[#719CEC] duration-1000 ease-out hover:bg-slate-400 ",
                 adminState && "translate-x-[9rem]",
               )}
             >
@@ -46,7 +46,7 @@ export default function Sigin({ onClicks }: any) {
           <p>Sign in with Google</p>
         </Button>
         <div className="relative py-2">
-          <span className=" absolute -top-1 left-16  bg-slate-100 ">
+          <span className=" absolute -top-1 left-16  bg-white">
             Or Sign in with Email
           </span>
           <hr className=""></hr>

@@ -5,7 +5,7 @@ import homeImg from '../../../public/Images/heroimg.png'
 
 export default function Screen() {
   return (
-    <div className="h-screen p-20 flex justify-between bg-white w-[100%] items-center ">
+    <div className="h-screen p-20 flex justify-between w-[100%] items-center ">
       <div className=" w-[230rem] mb-20 ">
         <h1 className="font-bold text-5xl leading-[55px]">
           Explore the lastest Opportubities - Everything at one place

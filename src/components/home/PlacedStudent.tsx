@@ -53,7 +53,7 @@ const students = [
 
 export default function PlacedStudent() {
   return (
-    <section className="mt-32 flex h-full w-[100%] flex-col items-center bg-white p-6 relative">
+    <section className="mt-32 flex h-full w-[100%] flex-col items-center p-6 relative">
       <h2 className="text-3xl font-medium mb-4">Our Top Placed Student</h2>
       <div className="button-prev-slide absolute bottom-[40%] hover:scale-125 transition right-2 active:scale-100"><GrNext size={40}/></div>
       <Swiper
@@ -77,7 +77,7 @@ export default function PlacedStudent() {
           <SwiperSlide key={i}>
             <div
               key={i}
-              className="flex h-[20rem] w-[16rem] flex-col items-center justify-evenly border-2 p-4 drop-shadow-lg "
+              className="flex h-[20rem] w-[16rem] flex-col items-center border-[#719CEC]  justify-evenly border p-4 drop-shadow-lg bg-[#FFFFFF]"
             >
               <h3 className="text-center font-medium">{students.college}</h3>
               <h4 className="font-semibold">{students.company}</h4>

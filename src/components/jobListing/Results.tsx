@@ -37,7 +37,7 @@ export default function Results() {
       {jobList && jobList.map((job, i) => (
         <Link href={`/detailedPage/${job._id}`}
           key={i}
-          className="mb-4 flex rounded-md bg-stone-200 p-8 text-sm justify-between max-sm:p-3"
+          className="mb-4 flex rounded-md bg-[#FFFFFF] border-[#719CEC] border p-8 text-sm justify-between max-sm:p-3"
         >
           <span className=" flex items-center">
             <Image

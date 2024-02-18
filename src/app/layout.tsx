@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 import { FormContextProvider } from "@/store/contextForm";
+import clsx from "clsx";
 
 const kanit = Kanit({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={kanit.className}>
+      <body className={clsx(kanit.className,"bg-[#F6F8FA]")}>
         <FormContextProvider>
           <Navbar />
           {children}
