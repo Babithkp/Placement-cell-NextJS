@@ -1,10 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 import { jobs } from "./jobs";
-import User,{user} from "./user";
-import {announcement} from "./announcement";
+import User, { user } from "./user";
+import { announcement } from "./announcement";
 
 export interface userDetails extends mongoose.Document {
-  user: user,
+  user: user;
   name: string;
   gender: string;
   phone: Number;
@@ -17,6 +17,8 @@ export interface userDetails extends mongoose.Document {
   passOutYear: Date;
   batch: String;
   address: string;
+  profession: String;
+  city: string;
   resumeURL: string;
   announcement: [announcement];
   savedJobs: [jobs];
@@ -24,7 +26,7 @@ export interface userDetails extends mongoose.Document {
 }
 
 const UserDetails = new Schema<userDetails>({
-  user: {type: Schema.Types.ObjectId,ref: "User"},
+  user: { type: Schema.Types.ObjectId, ref: "User" },
   name: {
     type: String,
     required: true,
@@ -38,7 +40,6 @@ const UserDetails = new Schema<userDetails>({
   phone: {
     type: Number,
     minlength: [10, "phone cannot be less than 10 characters"],
-    maxlength: [10, "phone cannot be more than 10 characters"],
   },
   sslcMarks: {
     type: Number,
@@ -72,6 +73,13 @@ const UserDetails = new Schema<userDetails>({
     type: String,
     required: true,
   },
+  profession: {
+    type: String,
+  },
+  city: {
+    type: String,
+    minlength: [2, "city cannot be less than 2 characters"],
+  },
   address: {
     type: String,
     minlength: [10, "Address cannot be less than 10 characters"],
@@ -80,15 +88,24 @@ const UserDetails = new Schema<userDetails>({
     type: String,
     required: true,
   },
-  announcement:[{
-    type: Schema.Types.ObjectId, req: "Announcement"
-  }],
-  savedJobs:[{
-    type: Schema.Types.ObjectId, ref:"Jobs"
-  }],
-  appliedJobs:[{
-    type: Schema.Types.ObjectId,ref: 'Jobs'
-  }]
+  announcement: [
+    {
+      type: Schema.Types.ObjectId,
+      req: "Announcement",
+    },
+  ],
+  savedJobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Jobs",
+    },
+  ],
+  appliedJobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Jobs",
+    },
+  ],
 });
 
 export default mongoose.models.UserDetails ||

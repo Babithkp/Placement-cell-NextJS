@@ -4,7 +4,6 @@ import Image from "next/image";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { Button } from "../ui/button";
-import { jobs } from "@/lib/models/jobs";
 
 
 export default function Info({job}:any) {

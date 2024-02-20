@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { jobs } from "./jobs";
-import User,{user} from "./user";
+import {user} from "./user";
+import {userDetails} from "./userDetail";
 
 export interface placementUserDetais extends mongoose.Document {
   user: user,
@@ -8,13 +9,15 @@ export interface placementUserDetais extends mongoose.Document {
   gender: String;
   phone: Number;
   companyName: String;
-  twitterLink: String;
+  twitterLink: String; 
   fackbookLink: String;
   linkdenInLink: String;
   comapanyLink: String;
   aboutCompany: String;
   companyAddress: String;
-  jobList: jobs;
+  jobList: jobs[];
+  applicants: userDetails[];
+  selectApplicants: userDetails[]
 }
 
 const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
@@ -57,6 +60,12 @@ const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
   },
   jobList: [{
     type: Schema.Types.ObjectId, ref: "Jobs"
+  }],
+  applicants: [{
+    type: Schema.Types.ObjectId, ref: "UserDetails"
+  }],
+  selectApplicants: [{
+    type: Schema.Types.ObjectId, ref: "UserDetails"
   }],
 });
 

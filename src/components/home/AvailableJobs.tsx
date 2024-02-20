@@ -34,7 +34,7 @@ export default function AvailableJobs() {
       </p>
       <div className="p-4">
         {availableJobList.map((job, i) => (
-          <div className="mb-4 flex border p-6 text-sm justify-between border-[#719CEC] bg-[#FFFFFF]" key={i}>
+          <div className="mb-4 flex border p-6 text-sm justify-between border-[#719CEC] bg-[#FFFFFF] rounded-lg" key={i}>
             <div className="flex flex-col gap-2 ">
               <h3 className="text-2xl ">{job.title} </h3>
               <p>

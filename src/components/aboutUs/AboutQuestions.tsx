@@ -34,7 +34,7 @@ export default function AboutQuestions() {
           <div>
             <Accordion type="single" collapsible className="bg-[#ffff]">
               <AccordionItem value="item-1">
-                <AccordionTrigger><p><GoQuestion className="inline mx-4"/>questions 1</p></AccordionTrigger>
+                <AccordionTrigger><p><GoQuestion className="inline mx-4"/>What is the objectve</p></AccordionTrigger>
                 <AccordionContent className="bg-[#bacdef]">
                   Yes. It adheres to the WAI-ARIA design pattern.
                 </AccordionContent>

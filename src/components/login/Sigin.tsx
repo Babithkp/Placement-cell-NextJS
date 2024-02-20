@@ -20,7 +20,7 @@ export default function Sigin({ onClicks }: any) {
             <div
               className={clsx(
                 "absolute flex h-full w-[50%] transform items-center  justify-center rounded-full bg-[#719CEC] duration-1000 ease-out hover:bg-slate-400 ",
-                adminState && "translate-x-[9rem]",
+                adminState && "translate-x-[100%]",
               )}
             >
               {adminState ? "Placement Login" : "Admin Login"}

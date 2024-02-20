@@ -22,6 +22,8 @@ interface userDetails {
   historyBacklogs: Number;
   passOutYear: Date;
   batch: String;
+  city: string;
+  profession: String;
   address: string;
   resumeURL: string;
 }
@@ -266,6 +268,29 @@ export default function UserRegister() {
             <p className="text-sm text-red-500">
               Please Enter a valid Batch year
             </p>
+          )}
+        </div>
+        <div>
+          <label>
+          Profession 
+          </label>
+          <input
+            type="text"
+            placeholder="Enter Your profession"
+            className="w-full rounded-full p-2"/>
+        </div>
+        <div>
+          <label>
+            City <span className="text-lg text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="w-full rounded-full p-2"
+            {...register("city", { required: true, minLength: 3 })}
+          />
+          {errors.city && (
+            <p className="text-sm text-red-500">Please enter a valid city</p>
           )}
         </div>
         <div>

@@ -39,7 +39,7 @@ export default function Partners() {
       >
         {AllImages.map((image, i) => (
           <SwiperSlide key={i}>
-            <div className="mt-4 h-[80px] w-[150px]  grayscale hover:grayscale-0">
+            <div className="mt-4 h-[80px] w-[150px]  grayscale hover:grayscale-0 flex justify-center items-center">
               <Image src={image} alt={`image-${i}`} height={100} />
             </div>
           </SwiperSlide>

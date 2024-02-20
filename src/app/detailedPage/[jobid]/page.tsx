@@ -6,11 +6,11 @@ import HowItWorks from "@/components/jobDetailed/HowItWorks";
 import Info from "@/components/jobDetailed/Info";
 import React, { useEffect, useState } from "react";
 import { getJobById } from '@/lib/controller/getJobInfo';
-import { jobs } from '@/lib/models/jobs';
+
 
 
 export default function Page() {
-    const [job,setJob] = useState<jobs | []>([])
+    const [job,setJob] = useState<any | []>([])
     const params = usePathname()
     const numbersOnly = params.split("/")
     const index = numbersOnly.length
@@ -28,11 +28,11 @@ export default function Page() {
     },[jobId])
     return (
         <div className="flex w-full flex-col items-center">
-          <div className="mb-4 flex min-h-[60vh]  w-full items-center justify-center bg-stone-200">
-            <p className="w-[25rem] text-4xl font-bold">
-              Full Stack Web Developer -
-              <span className="text-blue-700"> Google</span>
+          <div className="mb-4 flex h-[20vh]  w-full items-center justify-center  relative border ">
+            <p className=" text-4xl font-bold">
+            {job.jobtTitle ? job.jobtTitle : "Explore latest opportunities"}
             </p>
+         
           </div>
           <div className="flex w-[80%] max-sm:flex-col ">
             <div>

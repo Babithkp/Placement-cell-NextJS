@@ -77,7 +77,7 @@ export default function PlacedStudent() {
           <SwiperSlide key={i}>
             <div
               key={i}
-              className="flex h-[20rem] w-[16rem] flex-col items-center border-[#719CEC]  justify-evenly border p-4 drop-shadow-lg bg-[#FFFFFF]"
+              className="flex h-[20rem] w-[16rem] flex-col items-center border-[#719CEC]  justify-evenly border p-4 drop-shadow-lg bg-[#FFFFFF] rounded-lg"
             >
               <h3 className="text-center font-medium">{students.college}</h3>
               <h4 className="font-semibold">{students.company}</h4>
