@@ -9,6 +9,7 @@ export interface placementUserDetais extends mongoose.Document {
   gender: String;
   phone: Number;
   companyName: String;
+  companyIcon: String;
   twitterLink: String; 
   fackbookLink: String;
   linkdenInLink: String;
@@ -39,6 +40,9 @@ const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
     minlength: [5, "company name cannot be less than 5 characters"],
   },
   twitterLink: {
+    type: String,
+  },
+  companyIcon: {
     type: String,
   },
   fackbookLink: {

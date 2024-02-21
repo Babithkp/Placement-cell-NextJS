@@ -4,13 +4,13 @@ export default function Education() {
   return (
     <div className="mt-9 ">
       <p className="border-b-[2px]   border-b-slate-300 text-sm uppercase text-slate-400">
-        education
+        lastest education
       </p>
       <ul className="flex flex-col gap-2">
         <li className="flex gap-8">
           <p>college:</p>
           <span className="font-semibold">
-            East point college of engneening{" "}
+            East point college of engneening
           </span>
         </li>
 

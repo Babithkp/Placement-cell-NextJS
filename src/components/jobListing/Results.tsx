@@ -39,7 +39,7 @@ export default function Results() {
           key={i}
           className="mb-4 flex rounded-md bg-[#FFFFFF] border-[#719CEC] border p-8 text-sm justify-between max-sm:p-3"
         >
-          <span className=" flex items-center">
+          <span className=" flex items-center w-[10rem]">
             <Image
               src={job.companyWebsite || defaultImg}
               alt="image"
@@ -49,7 +49,7 @@ export default function Results() {
             />
           </span>
 
-          <div className="px-4">
+          <div className="px-4 w-[80%]">
             <h4 className="text-xl max-sm:text-base max-sm:font-semibold">{job.jobtTitle}</h4>
             <p>{job.companyName}</p>
             <div>

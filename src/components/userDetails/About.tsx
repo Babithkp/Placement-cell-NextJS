@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function About() {
   return (
-    <div className="flex gap-12">
-              <div className="flex w-[17rem] flex-col gap-3">
+    <div className="flex gap-[10rem]">
+              <div className="flex w-[25rem] flex-col gap-3">
                 <span className="text-sm uppercase text-slate-400">
                   contact information
                 </span>
@@ -19,7 +19,7 @@ export default function About() {
                   <span className="text-blue-400">useremail@gmail.com</span>
                 </p>
               </div>
-              <div className="w-[12rem] ">
+              <div className="">
                 <span className="text-sm uppercase text-slate-400">
                   Basic information
                 </span>

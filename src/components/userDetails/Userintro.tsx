@@ -16,16 +16,16 @@ import { ScrollArea } from "../ui/scroll-area";
 
 export default function Userintro() {
   return (
-    <div className="flex w-[90%] flex-col">
-      <section className="flex gap-16 py-8 ">
-        <div className="h-[15rem] w-[15rem]">
+    <div className="flex w-[90%] flex-col ">
+      <section className="flex gap-16 py-8 items-center">
+        <div className="h-[15rem] w-[20%] ">
           <Image
             src={image}
             alt="profile Image "
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover rounded-lg drop-shadow-lg"
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-[80%] bg-white p-6 text-lg border border-blue-400 rounded-lg drop-shadow-lg">
           <div className="flex">
             <div>
               <p className="text-2xl">Ashika M</p>
@@ -37,46 +37,23 @@ export default function Userintro() {
               </p>
             </div>
           </div>
-          <div className="">
-            <div className="flex items-end  gap-2 border-b-2 pb-2">
+          <div className="w-full">
+            <div className="flex items-end  gap-2 border-b-2 pb-2 ">
               <FaUser />
               <p className="-mb-1">About</p>
             </div>
             <About />
           </div>
         </div>
-        <div className="grid grid-rows-[2.7rem,1fr]">
-          <div className="row-start-2 ">
-            <Education />
-          </div>
-        </div>
       </section>
-      <section className="flex items-start gap-20">
-        <div className=" pt-10 ">
-          <p className=" w-full border-b-[2px]  border-b-slate-300 text-sm uppercase text-slate-400">
-            Aggegates
-          </p>
-          <ul>
-            <li className="flex gap-8">
-              <p className="w-[10rem]">SSLC/10th Aggregate:</p>
-              <span>80%</span>
-            </li>
-            <li className="flex gap-8">
-              <p className="w-[10rem]">Diploma/12th Aggregate:</p>
-              <span>80% </span>
-            </li>
-            <li className="flex gap-8">
-              <p className="w-[10rem]">BE/BTech Aggregate:</p>
-              <span>80% </span>
-            </li>
-          </ul>
-        </div>
+      <section className="flex items-start gap-20 bg-white px-6 pb-4 border border-blue-400 rounded-lg drop-shadow-lg">
+            <Education />
         <div>
           <Accordion type="single" collapsible className="w-[25rem] ">
             <AccordionItem value="item-1">
               <AccordionTrigger>Favourite Jobs</AccordionTrigger>
                 <AccordionContent className="flex items-center justify-between border-b p-0">
-              <ScrollArea className=" h-[6rem]   max-sm:w-[25rem] w-full">
+              <ScrollArea className=" h-[9rem]   max-sm:w-[25rem] w-full">
                   <div className="flex items-center justify-between border-b p-0">
                     <div>
                       <p className="text-base font-semibold">
@@ -84,7 +61,7 @@ export default function Userintro() {
                       </p>
                       <p>Company name</p>
                     </div>
-                    <Button className="h-fit p-1">View Details</Button>
+                    <Button className="h-fit p-1 mr-4">View Details</Button>
                   </div>
                   <div className="flex items-center justify-between border-b p-0">
                     <div>
@@ -93,7 +70,7 @@ export default function Userintro() {
                       </p>
                       <p>Company name</p>
                     </div>
-                    <Button className="h-fit p-1">View Details</Button>
+                    <Button className="h-fit p-1 mr-4">View Details</Button>
                   </div>
                   <div className="flex items-center justify-between border-b p-0">
                     <div>
@@ -102,7 +79,7 @@ export default function Userintro() {
                       </p>
                       <p>Company name</p>
                     </div>
-                    <Button className="h-fit p-1">View Details</Button>
+                    <Button className="h-fit p-1 mr-4">View Details</Button>
                   </div>
               </ScrollArea>
                 </AccordionContent>
@@ -114,7 +91,7 @@ export default function Userintro() {
             <AccordionItem value="item-1">
               <AccordionTrigger>Applied Jobs</AccordionTrigger>
                 <AccordionContent className="flex items-center justify-between border-b p-0">
-              <ScrollArea className=" h-[6rem]   max-sm:w-[25rem] w-full">
+              <ScrollArea className=" h-[9rem]   max-sm:w-[25rem] w-full">
                   <div className="flex items-center justify-between border-b p-0">
                     <div>
                       <p className="text-base font-semibold">
@@ -122,7 +99,7 @@ export default function Userintro() {
                       </p>
                       <p>Company name</p>
                     </div>
-                    <Button className="h-fit p-1">View Details</Button>
+                    <Button className="h-fit p-1 mr-4">View Details</Button>
                   </div>
                   <div className="flex items-center justify-between border-b p-0">
                     <div>
@@ -131,7 +108,7 @@ export default function Userintro() {
                       </p>
                       <p>Company name</p>
                     </div>
-                    <Button className="h-fit p-1">View Details</Button>
+                    <Button className="h-fit p-1 mr-4">View Details</Button>
                   </div>
                   <div className="flex items-center justify-between border-b p-0">
                     <div>
@@ -140,7 +117,7 @@ export default function Userintro() {
                       </p>
                       <p>Company name</p>
                     </div>
-                    <Button className="h-fit p-1">View Details</Button>
+                    <Button className="h-fit p-1 mr-4">View Details</Button>
                   </div>
               </ScrollArea>
                 </AccordionContent>
