@@ -34,7 +34,7 @@ export default function ContactUSContainer() {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="flex w-[40%] flex-col gap-2  rounded-lg border border-blue-400 px-16 py-6 drop-shadow-md  max-sm:w-[80%] bg-white"
+      className="flex w-[40%] flex-col gap-2  rounded-lg border border-blue-400 px-16 py-6 drop-shadow-md  max-sm:w-[90%] bg-white"
     >
       <div>
         <label htmlFor="address">Your Email Address</label>

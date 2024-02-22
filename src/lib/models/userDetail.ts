@@ -97,13 +97,13 @@ const UserDetails = new Schema<userDetails>({
   savedJobs: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Jobs",
+      ref: "JobsInfo",
     },
   ],
   appliedJobs: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Jobs",
+      ref: "JobsInfo",
     },
   ],
 });

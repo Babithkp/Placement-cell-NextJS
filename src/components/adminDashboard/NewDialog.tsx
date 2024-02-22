@@ -10,9 +10,10 @@ import {
 import { FaPlus } from "react-icons/fa";
 import AddDrives from "./AddDrives";
 import { ScrollArea } from "@/components/ui/scroll-area"
+import AnnounceForm from "./AnnounceForm";
 
 
-export default function NewDialog() {
+export default function NewDialog({announcement}:any) {
   return (
     <Dialog >
       <DialogTrigger >
@@ -22,7 +23,7 @@ export default function NewDialog() {
         <DialogHeader className="w-[100rem]">
           <DialogDescription className=" w-[100rem]  ">
           <ScrollArea className="h-[30rem] w-[50rem] rounded-md border max-sm:w-[25rem]">
-            <AddDrives/>
+            {announcement ? <AnnounceForm/> : <AddDrives/>}
           </ScrollArea>
           </DialogDescription>
         </DialogHeader>

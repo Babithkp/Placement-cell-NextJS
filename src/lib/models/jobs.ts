@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { announcement } from "./announcement";
 
 export interface jobs extends mongoose.Document {
     _id: string;
@@ -20,8 +21,11 @@ export interface jobs extends mongoose.Document {
     aboutCompany: string;
     impressions: number;
     applicationNo: number;
+    announcement: [announcement];
     submitOn: Date;
 }
+
+
 
 const JobSchema = new mongoose.Schema<jobs>({
     jobtTitle: {
@@ -104,6 +108,12 @@ const JobSchema = new mongoose.Schema<jobs>({
     required: [true, "Please provide the aboutCompany"],
     minlength: [10, "aboutCompany cannot be lesser than 5 characters"],
   },
+  announcement: [
+    {
+      type: Schema.Types.ObjectId,
+      req: "Announcement",
+    },
+  ],
   impressions: {
     type: Number,
     default: 0
@@ -118,4 +128,4 @@ const JobSchema = new mongoose.Schema<jobs>({
   },
 });
 
-export default mongoose.models.Jobs ||  mongoose.model<jobs>("Jobs", JobSchema);
+export default mongoose.models.JobsInfo ||  mongoose.model<jobs>("JobsInfo", JobSchema);

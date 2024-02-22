@@ -5,14 +5,14 @@ import DriveInfo from "@/components/adminDashboard/DriveInfo";
 import React from "react";
 import AnnounceForm from "@/components/adminDashboard/AnnounceForm";
 
-
 export default function page() {
   return (
-    <div className="w-[80%] max-sm:w-[95%]  flex flex-col gap-8">
-      {/* <Dashboard title={"Admin Dashboard"}/>
-      <DriveInfo/> */}
-      <Announcement/>
-      <AnnounceForm/>
+    <div className="flex flex-col items-center">
+      <div className="flex w-[80%]  flex-col gap-8 max-sm:w-[95%]">
+        <Dashboard title={"Admin Dashboard"} />
+        <DriveInfo />
+        <Announcement />
+      </div>
     </div>
   );
 }

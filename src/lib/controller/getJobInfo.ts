@@ -1,11 +1,11 @@
 "use server";
 import { connectDB } from "../dbConnect";
-import Jobs from "../models/jobs";
+import JobsInfo from "../models/jobs";
 
 export const getJobInfo = async () => {
   try {
     await connectDB();
-    const allJobs = await Jobs.find();
+    const allJobs = await JobsInfo.find();
     const serializedData = JSON.stringify(allJobs);
     return serializedData;
   } catch (err) {
@@ -16,7 +16,7 @@ export const getJobInfo = async () => {
 export const getJobById = async (jobId:string) => {
   try{
     await connectDB();
-    const job = await Jobs.findById(jobId)
+    const job = await JobsInfo.findById(jobId)
     if(job.length === 0) {
       console.error("Failed to find job");
       return

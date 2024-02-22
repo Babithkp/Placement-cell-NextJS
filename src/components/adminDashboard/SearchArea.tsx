@@ -47,7 +47,7 @@ export default function SearchArea({ getId, announcement }: any) {
             <BiSearchAlt size={25} />
           </li>
           <li>
-            <NewDialog />
+            <NewDialog announcement={announcement}/>
           </li>
         </ul>
       </div>
