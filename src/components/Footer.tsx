@@ -8,9 +8,13 @@ export default function Footer() {
     <div>
       <div className="my-8 grid grid-cols-[2rem,1fr,2rem]">
         <div className="col-start-2 flex justify-between border-b-2 p-4">
-          <Link href="/" className="text-2xl font-medium">LOGO</Link>
+          <Link href="/" className="text-2xl font-medium">
+            LOGO
+          </Link>
           <ul className="flex gap-8">
-            <li>Contact US</li>
+            <li>
+              <Link href="/contactUs">Contact US</Link>
+            </li>
             <li>FAQ&apos;s</li>
             <li>Support</li>
           </ul>
@@ -38,7 +42,7 @@ export default function Footer() {
           </div>
         </div>
         <div></div>
-        <div className="col-start-2 flex justify-around mt-4">
+        <div className="col-start-2 mt-4 flex justify-around">
           <div>&copy; 2024 Eastpoint Placement Cell. All rights reserved.</div>
           <ul className="flex gap-8">
             <li>Privacy Policy</li>

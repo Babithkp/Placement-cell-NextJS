@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={clsx(kanit.className,"bg-[#F6F8FA]")}>
+      <body className={clsx(kanit.className,"bg-[#F6F8FA] flex flex-col items-center justify-center")}>
         <FormContextProvider>
           <Navbar />
           {children}
