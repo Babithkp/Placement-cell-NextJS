@@ -7,6 +7,7 @@ import { getJobInfo } from "@/lib/controller/getJobInfo";
 import { jobs } from "@/lib/models/jobs";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { addNewAnnoucement } from "@/lib/controller/announcement";
+import { useRouter } from "next/navigation";
 
 interface Inputs {
   title: string;
@@ -25,6 +26,7 @@ export default function AnnounceForm() {
   const [jobList, setJobList] = useState<undefined | jobs[]>([]);
   const [selectedOption, setSelectedOption] = useState<undefined | jobInfo>();
   const [Error, setError] = useState<null | string>(null);
+  const router = useRouter()
 
   const selectHandler = function (jobTitle: string, jobID: string = "null") {
     setIsDropped(false);
@@ -53,8 +55,17 @@ export default function AnnounceForm() {
       setError("Please select a job");
       return
     }
+    try{
+      const response = await addNewAnnoucement(data, selectedOption?.jobID)
+      console.log(response);
+      
+      if(response){
+        router.replace("adminDashboard")
+      }
+    }catch(error){
+      setError("Failed to announce" + error)
+    }
 
-    await addNewAnnoucement(data, selectedOption?.jobID)
   };
   return (
     <div className="h-[30rem] w-full overflow-hidden rounded-lg border border-blue-400 bg-white">
@@ -106,7 +117,7 @@ export default function AnnounceForm() {
               placeholder="Enter Description"
               rows={3}
               className="w-full rounded-lg border border-black bg-slate-50 p-2"
-              {...register("description", { required: true, minLength: 5 })}
+              {...register("description", { required: true, minLength: 10 })}
             ></textarea>
             {errors.description && (
               <p className="text-red-600">Please enter a vaild Description</p>

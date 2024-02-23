@@ -9,7 +9,7 @@ import NewDialog from "./NewDialog";
 import { ScrollArea } from "../ui/scroll-area";
 
 export default function SearchArea({ getId, announcement }: any) {
-  const [Jobs, setJobs] = useState<undefined | any[]>([]);
+  const [items, setItems] = useState<undefined | any[]>([]);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function SearchArea({ getId, announcement }: any) {
           const job: string | undefined = await getJobInfo();
           if (job) {
             const filtered = JSON.parse(job);
-            setJobs(filtered);
+            setItems(filtered);
             getId(filtered[0]?._id);
           }
         } catch (error) {
@@ -27,14 +27,16 @@ export default function SearchArea({ getId, announcement }: any) {
             `failed to upload  ${(error as { message?: string })?.message}`,
           );
         }
+      }else{
+        
       }
     }
     fetchJobsw();
   }, []);
 
   const memoizedJobs = useMemo(() => {
-    return Jobs;
-  }, [Jobs]);
+    return items;
+  }, [items]);
 
   return (
     <div className="flex w-[40%] flex-col rounded-lg bg-gray-400 p-4 max-sm:text-xs ">
@@ -60,7 +62,7 @@ export default function SearchArea({ getId, announcement }: any) {
         </div>
         <ScrollArea className="h-[22rem]  rounded-md  max-sm:w-[25rem]">
           <ul className="flex flex-col gap-4 bg-gray-200">
-            {Jobs?.map((job, i) => (
+            {items?.map((job, i) => (
               <li
                 onClick={() => getId(job._id)}
                 key={i}

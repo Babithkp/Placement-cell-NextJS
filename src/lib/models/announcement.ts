@@ -5,6 +5,7 @@ export interface announcement extends mongoose.Document{
     validity: Date;
     type: string;
     description: string;
+    submittedOn: Date
 }
 
 const Announcement = new mongoose.Schema<announcement>({
@@ -24,6 +25,10 @@ const Announcement = new mongoose.Schema<announcement>({
     description:{
         type: String,
         minlength: [10, "Title can not be lesser than 10 characters"]
+    },
+    submittedOn:{
+        type: Date,
+        default: Date.now()
     }
 })
 
