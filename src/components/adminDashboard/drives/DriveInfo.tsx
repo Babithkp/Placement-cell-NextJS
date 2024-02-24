@@ -1,12 +1,16 @@
 "use client";
-import SearchArea from "./SearchArea";
+import SearchArea from "../SearchArea";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosGitBranch } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { getJobById } from "@/lib/controller/getJobInfo";
+import { getJobById } from "@/lib/controller/JobInfo";
 import { jobs } from "@/lib/models/jobs";
+
+import { MdDelete } from "react-icons/md";
+import EditDrivesDialog from "./EditDrivesDialog";
+import DeleteDrivesDialog from "./DeleteDrivesDialog";
 
 export default function DriveInfo() {
   const [jobId, setJobId] = useState("");
@@ -26,9 +30,9 @@ export default function DriveInfo() {
             const deadline = new Date(filteredJobInfo.deadline);
             const currentTime = new Date();
             const postTimeDifference =
-              currentTime.getTime() - postedOn.getTime();
+              currentTime.getDate() - postedOn.getDate();
             const deadlineTimeDifference =
-              deadline.getTime() - currentTime.getTime();
+              deadline.getDate() - currentTime.getDate();
 
             const daysDifference = Math.floor(
               postTimeDifference / (1000 * 60 * 60 * 24),
@@ -54,17 +58,23 @@ export default function DriveInfo() {
     <section className="flex rounded-lg bg-gray-200 max-sm:text-sm">
       <SearchArea getId={getJobId} />
       <div className="flex w-full flex-col gap-4 p-4 text-white ">
-        <div className="rounded-xl bg-black p-2 ">
-          <h4 className="text-lg max-sm:text-base">{jobInfo?.jobtTitle}</h4>
-          <p className="text-sm">{jobInfo?.companyName}</p>
-          <p className="text-xs">
-            Posted{" "}
-            {postedDate === 0 ? (
-              <span>Today</span>
-            ) : (
-              <span>on {postedDate}+ Days Ago</span>
-            )}
-          </p>
+        <div className="flex justify-between rounded-xl bg-black p-2">
+          <div>
+            <h4 className="text-lg max-sm:text-base">{jobInfo?.jobtTitle}</h4>
+            <p className="text-sm">{jobInfo?.companyName}</p>
+            <p className="text-xs">
+              Posted{" "}
+              {postedDate === 0 ? (
+                <span>Today</span>
+              ) : (
+                <span>on {postedDate}+ Days Ago</span>
+              )}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <EditDrivesDialog jobInfo={jobInfo} />
+            <DeleteDrivesDialog jobid={jobId} />
+          </div>
         </div>
         <div className="grid grid-cols-2 grid-rows-[repeat(2,10rem)] gap-4 text-sm">
           <div className="rounded-xl bg-black p-2  ">

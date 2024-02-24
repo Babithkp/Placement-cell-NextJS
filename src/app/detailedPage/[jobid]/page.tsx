@@ -5,7 +5,7 @@ import Description from "@/components/jobDetailed/Description";
 import HowItWorks from "@/components/jobDetailed/HowItWorks";
 import Info from "@/components/jobDetailed/Info";
 import React, { useEffect, useState } from "react";
-import { getJobById } from '@/lib/controller/getJobInfo';
+import { getJobById } from '@/lib/controller/JobInfo';
 
 
 

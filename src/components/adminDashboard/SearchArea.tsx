@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
-import { getJobInfo } from "@/lib/controller/getJobInfo";
+import { getJobInfoForAdmin } from "@/lib/controller/JobInfo";
 
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -16,7 +16,7 @@ export default function SearchArea({ getId, announcement }: any) {
     async function fetchJobsw() {
       if (!announcement) {
         try {
-          const job: string | undefined = await getJobInfo();
+          const job: string | undefined = await getJobInfoForAdmin();
           if (job) {
             const filtered = JSON.parse(job);
             setItems(filtered);
@@ -27,8 +27,6 @@ export default function SearchArea({ getId, announcement }: any) {
             `failed to upload  ${(error as { message?: string })?.message}`,
           );
         }
-      }else{
-        
       }
     }
     fetchJobsw();
@@ -62,17 +60,17 @@ export default function SearchArea({ getId, announcement }: any) {
         </div>
         <ScrollArea className="h-[22rem]  rounded-md  max-sm:w-[25rem]">
           <ul className="flex flex-col gap-4 bg-gray-200">
-            {items?.map((job, i) => (
-              <li
-                onClick={() => getId(job._id)}
+            {items?.map((item, i) => (
+              <li 
+                onClick={() => getId(item._id)}
                 key={i}
                 className="flex cursor-pointer items-center justify-between rounded-xl p-2 hover:bg-slate-300 "
               >
                 <div>
                   <h5 className="text-lg font-semibold max-sm:text-base">
-                    {job.jobtTitle}
+                    {announcement ? item.title : item.jobtTitle}
                   </h5>
-                  <p className="text-sm font-medium">{job.companyName}</p>
+                  {announcement ? "" :<p className="text-sm font-medium">{item.companyName}</p>}
                 </div>
                 <div className="w-fit">
                   <FaArrowRightLong />

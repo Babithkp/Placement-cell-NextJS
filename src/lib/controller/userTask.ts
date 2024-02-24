@@ -7,6 +7,7 @@ import { connectDB } from "../dbConnect";
 import { revalidatePath } from "next/cache";
 import User, { user } from "../models/user";
 import bcrypt from "bcryptjs";
+import userDetail from "../models/userDetail";
 
 
 export const IsUserExists = async (email: string) => {
@@ -63,5 +64,16 @@ export const addNewPlacementUser = async (userInfo: placementUserDetais, userSig
     return true;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const getUserInfo= async()=>{
+  try{
+      const userInfo = await UserDetails.findOne({_id:"65d96ff5e684b252436055d2"}).populate({ path: 'user', options: { strictPopulate: false } }).exec()
+      console.log(userInfo);
+      
+  }catch(error){
+    console.log(error);
+    
   }
 }

@@ -7,7 +7,7 @@ import { FaRegBookmark } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import Image from "next/image";
 import Link from "next/link";
-import { getJobInfo } from "@/lib/controller/getJobInfo";
+import { getAllJobInfo } from "@/lib/controller/JobInfo";
 import defaultImg from "../../../public/Images/companies/default.jpg"
 
 interface Job {
@@ -25,7 +25,7 @@ export default function Results() {
   const [jobList,setJobList] = useState<Job[]>([])
   useEffect(()=>{
     const fetch =async()=>{
-      const newjob:any = await getJobInfo()
+      const newjob:any = await getAllJobInfo()
       const response = JSON.parse(newjob)
       setJobList(response)
     }

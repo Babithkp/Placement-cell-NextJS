@@ -1,16 +1,17 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { Button } from "../ui/button";
+import React, { useEffect, useRef, useState } from "react";
+import { Button } from "../../ui/button";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { addNewJobs } from "@/lib/controller/addJob";
-import { jobs } from "@/lib/models/jobs";
+
 import { FaPlusCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
+import { addNewJobs, updateJobInfo } from "@/lib/controller/JobInfo";
 
 interface Inputs {
   jobtTitle: string;
   companyName: string;
-  deadline: Date;
+  deadline: string;
   companyWebsite: string;
   comapanyLocation: string;
   role: string;
@@ -26,7 +27,7 @@ interface Inputs {
   aboutCompany: string;
 }
 
-export default function AddDrives() {
+export default function AddDrives({ jobInfo }: any) {
   const skillRef = useRef<HTMLInputElement>(null);
   const [newSkills, setSkills] = useState<string[]>([]);
   const [isSkillEntered, setIsSkillEntered] = useState(true);
@@ -50,17 +51,14 @@ export default function AddDrives() {
     }
   };
 
-  if (isSubmitted === false) {
-    const timer = setTimeout(() => {
-      setisSubmitted(false);
-    }, 3000);
-  }
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    let response
     data.skills = newSkills;
     if (data.skills.length == 0) {
       setIsSkillEntered(false);
@@ -68,11 +66,17 @@ export default function AddDrives() {
     }
 
     try {
-      const response: Boolean | undefined = await addNewJobs(data as jobs);
-      setisSubmitted(response);
+      if(!jobInfo){
+        response  = await addNewJobs(data as any);
+        setisSubmitted(response);
+      }else{
+        response = await updateJobInfo(data, jobInfo._id);
+      }
     } catch (err) {
       if (err) {
-        setNewError(`failed to upload  ${(err as {message?: string })?.message}`);
+        setNewError(
+          `failed to upload  ${(err as { message?: string })?.message}`,
+        );
       }
     }
   };
@@ -85,6 +89,29 @@ export default function AddDrives() {
   } else if (isSubmitted === true) {
     router.replace("/jobListings");
   }
+
+  useEffect(() => {
+    if (jobInfo) {
+      const dateObject = new Date(jobInfo.deadline);
+      const dateString = format(dateObject, "yyyy-MM-dd");
+      setValue("jobtTitle", jobInfo.jobtTitle);
+      setValue("aboutCompany", jobInfo.aboutCompany);
+      setValue("comapanyLocation", jobInfo.comapanyLocation);
+      setValue("companyName", jobInfo.companyName);
+      setValue("companyWebsite", jobInfo.companyWebsite);
+      setValue("deadline", dateString);
+      setValue("department", jobInfo.department);
+      setValue("education", jobInfo.education);
+      setValue("indrustryType", jobInfo.indrustryType);
+      setValue("jobDescription", jobInfo.jobDescription);
+      setValue("openings", jobInfo.openings);
+      setValue("package", jobInfo.package);
+      setValue("role", jobInfo.role);
+      setValue("roleCategory", jobInfo.roleCategory);
+      setValue("workMode", jobInfo.workMode);
+      setSkills(jobInfo.skills)
+    }
+  }, [jobInfo, setValue]);
 
   return (
     <section className="w-full rounded-lg bg-gray-200 max-sm:w-[25rem] ">
@@ -125,7 +152,7 @@ export default function AddDrives() {
             type="date"
             className="rounded-md border border-black p-2 placeholder:text-base"
             placeholder="date"
-            {...register("deadline", { required: true })}
+            {...register("deadline", { required: true, valueAsDate: true })}
           />
           {errors.deadline && (
             <p className="text-red-600">Date cannot be Empty</p>
@@ -313,7 +340,10 @@ export default function AddDrives() {
           )}
         </div>
         <div className=" col-start-2 mr-4 pt-8 text-right">
-          <Button className="bg-[#00448E]"> {isSubmitting ? "submitting" : "Submit"}</Button>
+          <Button className="bg-[#00448E]">
+            {" "}
+            {isSubmitting ? "submitting" : "Submit"}
+          </Button>
           {state}
           {newError && <p className="text-red-600">{newError} + try again </p>}
         </div>

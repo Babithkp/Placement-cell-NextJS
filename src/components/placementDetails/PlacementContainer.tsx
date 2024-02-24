@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Dashboard from "@/components/Dashboard";
-import AddDrives from "@/components/adminDashboard/AddDrives";
+import AddDrives from "@/components/adminDashboard/drives/AddDrives";
 import Results from "@/components/jobListing/Results";
 import PlacementFilter from "@/components/placementDetails/PlacementFilter";
 import StudentsDetails from "@/components/placementDetails/StudentsDetails";
