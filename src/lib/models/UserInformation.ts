@@ -3,9 +3,10 @@ import { jobs } from "./jobs";
 import User, { user } from "./user";
 import { announcement } from "./announcement";
 
-export interface userDetails extends mongoose.Document {
+export interface userInformations extends mongoose.Document {
   user: user;
   name: string;
+  profileUrl: string;
   gender: string;
   phone: Number;
   sslcMarks: Number;
@@ -14,18 +15,18 @@ export interface userDetails extends mongoose.Document {
   backlogs: Number;
   collegeName: string;
   historyBacklogs: Number;
-  passOutYear: Date;
+  passOutYear: String;
   batch: String;
   address: string;
   profession: String;
   city: string;
   resumeURL: string;
-  announcement: [announcement];
+  date_of_birth: Date;
   savedJobs: [jobs];
   appliedJobs: [jobs];
 }
 
-const UserDetails = new Schema<userDetails>({
+const UserInformations = new Schema<userInformations>({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   name: {
     type: String,
@@ -34,7 +35,7 @@ const UserDetails = new Schema<userDetails>({
   },
   gender: {
     type: String,
-    enum: ["male", "female"],
+    enum: ["MALE", "FEMALE"],
     required: true,
   },
   phone: {
@@ -66,12 +67,19 @@ const UserDetails = new Schema<userDetails>({
     minlength: [1, "Backlogs cannot be less than 1 characters"],
   },
   passOutYear: {
+    type: String,
+    required: true,
+  },
+  date_of_birth: {
     type: Date,
     required: true,
   },
   batch: {
     type: String,
     required: true,
+  },
+  profileUrl: {
+    type: String,
   },
   profession: {
     type: String,
@@ -88,12 +96,6 @@ const UserDetails = new Schema<userDetails>({
     type: String,
     required: true,
   },
-  announcement: [
-    {
-      type: Schema.Types.ObjectId,
-      req: "Announcement",
-    },
-  ],
   savedJobs: [
     {
       type: Schema.Types.ObjectId,
@@ -108,5 +110,5 @@ const UserDetails = new Schema<userDetails>({
   ],
 });
 
-export default mongoose.models.UserDetails ||
-  mongoose.model<userDetails>("UserDetails", UserDetails);
+export default mongoose.models.UserInformations ||
+  mongoose.model<userInformations>("UserInformations", UserInformations);

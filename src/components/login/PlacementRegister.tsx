@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useGlobalContext } from "@/store/contextForm";
 import { IsUserExists, addNewPlacementUser } from "@/lib/controller/userTask";
+import { useRouter } from "next/navigation";
 
 interface placedmentInfo {
   name: String;
@@ -20,6 +21,7 @@ interface placedmentInfo {
 export default function PlacementRegister() {
   const formCtx = useGlobalContext();
   const [Error, setError] = useState<string | null>(null);
+  const router = useRouter()
 
   const {
     register,
@@ -41,6 +43,7 @@ export default function PlacementRegister() {
           const response = await addNewPlacementUser(data, signupinfo);
           if (response) {
             setError("Profile created! succesfully");
+            router.replace("/placement-Cell-Profile")
           }
         } catch (error) {
           setError("Interwork Error, Try Agian");

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import SiginForm from "@/components/login/SiginForm";
+import SiginContainer from "@/components/login/SiginContainer";
 import UserRegister from "@/components/login/UserRegister";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import clsx from "clsx";
@@ -37,7 +37,7 @@ export default function CardContainer() {
           flip && "rotate-y-180",
         )}
       >
-        <SiginForm onclicks={onFlipHandler}/>
+        <SiginContainer onclicks={onFlipHandler}/>
       </div>
       <Button onClick={() => setFlip(!flip)} className="w-fit">flip</Button>
     </div>

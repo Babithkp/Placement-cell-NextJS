@@ -29,10 +29,10 @@ export default function AnnounceSearchArea({ getId, announcement }: any) {
         const accouncement = await getAllAccouncements();
         if (accouncement) {
           const filtered = JSON.parse(accouncement);
-          console.log(filtered);
-
+          if(filtered.jobs.length === 0){
+            setError("No Jobs to Announce")
+          }
           setItems(filtered.jobs);
-          // getId(filtered[0]?._id);
         }
       } catch (error) {
         console.log(error);
@@ -78,7 +78,7 @@ export default function AnnounceSearchArea({ getId, announcement }: any) {
           </ul>
         </ScrollArea>
       </div>
-      {error && <p className="font-medium text-red-600">{error} try again</p>}
+      {error && <p className="font-medium text-red-600">{error}</p>}
     </div>
   );
 }

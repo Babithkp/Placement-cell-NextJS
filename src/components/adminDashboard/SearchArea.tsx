@@ -19,6 +19,10 @@ export default function SearchArea({ getId, announcement }: any) {
           const job: string | undefined = await getJobInfoForAdmin();
           if (job) {
             const filtered = JSON.parse(job);
+            if(filtered.length === 0) {
+              setError("No Job found")
+            }
+            
             setItems(filtered);
             getId(filtered[0]?._id);
           }

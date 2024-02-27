@@ -8,6 +8,8 @@ import { IsUserExists, addNewUser } from "@/lib/controller/userTask";
 import { storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import { useRouter } from "next/navigation";
+
 
 interface userDetails {
   name: string;
@@ -23,12 +25,14 @@ interface userDetails {
   passOutYear: Date;
   batch: String;
   city: string;
+  date_of_birth: Date;
   profession: String;
   address: string;
   resumeURL: string;
 }
 
 export default function UserRegister() {
+  const router = useRouter()
   const formCtx = useGlobalContext();
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
   const [Error, setError] = useState<string | null>(null);
@@ -79,9 +83,11 @@ export default function UserRegister() {
           const getResumeURL = await getDownloadURL(snapshot);
           data.resumeURL = getResumeURL;
 
-          const res = await addNewUser(data, signupDetails);
+          const res:any = await addNewUser(data, signupDetails);
+          const filtered = JSON.parse(res)
           if (res) {
             setError("User creared!");
+            router.replace(`/userDetails/${filtered._id}`)
           }
         }
       } else {
@@ -123,11 +129,25 @@ export default function UserRegister() {
             className="w-full rounded-full p-2 "
             {...register("gender", { required: true })}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
           </select>
           {errors.name && (
             <p className="text-sm text-red-500">Please select a valid Gender</p>
+          )}
+        </div>
+        <div>
+          <label>
+            Date Of Birth <span className="text-lg text-red-500">*</span>
+          </label>
+          <input
+            type="Date"
+            placeholder="--/--/---"
+            className="w-full rounded-full p-2"
+            {...register("date_of_birth", { required: true })}
+          />
+          {errors.date_of_birth && (
+            <p className="text-sm text-red-500">Please Enter a valid Year</p>
           )}
         </div>
         <div>
@@ -254,6 +274,7 @@ export default function UserRegister() {
             <p className="text-sm text-red-500">Please Enter a valid Year</p>
           )}
         </div>
+        
         <div>
           <label>
             Batch <span className="text-lg text-red-500">*</span>
@@ -277,7 +298,9 @@ export default function UserRegister() {
           <input
             type="text"
             placeholder="Enter Your profession"
-            className="w-full rounded-full p-2"/>
+            className="w-full rounded-full p-2"
+            {...register("profession")}
+            />
         </div>
         <div>
           <label>
@@ -321,7 +344,7 @@ export default function UserRegister() {
           />
           <div
             onClick={() => resumeClickHandler()}
-            className="flex h-[100%] w-full cursor-pointer items-center justify-center gap-4 rounded-full border-2 border-dotted border-slate-400 bg-white hover:bg-slate-50"
+            className="flex h-[70%] w-full cursor-pointer items-center justify-center gap-4 rounded-full border-2 border-dotted border-slate-400 bg-white hover:bg-slate-50"
           >
             <IoCloudUpload size={30} />
             {!selectedPdf && <p>Click to browse and upload</p>}

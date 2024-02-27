@@ -20,7 +20,7 @@ export default function DriveInfo() {
 
   useEffect(() => {
     async function jobFetch() {
-      if (jobId.length > 0) {
+      if (jobId?.length > 0) {
         try {
           const singleJob = await getJobById(jobId);
           if (singleJob) {

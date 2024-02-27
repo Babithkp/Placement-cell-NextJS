@@ -53,7 +53,7 @@ export default function SignUp({ onClicks, onclicking }: any) {
           <p>Sign in with Google</p>
         </Button>
         <div className="relative py-1">
-          <span className=" absolute -top-2 left-16  bg-slate-100 ">
+          <span className=" absolute -top-2 left-16  bg-white ">
             Or Sign in with Email
           </span>
           <hr className=""></hr>

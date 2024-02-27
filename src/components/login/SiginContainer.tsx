@@ -7,7 +7,7 @@ import Sigin from "./Sigin";
 import SignUp from "./SignUp";
 import { useSearchParams } from "next/navigation";
 
-export default function SiginForm({ onclicks }: any) {
+export default function SiginContainer({ onclicks }: any) {
   const params = useSearchParams();
   const [sliderState, setSliderState] = useState(false);
   const path = params.get("sign");
