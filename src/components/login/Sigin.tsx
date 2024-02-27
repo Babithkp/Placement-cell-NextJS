@@ -8,6 +8,8 @@ import clsx from "clsx";
 import { userLogin } from "@/lib/controller/userTask";
 import { useRouter } from "next/navigation";
 import { VscLoading } from "react-icons/vsc";
+import { placementUserLogin } from "@/lib/controller/placementAdmin";
+import { useGlobalContext } from "@/store/contextForm";
 
 interface userInputsState{
   email: boolean;
@@ -16,6 +18,7 @@ interface userInputsState{
 }
 
 export default function Sigin({ onClicks }: any) {
+  const userCtx = useGlobalContext()
   const router = useRouter()
   const [isSubmitting,setIsSubmitting] = useState(false)
   const emailRef = useRef<HTMLInputElement>(null)
@@ -64,21 +67,45 @@ export default function Sigin({ onClicks }: any) {
     }
     
     try{
-      setIsSubmitting(true)
-      const response = await userLogin(email, password)
-      if(response){
-        setIsSubmitting(false)
-        const filter = JSON.parse(response)
-        router.replace(`/userDetails/${filter._id}`)
+      if(!admin && adminState){
+        setIsSubmitting(true)
+        const response = await userLogin(email, password)
+        if(response){
+          setIsSubmitting(false)
+          const filter = JSON.parse(response)
+          userCtx?.setUserId(filter._id)
+          router.replace(`/userDetails/${filter._id}`)
+        }else{
+          setErrors(prev=>({
+            ...prev,
+            error : "Wrong Credentials Failed to login,Try again",
+          }))
+          setIsSubmitting(false)
+        }
+      }else if(admin && adminState){
+        setIsSubmitting(true)
+        const response = await placementUserLogin(email, password)
+        if(response){
+          setIsSubmitting(false)
+          const filter = JSON.parse(response)
+          userCtx?.setUserId(filter._id)
+          router.replace(`/placement-Cell-Profile/${filter._id}`)
+        }else{
+          setErrors(prev=>({
+            ...prev,
+            error : "Wrong Credentials Failed to login,Try again", 
+          }))
+          setIsSubmitting(false)
+        }
       }else{
-        setErrors(prev=>({
-          ...prev,
-          error : "Wrong Credentials Failed to login,Try again",
-        }))
-        setIsSubmitting(false)
+      console.log("Admin "+email,password);
       }
     }catch(error){
-      console.log(error);
+      setErrors(prev=>({
+        ...prev,
+        error : "Wrong Credentials Failed to login,Try again",
+      }))
+      setIsSubmitting(false)
       
     }
   }else if(!email || !password){

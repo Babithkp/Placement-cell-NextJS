@@ -1,4 +1,4 @@
-import PlacementContainer from "@/components/placementDetails/PlacementContainer";
+import PlacementContainer from "@/components/placementUserDashboard/PlacementContainer";
 import React from "react";
 
 export default function page() {

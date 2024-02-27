@@ -4,8 +4,11 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
+import { useGlobalContext } from "@/store/contextForm";
 
 export default function Navbar() {
+  const userCtx = useGlobalContext()
+  const path = userCtx?.userId
   const [isDropdown, setISDropdown] = useState(false);
 
   function dropDownHandler(value: boolean) {
@@ -23,6 +26,9 @@ export default function Navbar() {
         </li>
         <li>
           <Link href="/adminDashboard">Admin Dashboard</Link>
+        </li>
+        <li>
+          <Link href={`/placementUserDashboard/${path}`} >My Dashboard</Link>
         </li>
         <li>
           <Link href="/jobListings">Job Listings</Link>

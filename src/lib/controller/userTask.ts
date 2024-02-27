@@ -1,8 +1,6 @@
 "use server";
 import UserInformations, { userInformations } from "../models/UserInformation";
-import PlacementUserDetais, {
-  placementUserDetais,
-} from "../models/placementUserDetail";
+import PlacementUserInfo,{placementUserInfo} from "../models/placementUserDetail";
 import { connectDB } from "../dbConnect";
 import { revalidatePath } from "next/cache";
 import User, { user } from "../models/user";
@@ -49,7 +47,7 @@ export const addNewUser = async (
 };
 
 export const addNewPlacementUser = async (
-  userInfo: placementUserDetais,
+  userInfo: placementUserInfo,
   userSignUp: { email: string; password: string; type: string },
 ) => {
   try {
@@ -58,14 +56,15 @@ export const addNewPlacementUser = async (
     userSignUp.password = hasshedPassword;
     const newUser = new User(userSignUp);
     await newUser.save();
-    const userDetails = new PlacementUserDetais({
+    const userDetails = new PlacementUserInfo({
       ...userInfo,
       user: newUser._id,
     });
     await userDetails.save();
     console.log("data saved!");
     revalidatePath("/");
-    return true;
+    const filtered = JSON.stringify(userDetails)
+    return filtered;
   } catch (error) {
     console.log(error);
   }
@@ -200,3 +199,7 @@ export const edituserPassOutYear = async (passOutYear:string, userId:string)=>{
     
   }
 }
+
+
+
+

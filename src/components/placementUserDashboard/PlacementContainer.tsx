@@ -1,17 +1,36 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "@/components/Dashboard";
-import AddDrives from "@/components/adminDashboard/drives/AddDrives";
 import Results from "@/components/jobListing/Results";
-import PlacementFilter from "@/components/placementDetails/PlacementFilter";
-import StudentsDetails from "@/components/placementDetails/StudentsDetails";
+import PlacementFilter from "@/components/placementUserDashboard/PlacementFilter";
+import StudentsDetails from "@/components/placementUserDashboard/StudentsDetails";
+import { usePathname } from "next/navigation";
+import { getPlacementUserDetails } from "@/lib/controller/placementAdmin";
+import PlacementAddDrives from "./PlacementAddDrives";
+
+interface placementAdminProps{
+  name: String;
+  gender: String;
+  phone: string;
+  companyName: String;
+  twitterLink: String; 
+  fackbookLink: String;
+  linkdenInLink: String;
+  comapanyLink: String;
+  aboutCompany: String;
+  companyAddress: String;
+  profileUrl:string | undefined
+}
 
 export default function PlacementContainer() {
-
+  const getUrl = usePathname()
+  const path = getUrl.split("/")[2]
+  
   const [addDrives,setAddDrives] = useState(false)
   const [viewDrives,setViewDrives] = useState(false)
   const [viewApplicants,setViewApplicants] = useState(true)
   const [selectedApplicants,setSelectedApplicants] = useState(false)
+  const [userInfo,setUserInfo] = useState<placementAdminProps>()
 
   function addDriversHandler() {
     setAddDrives(true)
@@ -38,6 +57,17 @@ export default function PlacementContainer() {
     setSelectedApplicants(true)
   }
 
+  useEffect(()=>{
+    async function fetch(){
+      const response = await getPlacementUserDetails(path)
+      if(response){
+        const filtered = JSON.parse(response)
+        setUserInfo(filtered) 
+      }
+    }
+    fetch()
+  },[path])
+
   return (
     <div>
       <Dashboard title="My Statistics" />
@@ -47,6 +77,11 @@ export default function PlacementContainer() {
         viewApplicents={viewApplicantsHandler}
         selectedApplicents={selectedApplicantsHandler}
       />
+        {addDrives && userInfo &&(
+          <div className="mt-4 ">
+            <PlacementAddDrives jobInfo={userInfo}/>
+          </div>
+        )}
       <div className=" m-10 flex flex-col items-center  transition-all">
         {viewDrives && (
           <div className="w-[80%] transition delay-1000 duration-1000 ease-in-out">
@@ -59,11 +94,6 @@ export default function PlacementContainer() {
         {viewApplicants && <StudentsDetails title="All Applicants"/>}
         {selectedApplicants && <StudentsDetails title="Selected Applicants"/>}
       </div>
-      {addDrives && (
-        <div className="mt-4 ">
-          <AddDrives />
-        </div>
-      )}
     </div>
   );
 }

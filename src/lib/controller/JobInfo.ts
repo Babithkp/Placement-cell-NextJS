@@ -1,5 +1,7 @@
 "use server";
-
+import PlacementUserInfo, {
+  placementUserInfo,
+} from "../models/placementUserDetail";
 import { connectDB } from "../dbConnect";
 import JobsInfo from "../models/jobs";
 import { revalidatePath } from "next/cache";
@@ -37,12 +39,24 @@ export const addNewJobs = async (newJobs: newJob) => {
       jobtTitle: newJobs.jobtTitle,
       companyName: newJobs.companyName,
     });
+    const placementcellUser = await PlacementUserInfo.findOne({
+      companyName: newJobs.companyName,
+    });
     if (isFound.length > 0) {
       console.error("JOb Already exists");
       return false;
     } else {
       const newjob = new JobsInfo(newJobs);
-      await newjob.save();
+      await newjob.save();      
+      if (placementcellUser) {
+        const updatePlacementJob = await PlacementUserInfo.findByIdAndUpdate(
+          placementcellUser._id,
+          { $push: { jobList: newjob._id } },
+        );
+        if (updatePlacementJob) {
+          console.log("Job have updated to placement cell user");
+        }
+      }
       const admin = await Admin.findOne({
         email: "admin@gmail.com",
         password: "admin123",
@@ -51,6 +65,9 @@ export const addNewJobs = async (newJobs: newJob) => {
         const updatedAdmin = await Admin.findByIdAndUpdate(admin._id, {
           $push: { jobs: newjob._id },
         });
+        if (updatedAdmin) {
+          console.log("Job have updated to Admin");
+        }
       }
 
       console.log("data saved!");
@@ -62,16 +79,16 @@ export const addNewJobs = async (newJobs: newJob) => {
   }
 };
 
-export const getAllJobInfo = async ()=>{
+export const getAllJobInfo = async () => {
   try {
     await connectDB();
-    const admin = await JobsInfo.find()
+    const admin = await JobsInfo.find();
     const serializedData = JSON.stringify(admin);
     return serializedData;
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 export const getJobInfoForAdmin = async () => {
   try {
@@ -119,15 +136,15 @@ export const updateJobInfo = async (jobDetails: any, jobId: string) => {
 export const deleteJobInfo = async (jobId: string) => {
   let job;
   try {
-      const owners = await Admin.updateMany({$pull: { jobs: jobId }});
-      job = await JobsInfo.findByIdAndDelete(jobId);
-      console.log("Job deatils have deleted");
-      revalidatePath("/adminDashboard");
-      if(!job  || !owners) {
-        return false
-      }
-      return true;
+    const owners = await Admin.updateMany({ $pull: { jobs: jobId } });
+    job = await JobsInfo.findByIdAndDelete(jobId);
+    console.log("Job deatils have deleted");
+    revalidatePath("/adminDashboard");
+    if (!job || !owners) {
+      return false;
+    }
+    return true;
   } catch (error) {
     console.log(error);
   }
-}
+};

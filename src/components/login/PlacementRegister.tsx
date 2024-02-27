@@ -42,8 +42,9 @@ export default function PlacementRegister() {
           }
           const response = await addNewPlacementUser(data, signupinfo);
           if (response) {
+            const filtered = JSON.parse(response)
             setError("Profile created! succesfully");
-            router.replace("/placement-Cell-Profile")
+            router.replace(`/placement-Cell-Profile/${filtered._id}`)
           }
         } catch (error) {
           setError("Interwork Error, Try Agian");

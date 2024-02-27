@@ -3,7 +3,7 @@ import { jobs } from "./jobs";
 import {user} from "./user";
 import {userInformations} from "./UserInformation";
 
-export interface placementUserDetais extends mongoose.Document {
+export interface placementUserInfo extends mongoose.Document {
   user: user,
   name: String;
   gender: String;
@@ -16,12 +16,13 @@ export interface placementUserDetais extends mongoose.Document {
   comapanyLink: String;
   aboutCompany: String;
   companyAddress: String;
-  jobList: jobs[];
+  profileUrl:string | undefined;
+  jobList: jobs[]; 
   applicants: userInformations[];
   selectApplicants: userInformations[]
 }
 
-const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
+const PlacementUserInfoSchema = new mongoose.Schema<placementUserInfo>({
   user: {type: Schema.Types.ObjectId,ref: "User"},
   name: {
     type: String,
@@ -54,6 +55,9 @@ const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
   comapanyLink: {
     type: String,
   },
+  profileUrl: {
+    type: String ,
+  },
   aboutCompany: {
     type: String,
     minlength: [10, "About Company cannot be lesser than 10 characters"],
@@ -73,5 +77,4 @@ const PlacementUserDetaisSchema = new mongoose.Schema<placementUserDetais>({
   }],
 });
 
-export default mongoose.models.PlacementUserDetais ||
-  mongoose.model<placementUserDetais>("PlacementUserDetais", PlacementUserDetaisSchema);
+export default mongoose.models.PlacementUserInfo || mongoose.model<placementUserInfo>("PlacementUserInfo", PlacementUserInfoSchema);
