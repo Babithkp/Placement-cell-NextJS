@@ -91,7 +91,7 @@ export default function DriveInfo() {
               impressions: <span>{jobInfo?.impressions}</span>
             </p>
             <p className="max-sm:text-xs">
-              Applications received: <span>{jobInfo?.applicationNo}</span>
+              Applications received: <span>{jobInfo?.applicants.length}</span>
             </p>
           </div>
           <div className="rounded-xl bg-black p-2 max-sm:text-xs">
