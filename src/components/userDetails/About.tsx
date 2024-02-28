@@ -6,11 +6,18 @@ import { edituserAddress } from "@/lib/controller/userTask";
 import Link from "next/link";
 import { BiSolidFilePdf } from "react-icons/bi";
 
-
-export default function About({ phone, address, email, DOB, gender ,id,resumeURL}: any) {
+export default function About({
+  phone,
+  address,
+  email,
+  DOB,
+  gender,
+  id,
+  resumeURL,
+}: any) {
   const [editAddress, setEditAddress] = useState(address);
   const [isAddressEditable, setIsAddressEditable] = useState(false);
-  const [Error, setError] = useState<string>()
+  const [Error, setError] = useState<string>();
 
   const date = new Date(DOB);
   const day = date.getDate();
@@ -19,24 +26,19 @@ export default function About({ phone, address, email, DOB, gender ,id,resumeURL
 
   async function editAddressClickHandler() {
     setIsAddressEditable(false);
-      try{
-        const response = await edituserAddress(editAddress, id)
-        if(!response){
-          setError("Couldn't edit user Address, try reloading again")
-        }
-      }catch(error){
-        console.log(error);
-
+    try {
+      const response = await edituserAddress(editAddress, id);
+      if (!response) {
+        setError("Couldn't edit user Address, try reloading again");
       }
+    } catch (error) {
+      console.log(error);
     }
-  
+  }
 
   function editAddressHandler(event: any) {
     setEditAddress(event.target.value);
   }
-
-
-
 
   return (
     <div className="flex gap-[10rem]">
@@ -51,9 +53,15 @@ export default function About({ phone, address, email, DOB, gender ,id,resumeURL
           Address:{" "}
           <div className="flex">
             {isAddressEditable && (
-              <textarea value={editAddress} className="rounded-lg border p-1 outline-1"  onChange={editAddressHandler}></textarea>
+              <textarea
+                value={editAddress}
+                className="rounded-lg border p-1 outline-1"
+                onChange={editAddressHandler}
+              ></textarea>
             )}
-            {!isAddressEditable && <p>{editAddress ? editAddress : "Address"}</p>}
+            {!isAddressEditable && (
+              <p>{editAddress ? editAddress : "Address"}</p>
+            )}
             {!isAddressEditable && (
               <div
                 className="mr-16 flex items-center text-black"
@@ -96,16 +104,18 @@ export default function About({ phone, address, email, DOB, gender ,id,resumeURL
         <p className="flex gap-8">
           Gender: <span>{gender}</span>
         </p>
-      
       </div>
       <div className="flex flex-col items-center">
-      <span className="text-sm uppercase text-slate-400">
-          Resume
-        </span>
-      {resumeURL && <Link href={resumeURL} target="_blank">
-          <BiSolidFilePdf size={50} className="border drop-shadow-2xl rounded-lg"/>
-            </Link>}
-            <p className="text-sm  text-center">Click to View Resume</p>
+        <span className="text-sm uppercase text-slate-400">Resume</span>
+        {resumeURL && (
+          <Link href={resumeURL} target="_blank">
+            <BiSolidFilePdf
+              size={50}
+              className="rounded-lg border drop-shadow-2xl"
+            />
+          </Link>
+        )}
+        <p className="text-center  text-sm">Click to View Resume</p>
       </div>
     </div>
   );

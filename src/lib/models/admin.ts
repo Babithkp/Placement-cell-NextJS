@@ -20,7 +20,7 @@ const Admin = new mongoose.Schema<admin>({
     },
     jobs: [{
         type: Schema.Types.ObjectId,
-        ref: "JobsInfo"
+        ref: "JobsInfomaton"
     }]
 }) 
 

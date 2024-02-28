@@ -67,7 +67,7 @@ const PlacementUserInfoSchema = new mongoose.Schema<placementUserInfo>({
     minlength: [10, "Company address cannot be lesser than 10 characters"],
   },
   jobList: [{
-    type: Schema.Types.ObjectId, ref: "JobsInfo"
+    type: Schema.Types.ObjectId, ref: "JobsInfomaton"
   }],
   applicants: [{
     type: Schema.Types.ObjectId, ref: "UserInformations"

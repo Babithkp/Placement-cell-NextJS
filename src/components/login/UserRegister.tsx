@@ -36,6 +36,7 @@ export default function UserRegister() {
   const formCtx = useGlobalContext();
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
   const [Error, setError] = useState<string | null>(null);
+  const clickRef = useRef<any>(null);
   const {
     register,
     handleSubmit,
@@ -43,7 +44,6 @@ export default function UserRegister() {
     formState: { errors, isSubmitting },
   } = useForm<userDetails>();
 
-  const clickRef = useRef<any>(null);
   const resumeClickHandler = () => {
     clickRef?.current.click();
   };

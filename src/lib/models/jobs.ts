@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { announcement } from "./announcement";
-
+import {userInformations} from "./UserInformation";
 export interface jobs extends mongoose.Document {
     _id: string;
     jobtTitle: string;
@@ -20,7 +20,7 @@ export interface jobs extends mongoose.Document {
     jobDescription: string;
     aboutCompany: string;
     impressions: number;
-    applicationNo: number;
+    applicants: [userInformations];
     announcement: [announcement];
     submitOn: Date;
 }
@@ -118,14 +118,16 @@ const JobSchema = new mongoose.Schema<jobs>({
     type: Number,
     default: 0
   },
-  applicationNo: {
-    type: Number,
-    default: 0
-  },
+  applicants: [
+    {
+      type: Schema.Types.ObjectId,
+      req: "UserInformations",
+    },
+  ],
   submitOn: {
     type: Date,
     default: Date.now
   },
 });
 
-export default mongoose.models.JobsInfo ||  mongoose.model<jobs>("JobsInfo", JobSchema);
+export default mongoose.models.JobsInfomaton ||  mongoose.model<jobs>("JobsInfomaton", JobSchema);

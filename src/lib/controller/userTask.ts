@@ -213,5 +213,16 @@ export const edituserPassOutYear = async (passOutYear:string, userId:string)=>{
 }
 
 
-
+export const UpdateUserResume = async (resumeUrl:string,userId:string)=>{
+  try{
+    const user = await UserInformations.findByIdAndUpdate(userId,{resumeURL: resumeUrl});
+    if(user){
+      return true;
+    }
+    return false;
+  }catch(error){
+    console.log(error);
+    
+  }
+}
 

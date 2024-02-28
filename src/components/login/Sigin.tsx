@@ -78,7 +78,7 @@ export default function Sigin({ onClicks }: any) {
 
           const convert = JSON.stringify(storage)
           const value = sessionStorage.setItem("userInfo",convert)
-          router.replace(`/userDetails/${filter._id}`)
+          router.replace(`/userDetails/${storage.userId}`)
         }else{
           setErrors(prev=>({
             ...prev,

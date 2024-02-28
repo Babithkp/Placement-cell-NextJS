@@ -7,10 +7,12 @@ import ApplyWarning from "./ApplyWarning";
 
 export default function Info({job}:any) {
   let userInfo
-  const value = sessionStorage.getItem("userInfo")
-  if(value){
-    const filter = JSON.parse(value)    
-    userInfo  = filter
+  if (typeof sessionStorage !== 'undefined'){
+    const value = sessionStorage.getItem("userInfo")
+    if(value){
+      const filter = JSON.parse(value)    
+      userInfo  = filter
+    }
   }
 
   return (
@@ -45,11 +47,13 @@ export default function Info({job}:any) {
             </p>
           </div>
         </div>
-        <ApplyWarning userInfo={userInfo}/>
+        <div>
+        {userInfo && <ApplyWarning userInfo={userInfo}/>}
+        </div>
       </div>
       <div className="ml-[6rem] -mb-4">
         <p>
-          Posted: <span>30</span>+ Days Ago | Openings <span>{job.openings}</span>+ seats |
+          Posted: <span>30</span>+ Days Ago | Openings <span>{job.openings}</span>+ seats | 
           Applicants: 541
         </p>
       </div>
