@@ -41,7 +41,7 @@ export default function About({
   }
 
   return (
-    <div className="flex gap-[10rem]">
+    <div className="flex gap-[4rem]">
       <div className="flex w-[25rem] flex-col gap-3">
         <span className="text-sm uppercase text-slate-400">
           contact information
@@ -92,12 +92,12 @@ export default function About({
         {Error && <p className="text-red-500">{Error}</p>}
       </div>
       <div className="">
-        <span className="text-sm uppercase text-slate-400">
+        <span className="text-sm uppercase text-slate-400 ">
           Basic information
         </span>
-        <p className="flex gap-8 ">
+        <p className="flex gap-8">
           Birthday:{" "}
-          <span>
+          <span className="w-[6rem]" >
             {day}-{month}-{year}
           </span>
         </p>

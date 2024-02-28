@@ -240,9 +240,6 @@ export default function Userintro() {
                 resumeURL= {userInfo?.resumeURL}
               />
             )}
-            <div className=" ">
-          
-        </div>
           </div>
           
         </div>

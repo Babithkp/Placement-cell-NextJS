@@ -10,17 +10,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/deleteDailog";
 import { Button } from "../ui/button";
+import defaultImage from '../../../public/Images/profiles/deafultProfile.jpg'
 import { UpdateUserResume, getUserDetails } from "@/lib/controller/userTask";
-import Image from "next/image";
-import defaultImage from "../../../public/Images/profiles/deafultProfile.jpg";
-import { BiSolidFilePdf } from "react-icons/bi";
-import Link from "next/link";
+import { FcOk } from "react-icons/fc";
 import { IoMdAdd } from "react-icons/io";
 import { storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { VscLoading } from "react-icons/vsc";
 import { usePathname } from "next/navigation";
+import { appyForJob } from "@/lib/controller/JobInfo";
+import Link from "next/link";
+import { BiSolidFilePdf } from "react-icons/bi";
+import Image from "next/image";
 
 interface userProps {
   _id: string;
@@ -43,21 +45,26 @@ interface userProps {
   date_of_birth: Date;
 }
 
-export default function ApplyWarning({ userInfo }: any) {
+export default function ApplyWarning({ userInfo, jobId }: any) {
   const [user, setUser] = useState<userProps>();
   const [isUploaded, setIsuploaded] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isApplying, setIsApplying] = useState(false);
+  const [isApplyed, setIsApplyed] = useState(false);
   const clickRef = useRef<any>(null);
   const [Error, setError] = useState<string | null>();
 
-  const pageUrl = usePathname()
-  const jobId = pageUrl.split('/')[2]
-  
-
-
   async function ApplyJob() {
     try {
-      
+      setIsApplying(true);
+      const response = await appyForJob(userInfo.userId, jobId);
+      if (response) {
+        setIsApplying(false);
+        setIsApplyed(true);
+      }else if(!response){
+        setError("Application is already applied or something went wrong")
+        setIsApplying(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -87,13 +94,15 @@ export default function ApplyWarning({ userInfo }: any) {
       if (getResumeURL && user) {
         user.resumeURL = getResumeURL;
         setIsUploading(false);
-        setIsuploaded(true);
         const response = await UpdateUserResume(getResumeURL, user?._id);
+        if (response) {
+          setIsuploaded(true);
+        } else {
+          setError("Failed to upload,try again");
+        }
       }
     }
   };
-
-  
 
   useEffect(() => {
     async function fetch() {
@@ -116,8 +125,15 @@ export default function ApplyWarning({ userInfo }: any) {
         <DialogHeader className="">
           <DialogTitle className="">Apply Job</DialogTitle>
           <DialogDescription className=" ">
-            <div className="flex flex-col items-center gap-2 p-2">
-              <div className="flex gap-4">
+            <div className="relative flex flex-col items-center gap-5 p-2">
+              {isApplyed && <div className="flex  flex-col justify-center items-center">
+                <div >
+                <FcOk size={100}/>
+                </div>
+                <h4 className="text-lg">Application successfully Submitted</h4>
+                <p>Thankyou for subscribing</p>
+              </div>}
+              {!isApplyed && <div className="flex gap-4">
                 <div className="h-[10rem] w-[10rem] ">
                   <Image
                     src={user?.profileUrl ? user?.profileUrl : defaultImage}
@@ -184,7 +200,7 @@ export default function ApplyWarning({ userInfo }: any) {
                     )}
                   </div>
                 </div>
-              </div>
+              </div>}
               <div className="flex w-full justify-end gap-2">
                 <DialogClose asChild>
                   <Button
@@ -195,17 +211,17 @@ export default function ApplyWarning({ userInfo }: any) {
                     Close
                   </Button>
                 </DialogClose>
-                {
+                {!isApplyed && (
                   <Button
                     className="rounded-lg bg-[#00448E] "
                     type="button"
                     onClick={() => ApplyJob()}
                   >
-                    {isUploading ? "Appling" : "Apply"}
+                    {isApplying ? "Appling..." : "Apply"}
                   </Button>
-                }
-                {Error && <p className="text-sm text-red-500">{Error}</p>}
+                )}
               </div>
+                {Error && <p className="text-sm text-red-500">{Error}</p>}
             </div>
           </DialogDescription>
         </DialogHeader>

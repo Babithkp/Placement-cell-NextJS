@@ -149,3 +149,23 @@ export const deleteJobInfo = async (jobId: string) => {
   }
 };
 
+export const appyForJob = async (userId:string,jobId:string)=>{
+  try{
+    const isExist = await JobsInfomaton.findOne({_id:jobId,applicants:userId});
+    if(isExist) {
+      return false
+    }else{
+      const jobInfo = await JobsInfomaton.findByIdAndUpdate(jobId,{$push:{applicants:userId}});
+      if (!jobInfo) {
+        return false;
+      }else{
+        return true
+      }
+    }
+    
+
+  }catch(error){
+    console.log(error);
+    
+  }
+}

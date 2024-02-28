@@ -3,9 +3,13 @@ import Image from "next/image";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import ApplyWarning from "./ApplyWarning";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 export default function Info({job}:any) {
+  const router = useRouter()
   let userInfo
   if (typeof sessionStorage !== 'undefined'){
     const value = sessionStorage.getItem("userInfo")
@@ -48,7 +52,12 @@ export default function Info({job}:any) {
           </div>
         </div>
         <div>
-        {userInfo && <ApplyWarning userInfo={userInfo}/>}
+          {!userInfo && 
+          <Link href="/signing?sign=false">
+          <Button className="bg-[#00448E]">Apply</Button>
+          </Link>
+          }
+        {userInfo && <ApplyWarning userInfo={userInfo} jobId={job._id}/>}
         </div>
       </div>
       <div className="ml-[6rem] -mb-4">

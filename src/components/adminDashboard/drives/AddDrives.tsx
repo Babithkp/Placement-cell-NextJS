@@ -70,7 +70,10 @@ export default function AddDrives({ jobInfo }: any) {
         response  = await addNewJobs(data as any);
         setisSubmitted(response);
       }else{
-        response = await updateJobInfo(data, jobInfo._id);
+        response = await updateJobInfo(data, jobInfo._id)
+        if(response){
+          router.replace("/jobListings");
+        }
       }
     } catch (err) {
       if (err) {

@@ -4,8 +4,11 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  
+  const router = useRouter()
   let path
   if (typeof sessionStorage !== 'undefined'){
     const value = sessionStorage.getItem("userInfo")
@@ -14,18 +17,21 @@ export default function Navbar() {
       path = filter.userId
     }
   }
-  const [isDropdown, setISDropdown] = useState(false);
 
-  function dropDownHandler(value: boolean) {
-    setISDropdown(value);
+  function logoutHandler() {
+    if (typeof sessionStorage !== 'undefined'){
+      const value = sessionStorage.removeItem("userInfo")
+      path = undefined
+      router.replace("/")
+    }
   }
   return (
-    <nav className="relative flex  w-[100%] items-center justify-between border-b-2 bg-[#2560a9] ">
+    <nav className="relative flex h-[10vh] w-[100%] items-center justify-between border-b-2 bg-[#2560a9] ">
       <Link href="/" className="ml-8 font-bold ">
         LOGO
       </Link>
 
-      <ul className="flex w-[50%] items-center justify-around font-medium text-white">
+      <ul className="flex w-[70%] items-center justify-around font-medium text-white">
         <li>
           <Link href="/about-us">About Us</Link>
         </li>
@@ -36,27 +42,25 @@ export default function Navbar() {
           <Link href={`/placementUserDashboard/${path}`} >My Dashboard</Link>
         </li>
         <li>
-          <Link href="/jobListings">Job Listings</Link>
-        </li>
-        <li
-          className=" relative flex h-[3.5rem] cursor-pointer items-center"
-          onMouseEnter={() => dropDownHandler(true)}
-          onMouseLeave={() => dropDownHandler(false)}
-        >
-          <span>More</span>
-          <span>
-            <FaAngleDown size={20} style={{ marginTop: "4px" }} />
-          </span>
-          {isDropdown && <Dropdown />}
+          <Link href={`/userDetails/${path}`} >My Profile</Link>
         </li>
         <li>
+          <Link href={`/placementDetails/${path}`} >OUR profile</Link>
+        </li>
+        <li>
+          <Link href="/jobListings">Job Listings</Link>
+        </li>
+        {!path && <li>
           <Link href="/signing?sign=false">
             <Button variant="outline" className="text-black">Sign Up</Button>
           </Link>
           <Link href="/signing?sign=true" className="ml-4">
             <Button>Login</Button>
           </Link>
-        </li>
+        </li>}
+        {path && <li>
+            <Button onClick={logoutHandler}>Logout</Button>
+        </li>} 
       </ul>
     </nav>
   );

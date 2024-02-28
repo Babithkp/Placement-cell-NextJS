@@ -83,11 +83,3 @@ export const getJobsOfPlacementUser = async (id: string)=>{
 }
 
 
-export const appyForJob = async (userId:string,jobId:string)=>{
-  try{
-    // const jobInfo = await JobsInfo.findByIdAndUpdate(jobId,{$pull:{}});
-  }catch(error){
-    console.log(error);
-    
-  }
-}
