@@ -17,7 +17,12 @@ export const placementUserLogin = async (email: string, password: string) => {
       return false;
     } else if (user.type === "placement-cell" && passwordCheck) {
       const userDetail = await PlacementUserInfo.findOne({ user: user._id });
-      const filteredUser = JSON.stringify(userDetail);
+      const userIndo = {
+        userData : userDetail._id,
+        type: user.type
+      }
+      const filteredUser = JSON.stringify(userIndo);
+      
       return filteredUser;
     }
   } catch (error) {

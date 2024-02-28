@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { SubmitHandler, useForm } from "react-hook-form";
-import FormContextProps, { useGlobalContext } from "@/store/contextForm";
+import { useGlobalContext } from "@/store/contextForm";
 
 type Inputs = {
   email: string;

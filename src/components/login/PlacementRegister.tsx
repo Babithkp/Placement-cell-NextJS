@@ -21,7 +21,7 @@ interface placedmentInfo {
 export default function PlacementRegister() {
   const formCtx = useGlobalContext();
   const [Error, setError] = useState<string | null>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   const {
     register,
@@ -42,9 +42,14 @@ export default function PlacementRegister() {
           }
           const response = await addNewPlacementUser(data, signupinfo);
           if (response) {
-            const filtered = JSON.parse(response)
-            setError("Profile created! succesfully");
-            router.replace(`/placement-Cell-Profile/${filtered._id}`)
+            const filter = JSON.parse(response);
+            const storage = {
+              userId: filter.userData,
+              type: filter.type,
+            };
+            const convert = JSON.stringify(storage);
+            const value = sessionStorage.setItem("userInfo", convert);
+            router.replace(`/placement-Cell-Profile/${storage.userId}`);
           }
         } catch (error) {
           setError("Interwork Error, Try Agian");

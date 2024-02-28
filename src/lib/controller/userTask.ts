@@ -39,8 +39,12 @@ export const addNewUser = async (
     await userDetails.save();
     console.log("data saved!");
     revalidatePath("/");
-    const filter = JSON.stringify(userDetails);
-    return filter;
+    const userIndo = {
+      userData : userDetails._id,
+      type: newUser.type
+    }
+    const filteredUser = JSON.stringify(userIndo);
+    return filteredUser;
   } catch (error) {
     console.log(error);
   }
@@ -63,8 +67,12 @@ export const addNewPlacementUser = async (
     await userDetails.save();
     console.log("data saved!");
     revalidatePath("/");
-    const filtered = JSON.stringify(userDetails)
-    return filtered;
+    const userIndo = {
+      userData : userDetails._id,
+      type: newUser.type
+    }
+    const filteredUser = JSON.stringify(userIndo);
+    return filteredUser
   } catch (error) {
     console.log(error);
   }
@@ -98,7 +106,11 @@ export const userLogin = async (email: string, password: string) => {
       return false;
     } else if (user.type === "user" && passwordCheck) {
       const userDetail = await UserInformations.findOne({ user: user._id });
-      const filteredUser = JSON.stringify(userDetail);
+      const userIndo = {
+        userData : userDetail._id,
+        type: user.type
+      }
+      const filteredUser = JSON.stringify(userIndo);
       return filteredUser;
     }
     return false;

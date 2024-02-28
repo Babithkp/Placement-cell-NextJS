@@ -71,7 +71,13 @@ export default function Sigin({ onClicks }: any) {
         if(response){
           setIsSubmitting(false)
           const filter = JSON.parse(response)
-          const value = sessionStorage.setItem("userId",filter._id)
+          const storage = {
+            userId: filter.userData,
+            type: filter.type
+          }
+
+          const convert = JSON.stringify(storage)
+          const value = sessionStorage.setItem("userInfo",convert)
           router.replace(`/userDetails/${filter._id}`)
         }else{
           setErrors(prev=>({
@@ -79,15 +85,24 @@ export default function Sigin({ onClicks }: any) {
             error : "Wrong Credentials Failed to login,Try again",
           }))
           setIsSubmitting(false)
+          
         }
       }else if(admin && adminState){
         setIsSubmitting(true)
         const response = await placementUserLogin(email, password)
         if(response){
           setIsSubmitting(false)
+          
           const filter = JSON.parse(response)
-          const value = sessionStorage.setItem("userId",filter._id)
-          router.replace(`/placement-Cell-Profile/${filter._id}`)
+          
+          const storage = {
+            userId: filter.userData,
+            type: filter.type
+          }
+
+          const convert = JSON.stringify(storage)
+          const value = sessionStorage.setItem("userInfo",convert)
+          router.replace(`/placement-Cell-Profile/${storage.userId}`)
         }else{
           setErrors(prev=>({
             ...prev,

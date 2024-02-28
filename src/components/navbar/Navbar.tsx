@@ -4,10 +4,16 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
-import { useGlobalContext } from "@/store/contextForm";
 
 export default function Navbar() {
-  const newPath = sessionStorage.getItem("userId")
+  let path
+  if (typeof sessionStorage !== 'undefined'){
+    const value = sessionStorage.getItem("userInfo")
+    if(value){
+      const filter = JSON.parse(value)    
+      path = filter.userId
+    }
+  }
   const [isDropdown, setISDropdown] = useState(false);
 
   function dropDownHandler(value: boolean) {
@@ -27,7 +33,7 @@ export default function Navbar() {
           <Link href="/adminDashboard">Admin Dashboard</Link>
         </li>
         <li>
-          <Link href={`/placementUserDashboard/${newPath}`} >My Dashboard</Link>
+          <Link href={`/placementUserDashboard/${path}`} >My Dashboard</Link>
         </li>
         <li>
           <Link href="/jobListings">Job Listings</Link>

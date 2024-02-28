@@ -2,10 +2,17 @@ import React from "react";
 import Image from "next/image";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
-import { Button } from "../ui/button";
+import ApplyWarning from "./ApplyWarning";
 
 
 export default function Info({job}:any) {
+  let userInfo
+  const value = sessionStorage.getItem("userInfo")
+  if(value){
+    const filter = JSON.parse(value)    
+    userInfo  = filter
+  }
+
   return (
     <section className="mb-4 flex flex-col rounded-md bg-[#FFFFFF] border-[#719CEC] border p-8 text-sm ">
       <div className="flex">
@@ -38,7 +45,7 @@ export default function Info({job}:any) {
             </p>
           </div>
         </div>
-        <Button className="bg-[#00448E]">Apply</Button>
+        <ApplyWarning userInfo={userInfo}/>
       </div>
       <div className="ml-[6rem] -mb-4">
         <p>

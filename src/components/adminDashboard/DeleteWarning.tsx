@@ -9,8 +9,6 @@ import {
   DialogClose,
   DialogTrigger,
 } from "@/components/ui/deleteDailog";
-import { FaPlus } from "react-icons/fa";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { IoWarningOutline } from "react-icons/io5";
 import { Button } from "../ui/button";
 import { AiOutlineDelete } from "react-icons/ai";

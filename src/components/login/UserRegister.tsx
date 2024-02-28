@@ -32,7 +32,6 @@ interface userDetails {
 }
 
 export default function UserRegister() {
-  const userCtx = useGlobalContext()
   const router = useRouter()
   const formCtx = useGlobalContext();
   const [selectedPdf, setSelectedPdf] = useState<File | null>(null);
@@ -86,10 +85,16 @@ export default function UserRegister() {
 
           const res:any = await addNewUser(data, signupDetails);
           if (res) {
-            const filtered = JSON.parse(res)
-            userCtx?.setUserId(filtered._id)
+            const filter = JSON.parse(res)
+          const storage = {
+            userId: filter.userData,
+            type: filter.type
+          }
+
+          const convert = JSON.stringify(storage)
+          const value = sessionStorage.setItem("userInfo",convert)
             setError("User creared!");
-            router.replace(`/userDetails/${filtered._id}`)
+            router.replace(`/userDetails/${storage.userId}`)
           }
         }
       } else {
