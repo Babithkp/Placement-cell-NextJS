@@ -1,5 +1,4 @@
 import React from "react";
-import comapanyImg from "../../../public/Images/companies/client-2.png";
 import Image from "next/image";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";

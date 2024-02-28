@@ -12,8 +12,6 @@ export default interface FormContextProps {
   addPlacementUserSignUpInfo: (email: string, password: string) => void;
   userRegister : boolean
   changeUserRegiter: (state:boolean)=>void
-  userId: string
-  setUserId: (id:string)=>void
 }
 
 export const FormContext = createContext<FormContextProps | undefined>(
@@ -35,7 +33,7 @@ export const FormContextProvider = ({
     type: "",
   });
 
-  const [newUserId,setNewUserId] = useState<FormContextProps["userId"]>("")
+ 
 
   const [userRegister,setUserRegiter] = useState<FormContextProps["userRegister"]>(true)
 
@@ -62,13 +60,9 @@ export const FormContextProvider = ({
     });
   };
 
-  const setUserId = (userId:string):void=>{
-    setNewUserId(userId)
-  }
+
 
   const value: FormContextProps = {
-    setUserId,
-    userId: newUserId,
     SignUpInfo,
     addUserSignUpInfo,
     addPlacementUserSignUpInfo,

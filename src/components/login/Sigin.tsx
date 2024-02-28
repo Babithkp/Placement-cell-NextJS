@@ -9,7 +9,6 @@ import { userLogin } from "@/lib/controller/userTask";
 import { useRouter } from "next/navigation";
 import { VscLoading } from "react-icons/vsc";
 import { placementUserLogin } from "@/lib/controller/placementAdmin";
-import { useGlobalContext } from "@/store/contextForm";
 
 interface userInputsState{
   email: boolean;
@@ -18,7 +17,6 @@ interface userInputsState{
 }
 
 export default function Sigin({ onClicks }: any) {
-  const userCtx = useGlobalContext()
   const router = useRouter()
   const [isSubmitting,setIsSubmitting] = useState(false)
   const emailRef = useRef<HTMLInputElement>(null)
@@ -73,7 +71,7 @@ export default function Sigin({ onClicks }: any) {
         if(response){
           setIsSubmitting(false)
           const filter = JSON.parse(response)
-          userCtx?.setUserId(filter._id)
+          const value = sessionStorage.setItem("userId",filter._id)
           router.replace(`/userDetails/${filter._id}`)
         }else{
           setErrors(prev=>({
@@ -88,7 +86,7 @@ export default function Sigin({ onClicks }: any) {
         if(response){
           setIsSubmitting(false)
           const filter = JSON.parse(response)
-          userCtx?.setUserId(filter._id)
+          const value = sessionStorage.setItem("userId",filter._id)
           router.replace(`/placement-Cell-Profile/${filter._id}`)
         }else{
           setErrors(prev=>({

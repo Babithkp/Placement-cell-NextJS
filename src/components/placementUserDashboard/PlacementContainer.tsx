@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "@/components/Dashboard";
 import Results from "@/components/jobListing/Results";
 import PlacementFilter from "@/components/placementUserDashboard/PlacementFilter";
-import StudentsDetails from "@/components/placementUserDashboard/StudentsDetails";
 import { usePathname } from "next/navigation";
 import { getPlacementUserDetails } from "@/lib/controller/placementAdmin";
 import PlacementAddDrives from "./PlacementAddDrives";
+import StudentsDetails from "./StudentsDetails";
+import PlacementJobResults from "./PlacementJobResults";
 
 interface placementAdminProps{
+  _id: string;
   name: String;
   gender: String;
   phone: string;
@@ -88,7 +90,7 @@ export default function PlacementContainer() {
             <h4 className="rounded-t-lg bg-[#2560a9] py-1 text-center font-medium text-white">
               Drives
             </h4>
-            <Results />
+            <PlacementJobResults userId={userInfo?._id}/>
           </div>
         )}
         {viewApplicants && <StudentsDetails title="All Applicants"/>}

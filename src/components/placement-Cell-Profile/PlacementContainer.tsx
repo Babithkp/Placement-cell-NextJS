@@ -99,12 +99,12 @@ export default function PlacementContainer() {
   return (
     <div className="w-[90%] py-10">
       <section className="flex  gap-16 ">
-      <div className="relative h-[15rem] w-[20%]">
+      <div className="relative h-[12rem] w-[12rem] ">
           {Error && <p className="text-sm text-red-500 ">{Error}</p>}
           <Image
             src={ userDetails?.profileUrl ? userDetails?.profileUrl :defaultImage}
             alt="profile Image "
-            className="h-full w-full rounded-lg object-cover drop-shadow-lg"
+            className="h-full w-full rounded-full  drop-shadow-lg "
             width={300}
             height={300}
           />
@@ -187,22 +187,22 @@ export default function PlacementContainer() {
                 </p>
                 <span className="text-blue-400">{userDetails?.comapanyLink}</span>
               </div>
-              <div className="flex ">
-                <p className=" w-[20%] font-semibold">
+              <div className="flex gap-2">
+                <p className="font-semibold">
+
+                Location:
+                </p>
+                <span>
+                {userDetails?.companyAddress}
+                </span>
+              </div>
+              <div className="flex w-[90%] gap-3">
+                <p className=" font-semibold w-full">
                 About Company:
                 </p>
                 <p className=" ">
                 {userDetails?.aboutCompany}
                 </p>
-              </div>
-              <div className="flex gap-2">
-                <p className="font-semibold">
-
-                Address:
-                </p>
-                <span>
-                {userDetails?.companyAddress}
-                </span>
               </div>
             </div>
           </section>

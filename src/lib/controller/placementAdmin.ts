@@ -6,6 +6,8 @@ import { connectDB } from "../dbConnect";
 import { revalidatePath } from "next/cache";
 import User, { user } from "../models/user";
 import bcrypt from "bcryptjs";
+
+
 export const placementUserLogin = async (email: string, password: string) => {
   try {
     await connectDB();
@@ -61,3 +63,16 @@ export const setPlacementUserProfilePic = async (
     console.log(error);
   }
 };
+
+export const getJobsOfPlacementUser = async (id: string)=>{
+  try{
+    const userJobList = await PlacementUserInfo.findById(id).populate("jobList");    
+    if(userJobList){
+      const filterJobs = JSON.stringify(userJobList.jobList);
+      return filterJobs
+    }
+  }catch(error){
+    console.log(error);
+    
+  }
+}
