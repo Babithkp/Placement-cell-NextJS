@@ -59,7 +59,7 @@ export const addNewJobs = async (newJobs: newJob) => {
       }
       const admin = await Admin.findOne({
         email: "admin@gmail.com",
-        password: "admin123",
+        password: "admin@123",
       });
       if (admin) {
         const updatedAdmin = await Admin.findByIdAndUpdate(admin._id, {

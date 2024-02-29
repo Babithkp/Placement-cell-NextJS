@@ -71,7 +71,8 @@ export const setPlacementUserProfilePic = async (
 
 export const getJobsOfPlacementUser = async (id: string)=>{
   try{
-    const userJobList = await PlacementUserInfo.findById(id).populate("jobList");    
+    await connectDB()
+    const userJobList = await PlacementUserInfo.findById(id).populate("jobList")
     if(userJobList){
       const filterJobs = JSON.stringify(userJobList.jobList);
       return filterJobs

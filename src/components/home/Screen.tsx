@@ -1,9 +1,17 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import homeImg from '../../../public/Images/heroimg.png'
+import { addAdmin } from "@/lib/controller/admin";
 
 export default function Screen() {
+  useEffect(()=>{
+    async function fetch(){
+      await addAdmin()
+    }
+    fetch()
+  },[])
   return (
     <div className="h-screen p-20 flex justify-between w-[100%] items-center ">
       <div className=" w-[230rem] mb-20 ">
