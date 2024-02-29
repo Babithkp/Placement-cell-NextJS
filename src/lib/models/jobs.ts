@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { announcement } from "./announcement";
 import {userInformations} from "./UserInformation";
+import { David_Libre } from "next/font/google";
 export interface jobs extends mongoose.Document {
     _id: string;
     jobtTitle: string;
@@ -23,6 +24,7 @@ export interface jobs extends mongoose.Document {
     applicants: [userInformations];
     announcement: [announcement];
     submitOn: Date;
+    selectApplicants:[userInformations]
 }
 
 
@@ -128,6 +130,9 @@ const JobSchema = new mongoose.Schema<jobs>({
     type: Date,
     default: Date.now
   },
+  selectApplicants: [{
+    user: { type: Schema.Types.ObjectId, ref: "UserInformations" }
+  }],
 });
 
-export default mongoose.models.JobsInfomaton ||  mongoose.model<jobs>("JobsInfomaton", JobSchema);
+export default mongoose.models.NewJobs ||  mongoose.model<jobs>("NewJobs", JobSchema);

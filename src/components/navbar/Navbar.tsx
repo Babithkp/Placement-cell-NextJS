@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+const [isLogin,setIsLogin] = useState(false)
 
   const router = useRouter()
   let path
@@ -21,6 +22,7 @@ export default function Navbar() {
   function logoutHandler() {
     if (typeof sessionStorage !== 'undefined'){
       const value = sessionStorage.removeItem("userInfo")
+      setIsLogin(false)
       path = undefined
       router.replace("/")
     }
@@ -45,7 +47,7 @@ export default function Navbar() {
           <Link href={`/userDetails/${path}`} >My Profile</Link>
         </li>
         <li>
-          <Link href={`/placementDetails/${path}`} >OUR profile</Link>
+          <Link href={`/placement-Cell-Profile/${path}`} >OUR profile</Link>
         </li>
         <li>
           <Link href="/jobListings">Job Listings</Link>

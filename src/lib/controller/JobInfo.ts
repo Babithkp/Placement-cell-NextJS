@@ -3,7 +3,7 @@ import PlacementUserInfo, {
   placementUserInfo,
 } from "../models/placementUserDetail";
 import { connectDB } from "../dbConnect";
-import JobsInfomaton from "../models/jobs";
+import NewJobs from "../models/jobs";
 import { revalidatePath } from "next/cache";
 import { announcement } from "../models/announcement";
 import Admin, { admin } from "../models/admin";
@@ -35,7 +35,7 @@ interface newJob {
 export const addNewJobs = async (newJobs: newJob) => {
   try {
     await connectDB();
-    const isFound = await JobsInfomaton.find({
+    const isFound = await NewJobs.find({
       jobtTitle: newJobs.jobtTitle,
       companyName: newJobs.companyName,
     });
@@ -46,13 +46,13 @@ export const addNewJobs = async (newJobs: newJob) => {
       console.error("JOb Already exists");
       return false;
     } else {
-      const newjob = new JobsInfomaton(newJobs);
+      const newjob = new NewJobs(newJobs);
       await newjob.save();      
       if (placementcellUser) {
         const updatePlacementJob = await PlacementUserInfo.findByIdAndUpdate(
           placementcellUser._id,
           { $push: { jobList: newjob._id } },
-        );
+        );        
         if (updatePlacementJob) {
           console.log("Job have updated to placement cell user");
         }
@@ -82,7 +82,7 @@ export const addNewJobs = async (newJobs: newJob) => {
 export const getAllJobInfo = async () => {
   try {
     await connectDB();
-    const admin = await JobsInfomaton.find();
+    const admin = await NewJobs.find();
     const serializedData = JSON.stringify(admin);
     return serializedData;
   } catch (err) {
@@ -106,7 +106,7 @@ export const getJobInfoForAdmin = async () => {
 export const getJobById = async (jobId: string) => {
   try {
     await connectDB();
-    const job = await JobsInfomaton.findById(jobId);
+    const job = await NewJobs.findById(jobId);
     if (job.length === 0) {
       console.error("Failed to find job");
       return;
@@ -121,7 +121,7 @@ export const getJobById = async (jobId: string) => {
 export const updateJobInfo = async (jobDetails: any, jobId: string) => {
   try {
     if (jobDetails && jobId) {
-      const response = await JobsInfomaton.findByIdAndUpdate(jobId, jobDetails);
+      const response = await NewJobs.findByIdAndUpdate(jobId, jobDetails);
       if (response) {
         console.log("Data saved");
         return true;
@@ -137,7 +137,7 @@ export const deleteJobInfo = async (jobId: string) => {
   let job;
   try {
     const owners = await Admin.updateMany({ $pull: { jobs: jobId } });
-    job = await JobsInfomaton.findByIdAndDelete(jobId);
+    job = await NewJobs.findByIdAndDelete(jobId);
     console.log("Job deatils have deleted");
     revalidatePath("/adminDashboard");
     if (!job || !owners) {
@@ -149,13 +149,14 @@ export const deleteJobInfo = async (jobId: string) => {
   }
 };
 
+
 export const appyForJob = async (userId:string,jobId:string)=>{
   try{
-    const isExist = await JobsInfomaton.findOne({_id:jobId,applicants:userId});
+    const isExist = await NewJobs.findOne({_id:jobId,applicants:userId});
     if(isExist) {
       return false
     }else{
-      const jobInfo = await JobsInfomaton.findByIdAndUpdate(jobId,{$push:{applicants:userId}});
+      const jobInfo = await NewJobs.findByIdAndUpdate(jobId,{$push:{applicants:userId}});
       if (!jobInfo) {
         return false;
       }else{

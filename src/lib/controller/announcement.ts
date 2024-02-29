@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import Announcement, { announcement } from "../models/announcement";
-import JobsInfo from "../models/jobs";
+import NewJobs from "../models/jobs";
 import Admin from "../models/admin";
 
 interface Inputs {
@@ -28,11 +28,11 @@ export const addNewAnnoucement = async (
     const announcement = new Announcement(announcementData);
     await announcement.save();
     if (jobId === "null") {
-      job = await JobsInfo.updateMany({
+      job = await NewJobs.updateMany({
         $push: { announcement: announcement._id },
       });
     } else {
-      job = await JobsInfo.findOneAndUpdate(
+      job = await NewJobs.findOneAndUpdate(
         { _id: jobId },
         { $push: { announcement: announcement._id } },
       );
@@ -102,7 +102,7 @@ export const setAdmin = async () => {
 
 export const getJobsAnnouncement = async (announcementId: string) => {
   try {
-    const job = await JobsInfo.findOne({ announcement: announcementId });
+    const job = await NewJobs.findOne({ announcement: announcementId });
     if (job.length < 0) {
       return false;
     } else {
@@ -134,11 +134,11 @@ export const updateAccouncement = async (
       announcementData,
     );
     if (jobId === "null") {
-      job = await JobsInfo.updateMany({
+      job = await NewJobs.updateMany({
         $push: { announcement: announcement._id },
       });
     } else {
-      job = await JobsInfo.findOneAndUpdate(
+      job = await NewJobs.findOneAndUpdate(
         { _id: jobId },
         { $push: { announcement: announcement._id } },
       );
@@ -153,7 +153,7 @@ export const updateAccouncement = async (
 export const deleteAnnouncement = async (announceId: string) => {
   let announcement;
   try {
-      const job = await JobsInfo.updateMany({$pull: { announcement: announceId }});
+      const job = await NewJobs.updateMany({$pull: { announcement: announceId }});
       announcement = await Announcement.findOneAndDelete({ _id: announceId });
       console.log("Announcement deleted");
       revalidatePath("/adminDashboard");

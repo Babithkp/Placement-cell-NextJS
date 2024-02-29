@@ -6,7 +6,7 @@ import PlacementFilter from "@/components/placementUserDashboard/PlacementFilter
 import { usePathname } from "next/navigation";
 import { getPlacementUserDetails } from "@/lib/controller/placementAdmin";
 import PlacementAddDrives from "./PlacementAddDrives";
-import StudentsDetails from "./StudentsDetails";
+import JobApplicantion from "./JobApplicantion";
 import PlacementJobResults from "./PlacementJobResults";
 
 interface placementAdminProps{
@@ -27,10 +27,10 @@ interface placementAdminProps{
 export default function PlacementContainer() {
   const getUrl = usePathname()
   const path = getUrl.split("/")[2]
-  
-  const [addDrives,setAddDrives] = useState(false)
+  const [myJobs,setMyJobs] = useState<any[]>()
+  const [addDrives,setAddDrives] = useState(true)
   const [viewDrives,setViewDrives] = useState(false)
-  const [viewApplicants,setViewApplicants] = useState(true)
+  const [viewApplicants,setViewApplicants] = useState(false)
   const [selectedApplicants,setSelectedApplicants] = useState(false)
   const [userInfo,setUserInfo] = useState<placementAdminProps>()
 
@@ -64,9 +64,10 @@ export default function PlacementContainer() {
       const response = await getPlacementUserDetails(path)
       if(response){
         const filtered = JSON.parse(response)
+        setUserInfo(filtered) 
+        setMyJobs(filtered.jobList)
         console.log(filtered);
         
-        setUserInfo(filtered) 
       }
     }
     fetch()
@@ -89,14 +90,14 @@ export default function PlacementContainer() {
       <div className=" m-10 flex flex-col items-center  transition-all">
         {viewDrives && (
           <div className="w-[80%] transition delay-1000 duration-1000 ease-in-out">
-            <h4 className="rounded-t-lg bg-[#2560a9] py-1 text-center font-medium text-white">
+            <h4 className="rounded-t-lg bg-[#2560a9] py-1  text-center font-medium text-white">
               Drives
             </h4>
-            <PlacementJobResults userId={userInfo?._id}/>
+            <PlacementJobResults  myJobs={myJobs}/>
           </div>
         )}
-        {viewApplicants && <StudentsDetails title="All Applicants"/>}
-        {selectedApplicants && <StudentsDetails title="Selected Applicants"/>}
+        {viewApplicants && <JobApplicantion  jobList={myJobs} />}
+        {selectedApplicants && <JobApplicantion  jobList={myJobs} selected={true}/>}
       </div>
     </div>
   );

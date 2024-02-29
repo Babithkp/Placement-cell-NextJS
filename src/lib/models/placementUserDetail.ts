@@ -20,6 +20,7 @@ export interface placementUserInfo extends mongoose.Document {
   jobList: jobs[]; 
   applicants: userInformations[];
   selectApplicants: userInformations[]
+  openJobList: [jobs]
 }
 
 const PlacementUserInfoSchema = new mongoose.Schema<placementUserInfo>({
@@ -67,7 +68,7 @@ const PlacementUserInfoSchema = new mongoose.Schema<placementUserInfo>({
     minlength: [10, "Company address cannot be lesser than 10 characters"],
   },
   jobList: [{
-    type: Schema.Types.ObjectId, ref: "JobsInfomaton"
+    type: Schema.Types.ObjectId, ref: "NewJobs"
   }],
   applicants: [{
     type: Schema.Types.ObjectId, ref: "UserInformations"
@@ -76,5 +77,6 @@ const PlacementUserInfoSchema = new mongoose.Schema<placementUserInfo>({
     type: Schema.Types.ObjectId, ref: "UserInformations"
   }],
 });
+
 
 export default mongoose.models.PlacementUserInfo || mongoose.model<placementUserInfo>("PlacementUserInfo", PlacementUserInfoSchema);

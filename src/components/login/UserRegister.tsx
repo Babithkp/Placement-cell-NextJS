@@ -130,8 +130,8 @@ export default function UserRegister() {
         </div>
         <div>
           <label>
-            Gender <span className="text-lg text-red-500">*</span>
-          </label>
+            Gender <span className="text-lg text-red-500">*</span> 
+          </label> 
           <select
             className="w-full rounded-full p-2 "
             {...register("gender", { required: true })}
@@ -139,7 +139,7 @@ export default function UserRegister() {
             <option value="MALE">Male</option>
             <option value="FEMALE">Female</option>
           </select>
-          {errors.name && (
+          {errors.gender && (
             <p className="text-sm text-red-500">Please select a valid Gender</p>
           )}
         </div>

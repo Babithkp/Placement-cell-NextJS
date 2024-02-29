@@ -1,46 +1,104 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import defaultImage from "../../../public/Images/profiles/deafultProfile.jpg";
 import Image from "next/image";
 import { PiStudentBold } from "react-icons/pi";
 import { Button } from "@/components/ui/button";
+import SelectStudent from "./SelectStudent";
 
-export default function StudentsDetails({title}:any) {
+interface stud{
+  name: string;
+  profileUrl: string;
+  gender: string;
+  phone: Number;
+  sslcMarks: Number;
+  twelvesMarks: Number;
+  BEMarks: Number;
+  backlogs: Number;
+  collegeName: string;
+  historyBacklogs: Number;
+  passOutYear: String;
+  batch: String;
+  address: string;
+  profession: String;
+  city: string;
+  resumeURL: string;
+}
+
+export default function StudentsDetails({ students,jobId,selected }: any) {
+  const [student, setStudent] = useState<any[]>();
+
+  useEffect(() => {
+      setStudent(students);
+    console.log(students);
+    
+  }, [students]);
   return (
-    <div className="w-[80%] ">
-            <h4 className="rounded-t-lg bg-[#2560a9] py-1 text-center font-medium text-white">
-              {title}
-            </h4>
-            <div className="flex mb-4 border border-[#719CEC] bg-[#FFFFFF]">
-              <div className="w-[15%] p-4 ">
-                <Image
-                  src={defaultImage}
-                  alt="profile images"
-                  className="h-full w-full rounded-full"
-                />
-              </div>
-              <div className="p-4 w-full text-lg flex flex-col justify-around">
-                <p className=" font-medium text-xl">Ashika M</p>
-                <div className="flex gap-2 items-center border-b">
-                  <PiStudentBold />
-                  <span>East point college of engineering</span>
-                  <p>|</p>
-                  <p>
-                    CGPA: <span>9</span>
-                  </p>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <p>Applied on: <span>01-02-2024</span></p>
-                  <p>|</p>
-                  <p>No. of backlogs <span>0</span></p>
-                  <p>|</p>
-                  <p>Pass out year: <span>2025</span></p>
-                </div>
-              </div>
-                <div className="p-4 flex flex-col h-full gap-2">
-                  <Button className="w-full">View Resume</Button>
-                  <Button className="w-full" variant="outline">Select </Button>
-                </div>
+    <div>
+      {student?.map((student) => (
+        <div
+          key={student._id}
+          className="mb-4 flex border border-[#719CEC] bg-[#FFFFFF]"
+        >
+          <div className="h-[10rem] w-[13rem]  p-4 ">
+            <Image
+              src={selected ? student.user.profileUrl : student.profileUrl ? student.profileUrl :defaultImage}
+              alt="profile images"
+              className="h-full w-full rounded-full"
+              width={300}
+              height={300}
+            />
+          </div>
+          <div className="flex w-full flex-col justify-around p-4 text-lg">
+            <p className=" text-xl font-medium">{selected ? student.user.name : student.name}</p>
+            <div className="flex items-center gap-2 border-b">
+              <PiStudentBold />
+              <span>
+                {selected ? student.user.collegeName : student.collegeName}
+              </span>
+              <p>|</p>
+              <p>
+                CGPA:{" "}
+                <span>{selected ? student.user.BEMarks / 10 : student.BEMarks / 10}</span>
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-base">
+              <p>
+                Email:{" "}
+                <span className="text-blue-500">
+                  <a
+                    href={`mailto:${selected ? student.user.user.email : student.user.email}`}
+                  >
+                    {student.user.email ? student.user.email : "Email Address"}
+                  </a>
+                </span>
+              </p>
+              <p>|</p>
+              <p>
+                No. of backlogs <span>{student.backlogs}</span>
+              </p>
+              <p>|</p>
+              <p>
+                Pass out year:{" "}
+                <span>
+                  {student.passOutYear ? student.passOutYear : "Year"}
+                </span>
+              </p>
             </div>
           </div>
-  )
+          <div className="flex  flex-col justify-center gap-2 p-4">
+            <Button className="w-full">
+              <a
+                href={`${student.resumeURL} ? ${student.resumeURL} : Email Address`}
+                target="_blank"
+              >
+                View Resume
+              </a>
+            </Button>
+            <SelectStudent jobId={jobId} userId={student._id} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }

@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { jobs } from "./jobs";
-import User, { user } from "./user";
-import { announcement } from "./announcement";
+import { user } from "./user";
 
 export interface userInformations extends mongoose.Document {
   user: user;
@@ -99,13 +98,13 @@ const UserInformations = new Schema<userInformations>({
   savedJobs: [
     {
       type: Schema.Types.ObjectId,
-      ref: "JobsInfomaton",
+      ref: "NewJobs",
     },
   ],
   appliedJobs: [
     {
       type: Schema.Types.ObjectId,
-      ref: "JobsInfomaton",
+      ref: "NewJobs",
     },
   ],
 });

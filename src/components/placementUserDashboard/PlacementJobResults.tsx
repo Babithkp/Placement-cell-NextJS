@@ -22,20 +22,14 @@ interface Job {
   skills: string[];
 }
 
-export default function PlacementJobResults({userId}:any) {
+export default function PlacementJobResults({myJobs}:any) {
   const [jobList,setJobList] = useState<Job[]>([])
   
   useEffect(()=>{
-    const fetch =async()=>{
-      const newjob:any = await getJobsOfPlacementUser(userId)
-      if(newjob){
-        const response = JSON.parse(newjob)
-        setJobList(response)
-      }
-    }
-    
-    fetch()
-  },[userId])
+        setJobList(myJobs)
+  },[myJobs])
+
+
   return (
     <>
       {jobList && jobList.map((job, i) => (
@@ -75,7 +69,7 @@ export default function PlacementJobResults({userId}:any) {
               <span>
                 <MdDescription />
               </span>
-              <span >{job.jobDescription.substring(0, 70)}...</span>
+              {/* <span >{job.jobDescription.substring(0, 70)}...</span> */}
             </p>
             <ul className="flex flex-wrap">
               {job.skills.map((skill, i) => (
