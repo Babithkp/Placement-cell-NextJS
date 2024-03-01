@@ -9,7 +9,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllJobInfo } from "@/lib/controller/JobInfo";
 import defaultImg from "../../../public/Images/companies/default.jpg"
-import { getJobsOfPlacementUser } from "@/lib/controller/placementAdmin";
 
 interface Job {
   _id: string;
@@ -69,7 +68,7 @@ export default function PlacementJobResults({myJobs}:any) {
               <span>
                 <MdDescription />
               </span>
-              {/* <span >{job.jobDescription.substring(0, 70)}...</span> */}
+              <span >{job.jobDescription.substring(0, 70)}...</span>
             </p>
             <ul className="flex flex-wrap">
               {job.skills.map((skill, i) => (
