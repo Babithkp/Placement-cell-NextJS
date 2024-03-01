@@ -1,36 +1,34 @@
 import mongoose, { Schema } from "mongoose";
 import { announcement } from "./announcement";
-import {userInformations} from "./UserInformation";
+import { userInformations } from "./UserInformation";
 import { David_Libre } from "next/font/google";
 export interface jobs extends mongoose.Document {
-    _id: string;
-    jobtTitle: string;
-    companyName: string;
-    deadline: Date;
-    companyWebsite: string;
-    comapanyLocation: string
-    role: string;
-    indrustryType: string;
-    workMode: string;
-    department: string;
-    roleCategory: string;
-    education: string;
-    skills: string[];
-    package: string;
-    openings: number;
-    jobDescription: string;
-    aboutCompany: string;
-    impressions: number;
-    applicants: [userInformations];
-    announcement: [announcement];
-    submitOn: Date;
-    selectApplicants:[userInformations]
+  _id: string;
+  jobtTitle: string;
+  companyName: string;
+  deadline: Date;
+  companyWebsite: string;
+  comapanyLocation: string;
+  role: string;
+  indrustryType: string;
+  workMode: string;
+  department: string;
+  roleCategory: string;
+  education: string;
+  skills: string[];
+  package: string;
+  openings: number;
+  jobDescription: string;
+  aboutCompany: string;
+  impressions: number;
+  applicants: [userInformations];
+  announcement: [announcement];
+  submitOn: Date;
+  selectApplicants: [userInformations];
 }
 
-
-
 const JobSchema = new mongoose.Schema<jobs>({
-    jobtTitle: {
+  jobtTitle: {
     type: String,
     required: [true, "Please provide a name for this job Title."],
     minlength: [5, "jobtTitle cannot be lesser than 5 characters"],
@@ -43,7 +41,6 @@ const JobSchema = new mongoose.Schema<jobs>({
   deadline: {
     type: Date,
     required: [true, "Please specify the species of your pet."],
-    
   },
   companyWebsite: {
     type: String,
@@ -54,13 +51,11 @@ const JobSchema = new mongoose.Schema<jobs>({
     type: String,
     required: [true, "Please provide the company location"],
     minlength: [3, "company Location cannot be lesser than 3 characters"],
-
   },
   role: {
     type: String,
     required: [true, "Please provide the role"],
     minlength: [5, "role cannot be lesser than 5 characters"],
-    
   },
   indrustryType: {
     type: String,
@@ -118,21 +113,21 @@ const JobSchema = new mongoose.Schema<jobs>({
   ],
   impressions: {
     type: Number,
-    default: 0
+    default: 0,
   },
   applicants: [
     {
-      type: Schema.Types.ObjectId,
-      req: "UserInformations",
+      userId: { type: Schema.Types.ObjectId, ref: "UserInformations" },
+      submittedOn: { type: Date, default: Date.now },
     },
   ],
-  submitOn: {
-    type: Date,
-    default: Date.now
-  },
-  selectApplicants: [{
-    user: { type: Schema.Types.ObjectId, ref: "UserInformations" }
-  }],
+  selectApplicants: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "UserInformations",
+    },
+  ],
 });
 
-export default mongoose.models.NewJobs ||  mongoose.model<jobs>("NewJobs", JobSchema);
+export default mongoose.models.NewJobs ||
+  mongoose.model<jobs>("NewJobs", JobSchema);

@@ -3,12 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import defaultImage from "../../../public/Images/profiles/deafultProfile.jpg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { getPlacementUserDetails, setPlacementUserProfilePic } from "@/lib/controller/placementAdmin";
+import { getPlacementUSerInfo, setPlacementUserProfilePic } from "@/lib/controller/placementAdmin";
 import { VscLoading } from "react-icons/vsc";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { storage } from "@/lib/firebase";
-import { setUserProfilePIc } from "@/lib/controller/userTask";
 
 interface placementAdminProps{
   _id:string
@@ -82,10 +81,12 @@ export default function PlacementContainer() {
   useEffect(()=>{
     async function fetch(){
       try{
-        const response = await getPlacementUserDetails(path)
+        const response = await getPlacementUSerInfo(path)
         if(response){
           const filtered = JSON.parse(response)
           setUserDetails(filtered)
+          console.log(filtered);
+          
         }
       }catch(error){
         console.log(error);

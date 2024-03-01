@@ -95,7 +95,7 @@ export const selectedStudentForJob = async (userId: string, jobId: string) => {
 
   try {
     const updatedJob = await NewJobs.findByIdAndUpdate(jobId, {
-      $push: { selectApplicants: { user: userId } },
+      $push: { selectApplicants:userId },
     });
 
     console.log(updatedJob);
@@ -111,3 +111,19 @@ export const selectedStudentForJob = async (userId: string, jobId: string) => {
     return false;
   }
 };
+
+export const getPlacementUSerInfo = async(userId:string)=>{
+  try{
+    const userDetails = await PlacementUserInfo.findById(userId).populate("user")
+    if(userDetails){
+      const filtered = JSON.stringify(userDetails);
+      return filtered
+    }else{
+      return false
+    }
+
+  }catch(error){
+    console.log(error);
+    
+  }
+}

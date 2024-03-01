@@ -96,8 +96,8 @@ export default function PlacementContainer() {
             <PlacementJobResults  myJobs={myJobs}/>
           </div>
         )}
-        {viewApplicants && <JobApplicantion  jobList={myJobs} />}
-        {selectedApplicants && <JobApplicantion  jobList={myJobs} selected={true}/>}
+        {viewApplicants && <JobApplicantion  jobList={myJobs} selected={true}/>}
+        {selectedApplicants && <JobApplicantion  jobList={myJobs} />}
       </div>
     </div>
   );

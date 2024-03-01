@@ -152,11 +152,11 @@ export const deleteJobInfo = async (jobId: string) => {
 
 export const appyForJob = async (userId:string,jobId:string)=>{
   try{
-    const isExist = await NewJobs.findOne({_id:jobId,applicants:userId});
+    const isExist = await NewJobs.findOne({_id:jobId,applicants:{userId:userId}});
     if(isExist) {
       return false
     }else{
-      const jobInfo = await NewJobs.findByIdAndUpdate(jobId,{$push:{applicants:userId}});
+      const jobInfo = await NewJobs.findByIdAndUpdate(jobId,{$push:{applicants:{userId:userId}}});
       if (!jobInfo) {
         return false;
       }else{
