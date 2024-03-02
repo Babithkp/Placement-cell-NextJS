@@ -6,8 +6,9 @@ import PlacementFilter from "@/components/placementUserDashboard/PlacementFilter
 import { usePathname } from "next/navigation";
 import { getPlacementUserDetails } from "@/lib/controller/placementAdmin";
 import PlacementAddDrives from "./PlacementAddDrives";
-import JobApplicantion from "./JobApplicantion";
+import Applicantion from "./Applicantion";
 import PlacementJobResults from "./PlacementJobResults";
+import SelectedList from "./SelectedList";
 
 interface placementAdminProps{
   _id: string;
@@ -59,6 +60,15 @@ export default function PlacementContainer() {
     setSelectedApplicants(true)
   }
 
+  async function reFetch(){
+    const response = await getPlacementUserDetails(path)
+      if(response){
+        const filtered = JSON.parse(response)
+        setUserInfo(filtered) 
+        setMyJobs(filtered.jobList)
+      }
+  }
+
   useEffect(()=>{
     async function fetch(){
       const response = await getPlacementUserDetails(path)
@@ -66,8 +76,6 @@ export default function PlacementContainer() {
         const filtered = JSON.parse(response)
         setUserInfo(filtered) 
         setMyJobs(filtered.jobList)
-        console.log(filtered);
-        
       }
     }
     fetch()
@@ -96,8 +104,8 @@ export default function PlacementContainer() {
             <PlacementJobResults  myJobs={myJobs}/>
           </div>
         )}
-        {viewApplicants && <JobApplicantion  jobList={myJobs} selected={true}/>}
-        {selectedApplicants && <JobApplicantion  jobList={myJobs} />}
+        {viewApplicants && <Applicantion  jobList={myJobs} reFetch={reFetch}/>}
+        {selectedApplicants && <SelectedList  jobList={myJobs} reFetch={reFetch}/>}
       </div>
     </div>
   );

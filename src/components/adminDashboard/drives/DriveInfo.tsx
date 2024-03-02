@@ -4,12 +4,11 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { IoEye } from "react-icons/io5";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoIosGitBranch } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getJobById } from "@/lib/controller/JobInfo";
 import { jobs } from "@/lib/models/jobs";
 
-import { MdDelete } from "react-icons/md";
-import EditDrivesDialog from "./EditDrivesDialog";
+ import EditDrivesDialog from "./EditDrivesDialog";
 import DeleteDrivesDialog from "./DeleteDrivesDialog";
 
 export default function DriveInfo() {
@@ -17,6 +16,7 @@ export default function DriveInfo() {
   const [jobInfo, setJobInfo] = useState<jobs>();
   const [postedDate, setPostedDate] = useState(0);
   const [deadlineDate, setDeadlineDate] = useState(0);
+  const parentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function jobFetch() {
@@ -56,7 +56,7 @@ export default function DriveInfo() {
   }
   return (
     <section className="flex rounded-lg bg-gray-200 max-sm:text-sm">
-      <SearchArea getId={getJobId} />
+      <SearchArea getId={getJobId} ref={parentRef}/>
       <div className="flex w-full flex-col gap-4 p-4 text-white ">
         <div className="flex justify-between rounded-xl bg-black p-2">
           <div>

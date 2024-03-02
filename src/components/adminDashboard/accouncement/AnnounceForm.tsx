@@ -13,6 +13,7 @@ import {
 } from "@/lib/controller/announcement";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { FcOk } from "react-icons/fc";
 
 interface Inputs {
   title: string;
@@ -26,12 +27,13 @@ interface jobInfo {
   jobID: string | "null";
 }
 
-export default function AnnounceForm({ announcement, announceId }: any) {
+export default function AnnounceForm({ announcement, announceId ,refetch,fetchJobsw}: any) {
   const [isDropped, setIsDropped] = useState(false);
   const [jobList, setJobList] = useState<undefined | jobs[]>([]);
   const [selectedOption, setSelectedOption] = useState<undefined | jobInfo>();
   const [Error, setError] = useState<null | string>(null);
   const router = useRouter();
+  const [isSubmitted,setSubmitted] = useState(false)
 
   const selectHandler = function (jobTitle: string, jobID: string = "null") {
     setIsDropped(false);
@@ -69,10 +71,14 @@ export default function AnnounceForm({ announcement, announceId }: any) {
           selectedOption?.jobID,
           announceId,
         );
-        console.log(response);
+        setSubmitted(true)
+        refetch()
+        
       } else {
         response = await addNewAnnoucement(data, selectedOption?.jobID);
-
+        setSubmitted(true)
+        fetchJobsw()
+        
         if (response) {
           router.refresh();
           router.replace("/adminDashboard");
@@ -90,7 +96,6 @@ export default function AnnounceForm({ announcement, announceId }: any) {
           const jobinfo: any = await getJobsAnnouncement(announceId);
           if (jobinfo) {
             const response = JSON.parse(jobinfo);
-            console.log(response);
             setSelectedOption({
               jobTitle: response.jobtTitle,
               jobID: announceId,
@@ -117,7 +122,14 @@ export default function AnnounceForm({ announcement, announceId }: any) {
       <div className="w-full bg-[#2560a9] text-center">
         <h4 className="text-2xl  text-white">New Announcement</h4>
       </div>
-      <form
+      {isSubmitted && <div className="flex h-full flex-col -mt-[5rem] justify-center items-center">
+                <div >
+                <FcOk size={200}/>
+                </div>
+                <h4 className="text-3xl">Changes have successfully updated</h4>
+                <p className="text-2xl">Now you can close this window</p>
+              </div>}
+      {!isSubmitted && <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid h-full w-full grid-cols-[50%,50%] p-8"
       >
@@ -214,12 +226,12 @@ export default function AnnounceForm({ announcement, announceId }: any) {
             )}
           </div>
           <div className="flex gap-2">
-            <Button className="rounded-lg bg-[#00448E] px-8">
+             <Button className="rounded-lg bg-[#00448E] px-8">
               {isSubmitting ? "Submitting..." : "Send"}
             </Button>
           </div>
         </div>
-      </form>
+      </form>}
     </div>
   );
 }

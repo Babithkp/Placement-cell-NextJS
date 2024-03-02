@@ -35,43 +35,45 @@ export default function Announcement() {
   const [status, setStatus] = useState<undefined | activity>();
 
 
-
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        if (announcementId) {
-          const singleAccouncement = await getAccouncementById(announcementId);
-          if (singleAccouncement) {
-            const filtered = JSON.parse(singleAccouncement);
-            setAnnouncement(filtered);
-            const validity = new Date(filtered.validity);
-            const postedOn = new Date(filtered.submittedOn);
-            const currentTime = new Date();
-            const postTimeDifference =
-              currentTime.getDate() - postedOn.getDate();
-            setpostedOn(postTimeDifference);
-            if (validity.getDate() > 0) {
-              setStatus({
-                status: "Active",
-                date: validity.getDate(),
-                month: validity.toLocaleString("en-US", { month: "short" }),
-                year: validity.getFullYear(),
-              });
-            } else {
-              setStatus({
-                status: "Inactive",
-                date: validity.getDate(),
-                month: validity.toLocaleString("en-US", { month: "short" }),
-                year: validity.getFullYear(),
-              });
-            }
+  function deleteAnnouncement(){
+    setAnnouncement(undefined);
+}
+  async function fetch() {
+    try {
+      if (announcementId) {
+        const singleAccouncement = await getAccouncementById(announcementId);
+        if (singleAccouncement) {
+          const filtered = JSON.parse(singleAccouncement);
+          setAnnouncement(filtered);
+          const validity = new Date(filtered.validity);
+          const postedOn = new Date(filtered.submittedOn);
+          const currentTime = new Date();
+          const postTimeDifference =
+            currentTime.getDate() - postedOn.getDate();
+          setpostedOn(postTimeDifference);
+          if (validity.getDate() > 0) {
+            setStatus({
+              status: "Active",
+              date: validity.getDate(),
+              month: validity.toLocaleString("en-US", { month: "short" }),
+              year: validity.getFullYear(),
+            });
+          } else {
+            setStatus({
+              status: "Inactive",
+              date: validity.getDate(),
+              month: validity.toLocaleString("en-US", { month: "short" }),
+              year: validity.getFullYear(),
+            });
           }
         }
-      } catch (error) {
-        console.log(error);
       }
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  useEffect(() => {
     fetch();
   }, [announcementId]);
 
@@ -121,8 +123,8 @@ export default function Announcement() {
           <div className="flex flex-col gap-2 rounded-xl bg-black p-4 max-sm:text-xs">
             <BsThreeDots className="mt-2 " size={25} />
             <p className="my-2 text-lg font-medium">Options</p>
-            <EditDialog announcement={ announcement} announceId={announcementId}/>
-            <DeleteWarning announceId={announcementId}/>
+            <EditDialog announcement={ announcement} announceId={announcementId} fetch={fetch}/>
+           {announcement &&  <DeleteWarning announceId={announcementId} fetch={deleteAnnouncement}/>}
           </div>
         </div>
       </div>

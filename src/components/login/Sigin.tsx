@@ -9,6 +9,7 @@ import { userLogin } from "@/lib/controller/userTask";
 import { useRouter } from "next/navigation";
 import { VscLoading } from "react-icons/vsc";
 import { placementUserLogin } from "@/lib/controller/placementAdmin";
+import { useGlobalContext } from "@/store/contextForm";
 
 interface userInputsState{
   email: boolean;
@@ -29,6 +30,7 @@ export default function Sigin({ onClicks }: any) {
     password: false,
     error: false,
   });
+  const loginCtx = useGlobalContext()
 
   async function formClickHandler(e: any) {
     e.preventDefault();
@@ -75,10 +77,9 @@ export default function Sigin({ onClicks }: any) {
             userId: filter.userData,
             type: filter.type
           }
-
-          const convert = JSON.stringify(storage)
-          const value = sessionStorage.setItem("userInfo",convert)
+          loginCtx?.storeToSession(storage)
           router.replace(`/userDetails/${storage.userId}`)
+          loginCtx?.LoginWithUser()
         }else{
           setErrors(prev=>({
             ...prev,
@@ -99,10 +100,9 @@ export default function Sigin({ onClicks }: any) {
             userId: filter.userData,
             type: filter.type
           }
-
-          const convert = JSON.stringify(storage)
-          const value = sessionStorage.setItem("userInfo",convert)
+          loginCtx?.storeToSession(storage)
           router.replace(`/placement-Cell-Profile/${storage.userId}`)
+          loginCtx?.LoginWithUser()
         }else{
           setErrors(prev=>({
             ...prev,

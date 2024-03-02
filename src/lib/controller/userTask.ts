@@ -5,6 +5,8 @@ import { connectDB } from "../dbConnect";
 import { revalidatePath } from "next/cache";
 import User, { user } from "../models/user";
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+import NewJobs from '../models/jobs'
 
 export const IsUserExists = async (email: string) => {
   try {
@@ -81,9 +83,10 @@ export const addNewPlacementUser = async (
 export const getUserDetails = async (userId: string) => {
   try {
     await connectDB();
+    mongoose.model('NewJobs', NewJobs.schema);
     if (userId) {
       const user = await UserInformations.findOne({ _id: userId })
-        .populate("user", "email")
+        .populate("user", "email").populate("appliedJobs","_id companyName jobtTitle").populate("savedJobs")
         .exec();
       if (user.length === 0) {
         return false;
@@ -226,3 +229,38 @@ export const UpdateUserResume = async (resumeUrl:string,userId:string)=>{
   }
 }
 
+export const addToSavedList = async (userId:string,jobId:string)=>{
+  try{
+    const addToSaved = await UserInformations.findByIdAndUpdate(
+      userId,
+      {
+        $addToSet: { savedJobs: jobId }
+      },
+      { new: true } 
+    );
+    if(addToSaved){
+      console.log("added to saved list");
+      return true;
+    }
+    return false
+  }catch(error){
+    console.log(error);
+  }
+}
+export const removeFromSavedList = async (userId:string,jobId:string)=>{
+  try{
+    const isCheck = await UserInformations.findById(userId,{savedJobs: jobId})
+    if(!isCheck){
+      console.log("Job not Found");
+      return false
+    }
+    const addToSaved = await UserInformations.findByIdAndUpdate(userId,{$pull:{savedJobs:jobId}});
+    if(addToSaved){
+      console.log("Remove from saved list");
+      return true;
+    }
+    return false
+  }catch(error){
+    console.log(error);
+  }
+}

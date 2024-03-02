@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import StudentsDetails from "./StudentsDetails";
 
-export default function JobApplicantion({ jobList ,selected}: any) {
+export default function Applicantion({ jobList,reFetch}: any) {
   const [jobDetails, setJobDetails] = useState<any[]>([]);
+
+
 
   useEffect(() => {
     async function fetch() {
@@ -16,29 +18,21 @@ export default function JobApplicantion({ jobList ,selected}: any) {
     <div className="w-[90%] ">
       {jobDetails?.map((job) => (
         <div key={job._id}>
-          {!selected && job.applicants.length > 0 ? (
+          {job.applicants.length > 0 ? (
             <div>
               <h4 className="text-medium rounded-t-lg bg-[#2560a9] py-1 pl-10 text-white">
                 {job.jobtTitle}
               </h4>
               <div>
-                <StudentsDetails students={ job.applicants} jobId={job._id} />
+                {job.applicants.map((singStud:any,i:string)=>(
+                  <div key={i}>
+                    <StudentsDetails students={ singStud} jobId={job._id} reFetch={reFetch}/>
+                  </div>
+                  ))}
               </div>
             </div>
           ) : (
-            ""
-          )}
-          {selected && job.selectApplicants.length > 0 ? (
-            <div>
-              <h4 className="text-medium rounded-t-lg bg-[#2560a9] py-1 pl-10 text-white">
-                {job.jobtTitle}
-              </h4>
-              <div>
-                <StudentsDetails students={ job.selectApplicants} jobId={job._id} selected={selected}/>
-              </div>
-            </div>
-          ) : (
-            ""
+            <p className="text-center">Applicant List is Empty</p>
           )}
         </div>
       ))}

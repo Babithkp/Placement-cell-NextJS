@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -13,7 +14,7 @@ import AnnounceForm from "./AnnounceForm";
 import { BiEditAlt } from "react-icons/bi";
 
 
-export default function EditDialog({announcement,announceId}:any) {    
+export default function EditDialog({announcement,announceId,fetch}:any) {    
   return (
     <Dialog >
       {announcement && <DialogTrigger >
@@ -23,7 +24,7 @@ export default function EditDialog({announcement,announceId}:any) {
         <DialogHeader className="w-[100rem]">
           <DialogDescription className=" w-[100rem]  ">
           <ScrollArea className="h-[30rem] w-[50rem] rounded-md border max-sm:w-[25rem]">
-             <AnnounceForm announcement={announcement} announceId={announceId}/>
+             <AnnounceForm announcement={announcement} announceId={announceId} refetch={fetch}/>
           </ScrollArea>
           </DialogDescription>
         </DialogHeader>

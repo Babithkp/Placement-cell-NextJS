@@ -5,26 +5,23 @@ import Link from "next/link";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/store/contextForm";
 
 export default function Navbar() {
 const [isLogin,setIsLogin] = useState(false)
-
+const [userId,setUserId] = useState('')
   const router = useRouter()
-  let path
-  if (typeof sessionStorage !== 'undefined'){
-    const value = sessionStorage.getItem("userInfo")
-    if(value){
-      const filter = JSON.parse(value)    
-      path = filter.userId
-    }
-  }
+  const userStatesCtx = useGlobalContext()
+
+  const newUserId = userStatesCtx?.userId
+
+  
 
   function logoutHandler() {
     if (typeof sessionStorage !== 'undefined'){
       const value = sessionStorage.removeItem("userInfo")
-      setIsLogin(false)
-      path = undefined
       router.replace("/")
+      setIsLogin(false)
     }
   }
   return (
@@ -41,18 +38,18 @@ const [isLogin,setIsLogin] = useState(false)
           <Link href="/adminDashboard">Admin Dashboard</Link>
         </li>
         <li>
-          <Link href={`/placementUserDashboard/${path}`} >My Dashboard</Link>
+          <Link href={`/placementUserDashboard/${newUserId}`} >My Dashboard</Link>
         </li>
         <li>
-          <Link href={`/userDetails/${path}`} >My Profile</Link>
+          <Link href={`/userDetails/${newUserId}`} >My Profile</Link>
         </li>
         <li>
-          <Link href={`/placement-Cell-Profile/${path}`} >OUR profile</Link>
+          <Link href={`/placement-Cell-Profile/${newUserId}`} >OUR profile</Link>
         </li>
         <li>
           <Link href="/jobListings">Job Listings</Link>
         </li>
-        {!path && <li>
+        {!newUserId && <li>
           <Link href="/signing?sign=false">
             <Button variant="outline" className="text-black">Sign Up</Button>
           </Link>
@@ -60,9 +57,9 @@ const [isLogin,setIsLogin] = useState(false)
             <Button>Login</Button>
           </Link>
         </li>}
-        {path && <li>
+        {newUserId && <li>
             <Button onClick={logoutHandler}>Logout</Button>
-        </li>} 
+        </li>}
       </ul>
     </nav>
   );

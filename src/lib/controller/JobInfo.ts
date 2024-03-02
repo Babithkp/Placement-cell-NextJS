@@ -7,6 +7,7 @@ import NewJobs from "../models/jobs";
 import { revalidatePath } from "next/cache";
 import { announcement } from "../models/announcement";
 import Admin, { admin } from "../models/admin";
+import UserInformations from "../models/UserInformation";
 
 interface newJob {
   _id: string;
@@ -42,17 +43,18 @@ export const addNewJobs = async (newJobs: newJob) => {
     const placementcellUser = await PlacementUserInfo.findOne({
       companyName: newJobs.companyName,
     });
+
     if (isFound.length > 0) {
       console.error("JOb Already exists");
       return false;
     } else {
       const newjob = new NewJobs(newJobs);
-      await newjob.save();      
+      await newjob.save();
       if (placementcellUser) {
         const updatePlacementJob = await PlacementUserInfo.findByIdAndUpdate(
           placementcellUser._id,
           { $push: { jobList: newjob._id } },
-        );        
+        );
         if (updatePlacementJob) {
           console.log("Job have updated to placement cell user");
         }
@@ -149,24 +151,48 @@ export const deleteJobInfo = async (jobId: string) => {
   }
 };
 
-
-export const appyForJob = async (userId:string,jobId:string)=>{
-  try{
-    const isExist = await NewJobs.findOne({_id:jobId,applicants:{userId:userId}});
-    if(isExist) {
-      return false
-    }else{
-      const jobInfo = await NewJobs.findByIdAndUpdate(jobId,{$push:{applicants:{userId:userId}}});
+export const appyForJob = async (userId: string, jobId: string) => {
+  try {
+    const isExist = await NewJobs.findOne({
+      _id: jobId,
+      applicants: { userId: userId },
+    });
+    if (isExist) {
+      return false;
+    } else {
+      const jobInfo = await NewJobs.findByIdAndUpdate(jobId, {
+        $push: { applicants: { userId: userId } },
+      });
+      if (jobInfo) {
+        const userInfo = await UserInformations.findByIdAndUpdate(userId, {
+          $push: { appliedJobs: jobId },
+        });
+        if (userInfo) {
+          console.log("updated in user collection");
+        }
+      }
       if (!jobInfo) {
         return false;
-      }else{
-        return true
+      } else {
+        return true;
       }
     }
-    
-
-  }catch(error){
+  } catch (error) {
     console.log(error);
-    
   }
-}
+};
+
+export const checkIsSavedJobToUser = async (jobId: string, userId: string) => {
+  try {
+    const user = await UserInformations.findOne({
+      _id: userId,
+      savedJobs: { $in: [jobId] },
+    });
+    if (user) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+  }
+};

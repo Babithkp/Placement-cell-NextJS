@@ -48,6 +48,12 @@ interface userDetailsProps {
   };
 }
 
+interface job{
+  _id: string;
+  companyName: string;
+  jobtTitle: string;
+}
+
 export default function Userintro() {
   const [userInfo, setUserInfo] = useState<userDetailsProps>();
   const pathName = usePathname();
@@ -58,6 +64,8 @@ export default function Userintro() {
   const [isProfessionEditable, setProfessionEditable] =
     useState<boolean>(false);
   const [editProfession, setEditProfession] = useState(userInfo?.profession);
+  const [appliedJobList,setAppliedJobList] = useState<any>([])
+  const [savedJobList,setSavedJobList] = useState<any>([])
 
   async function editProfssionClickHandler() {
     setProfessionEditable(false);
@@ -130,10 +138,20 @@ export default function Userintro() {
   useEffect(() => {
     async function fetch() {
       if (path) {
-        const response: any = await getUserDetails(path);
-        const filtered = JSON.parse(response);
-        setEditProfession(filtered?.profession);
-        setUserInfo(filtered);
+        try{
+          const response: any = await getUserDetails(path);
+          const filtered = JSON.parse(response);
+          setEditProfession(filtered?.profession);
+          setUserInfo(filtered);
+          setAppliedJobList(filtered.appliedJobs);
+          setSavedJobList(filtered.savedJobs)
+          console.log(filtered);
+          
+        }catch(error){
+          console.log(error);
+          
+        }
+        
       }
     }
     fetch();
@@ -257,81 +275,58 @@ export default function Userintro() {
         )}
         
         <div>
-          <Accordion type="single" collapsible className="w-[20rem] ">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Favourite Jobs</AccordionTrigger>
-              <AccordionContent className="flex items-center justify-between border-b p-0">
-                <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
-                  <div className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        Frontend Developer
-                      </p>
-                      <p>Company name</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">View Details</Button>
-                  </div>
-                  <div className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        Frontend Developer
-                      </p>
-                      <p>Company name</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">View Details</Button>
-                  </div>
-                  <div className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        Frontend Developer
-                      </p>
-                      <p>Company name</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">View Details</Button>
-                  </div>
-                </ScrollArea>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-        <div className="mr-20">
-          <Accordion type="single" collapsible className="w-[20rem] ">
+          {appliedJobList &&<Accordion type="single" collapsible className="w-[20rem] ">
             <AccordionItem value="item-1">
               <AccordionTrigger>Applied Jobs</AccordionTrigger>
               <AccordionContent className="flex items-center justify-between border-b p-0">
                 <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
-                  <div className="flex items-center justify-between border-b p-0">
+                  {appliedJobList.map((job:job)=>(
+                  <div key={job._id} className="flex items-center justify-between border-b p-0">
                     <div>
                       <p className="text-base font-semibold">
-                        Frontend Developer
+                        {job.jobtTitle}
                       </p>
-                      <p>Company name</p>
+                      <p>{job.companyName}</p>
                     </div>
-                    <Button className="mr-4 h-fit p-1">View Details</Button>
+                    <Button className="mr-4 h-fit p-1">
+                      <Link href={`/detailedPage/${job._id}`}>
+                      View Details
+                      </Link>
+                      </Button>
                   </div>
-                  <div className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        Frontend Developer
-                      </p>
-                      <p>Company name</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">View Details</Button>
-                  </div>
-                  <div className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        Frontend Developer
-                      </p>
-                      <p>Company name</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">View Details</Button>
-                  </div>
+                  ))}
                 </ScrollArea>
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
+          </Accordion>}
         </div>
+        <div>
+          {savedJobList &&<Accordion type="single" collapsible className="w-[20rem] ">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Saved Jobs</AccordionTrigger>
+              <AccordionContent className="flex items-center justify-between border-b p-0">
+                <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
+                  {savedJobList.map((job:job)=>(
+                  <div key={job._id} className="flex items-center justify-between border-b p-0">
+                    <div>
+                      <p className="text-base font-semibold">
+                        {job.jobtTitle}
+                      </p>
+                      <p>{job.companyName}</p>
+                    </div>
+                    <Button className="mr-4 h-fit p-1">
+                      <Link href={`/detailedPage/${job._id}`}>
+                      View Details
+                      </Link>
+                      </Button>
+                  </div>
+                  ))}
+                </ScrollArea>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>}
+        </div>
+        
       </section>
     </div>
   );

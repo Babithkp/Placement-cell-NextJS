@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { getJobInfoForAdmin } from "@/lib/controller/JobInfo";
 
@@ -8,7 +8,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import NewDialog from "./NewDialog";
 import { ScrollArea } from "../ui/scroll-area";
 
-export default function SearchArea({ getId, announcement }: any) {
+const SearchArea = forwardRef(({ getId, announcement }: any,ref)=> {
   const [items, setItems] = useState<undefined | any[]>([]);
   const [error, setError] = useState<string>("");
 
@@ -19,10 +19,10 @@ export default function SearchArea({ getId, announcement }: any) {
           const job: string | undefined = await getJobInfoForAdmin();
           if (job) {
             const filtered = JSON.parse(job);
-            if(filtered.length === 0) {
-              setError("No Job found")
+            if (filtered.length === 0) {
+              setError("No Job found");
             }
-            
+
             setItems(filtered);
             getId(filtered[0]?._id);
           }
@@ -35,6 +35,22 @@ export default function SearchArea({ getId, announcement }: any) {
     }
     fetchJobsw();
   }, []);
+
+  async function reFetch() {
+    const job: string | undefined = await getJobInfoForAdmin();
+    if (job) {
+      const filtered = JSON.parse(job);
+      if (filtered.length === 0) {
+        setError("No Job found");
+      }
+      setItems(filtered);
+      getId(filtered[0]?._id);
+    }
+  }
+
+  useImperativeHandle(ref, () => ({
+    reFetch, 
+  }));
 
   const memoizedJobs = useMemo(() => {
     return items;
@@ -51,7 +67,7 @@ export default function SearchArea({ getId, announcement }: any) {
             <BiSearchAlt size={25} />
           </li>
           <li>
-            <NewDialog announcement={announcement}/>
+            <NewDialog announcement={announcement} />
           </li>
         </ul>
       </div>
@@ -65,7 +81,7 @@ export default function SearchArea({ getId, announcement }: any) {
         <ScrollArea className="h-[22rem]  rounded-md  max-sm:w-[25rem]">
           <ul className="flex flex-col gap-4 bg-gray-200">
             {items?.map((item, i) => (
-              <li 
+              <li
                 onClick={() => getId(item._id)}
                 key={i}
                 className="flex cursor-pointer items-center justify-between rounded-xl p-2 hover:bg-slate-300 "
@@ -74,7 +90,11 @@ export default function SearchArea({ getId, announcement }: any) {
                   <h5 className="text-lg font-semibold max-sm:text-base">
                     {announcement ? item.title : item.jobtTitle}
                   </h5>
-                  {announcement ? "" :<p className="text-sm font-medium">{item.companyName}</p>}
+                  {announcement ? (
+                    ""
+                  ) : (
+                    <p className="text-sm font-medium">{item.companyName}</p>
+                  )}
                 </div>
                 <div className="w-fit">
                   <FaArrowRightLong />
@@ -87,4 +107,8 @@ export default function SearchArea({ getId, announcement }: any) {
       {error && <p className="font-medium text-red-600">{error} try again</p>}
     </div>
   );
-}
+})
+
+SearchArea.displayName = 'SearchArea';
+
+export default SearchArea;

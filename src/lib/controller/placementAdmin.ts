@@ -35,14 +35,14 @@ export const getPlacementUserDetails = async (id: string) => {
   try {
     await connectDB();
     const userDetails = await PlacementUserInfo.findById(id)
-      .populate({path:"jobList",populate:{path:"applicants",model: "UserInformations",populate:{path:"user"}}})
-      .populate({path:"jobList",populate:{path:"selectApplicants",model: "UserInformations",populate:{path:"user"}}})
+      .populate({path:"jobList"})
       .exec();
     
     if (userDetails.length === 0) {
       return false;
     } else {
       const filteredUser = JSON.stringify(userDetails);
+      revalidatePath("/placementUserDashboard")
       return filteredUser;
     }
   } catch (error) {
@@ -70,38 +70,50 @@ export const setPlacementUserProfilePic = async (
 };
 
 
-export const getJobsApplicantsDetails = async (jobId: string) => {
-  try {
-    await connectDB();
-    const jobinfo = await NewJobs.findById(jobId);
-    const userDetail = [];
-    for (let job of jobinfo.applicants) {
-      const userInfo = await UserInformation.findById(job).populate("user");
-      userDetail.push(userInfo);
-    }
-    if (jobinfo) {
-      const filter = JSON.stringify(userDetail);
-      return filter;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const getJobsApplicantsDetails = async (jobId: string) => {
+//   try {
+//     await connectDB();
+//     const jobinfo = await NewJobs.findById(jobId);
+//     const userDetail = [];
+//     for (let job of jobinfo.applicants) {
+//       const userInfo = await UserInformation.findById(job).populate("user");
+//       userDetail.push(userInfo);
+//     }
+//     if (jobinfo) {
+//       const filter = JSON.stringify(userDetail);
+//       revalidatePath("/placementUserDashboard")
+//       return filter;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const selectedStudentForJob = async (userId: string, jobId: string) => {
-  console.log(userId);
 
   try {
+    const isFound = await NewJobs.findOne({ "selectApplicants" :userId })
+    if(isFound) {
+      console.log("User already selected");
+      return 
+    }
+    const removeFromAplicant = await NewJobs.findByIdAndUpdate(jobId, {
+      $pull: { "applicants" :{userId:userId} },
+    }
+    );
+
+    if(removeFromAplicant){
+      console.log("removed From Aplicant");
+      
+    }
     const updatedJob = await NewJobs.findByIdAndUpdate(jobId, {
       $push: { selectApplicants:userId },
     });
-
-    console.log(updatedJob);
-
     if (updatedJob) {
       console.log("Updated to selected section");
+      revalidatePath("/placementUserDashboard")
       return true;
     } else {
       return false;
@@ -114,14 +126,32 @@ export const selectedStudentForJob = async (userId: string, jobId: string) => {
 
 export const getPlacementUSerInfo = async(userId:string)=>{
   try{
-    const userDetails = await PlacementUserInfo.findById(userId).populate("user")
-    if(userDetails){
-      const filtered = JSON.stringify(userDetails);
+    const jobDetails = await PlacementUserInfo.findById(userId).populate("user")
+    if(jobDetails){
+      const filtered = JSON.stringify(jobDetails);
+      revalidatePath("/placementUserDashboard")
       return filtered
     }else{
       return false
     }
 
+  }catch(error){
+    console.log(error);
+    
+  }
+}
+
+export const deleteFromSelected = async(jobId:string,userId:string)=>{
+  
+  try{
+    const jobDetails = await NewJobs.findByIdAndUpdate(jobId,{$pull: { selectApplicants:userId }})
+    if(jobDetails){
+      console.log("delete From Selected");
+      revalidatePath("/placementUserDashboard")
+      return true
+    }else{
+      return false
+    }
   }catch(error){
     console.log(error);
     

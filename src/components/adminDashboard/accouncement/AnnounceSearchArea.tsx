@@ -17,29 +17,30 @@ interface annoucementProps {
   type: string;
   description: string;
   submittedOn: Date;
-}
+}[]
 
 export default function AnnounceSearchArea({ getId, announcement }: any) {
   const [items, setItems] = useState<undefined | any[]>([]);
   const [error, setError] = useState<string>("");
 
-  useEffect(() => {
-    async function fetchJobsw() {
-      try {
-        const accouncement = await getAllAccouncements();
-        if (accouncement) {
-          const filtered = JSON.parse(accouncement);
-          if(filtered.jobs.length === 0){
-            setError("No Jobs to Announce")
-          }
-          setItems(filtered.jobs);
+  async function fetchJobsw() {
+    try {
+      const accouncement = await getAllAccouncements();
+      if (accouncement) {
+        const filtered = JSON.parse(accouncement);
+        if(filtered.jobs.length === 0){
+          setError("No Jobs to Announce")
         }
-      } catch (error) {
-        console.log(error);
+        setItems(filtered.jobs);
       }
+    } catch (error) {
+      console.log(error);
     }
+  }
+  useEffect(() => {
     fetchJobsw();
   }, []);
+
 
   const memoizedJobs = useMemo(() => {
     return items;
@@ -54,7 +55,7 @@ export default function AnnounceSearchArea({ getId, announcement }: any) {
             <BiSearchAlt size={25} />
           </li>
           <li>
-            <NewDialog announcement={announcement} />
+            <NewDialog announcement={announcement} fetchJobsw={fetchJobsw}/>
           </li>
         </ul>
       </div>

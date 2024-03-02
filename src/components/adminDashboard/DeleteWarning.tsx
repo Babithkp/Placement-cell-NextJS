@@ -16,10 +16,9 @@ import { deleteAnnouncement } from "@/lib/controller/announcement";
 import { useRouter } from "next/navigation";
 
 
-export default function DeleteWarning({ announceId }: any) {
+export default function DeleteWarning({ announceId,fetch }: any) {
   const [isLoading,setIsLoading] = useState(false)
   const [isDeleted,setIsDeleted] = useState(false)
-  const router = useRouter()
 
   async function deleteAnnoucement(){
     try{
@@ -29,9 +28,7 @@ export default function DeleteWarning({ announceId }: any) {
         if(response || !response){
           setIsLoading(false)
           setIsDeleted(true)
-        }
-        if(response){
-          router.refresh()
+          fetch()
         }
       }
     }catch(error){
