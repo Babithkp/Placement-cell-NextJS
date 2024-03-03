@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import defaultImage from "../../../public/Images/profiles/deafultProfile.jpg";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getPlacementUSerInfo, setPlacementUserProfilePic } from "@/lib/controller/placementAdmin";
 import { VscLoading } from "react-icons/vsc";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -33,6 +33,13 @@ export default function PlacementContainer() {
   const [userDetails,setUserDetails] = useState<placementAdminProps>()
   const [Error,setError]= useState<string|null>()
   const [isUploading,setIsUploading] = useState(false)
+  const router = useRouter()
+
+  useEffect(()=>{
+    if(!sessionStorage.getItem("userInfo")){
+      router.replace("/signing?sign=true")
+    }
+  },[])
 
   const pathUrl = usePathname()
   const path = pathUrl.split("/")[2]

@@ -16,6 +16,8 @@ export default interface FormContextProps {
   userId: string
   LoginWithUser:()=>void
   storeToSession: (userInfo:object) => void
+
+  
 }
 
 export const FormContext = createContext<FormContextProps | undefined>(

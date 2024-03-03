@@ -12,7 +12,8 @@ export const addAdmin = async()=>{
         }else{
             const admin = new Admin({
                 email: "admin@gmail.com",
-                password: "admin@123"
+                password: "admin@123",
+                type: "admin",
             })
             admin.save()
             if(admin){

@@ -14,7 +14,7 @@ import Education from "./Education";
 import About from "./About";
 import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   edituserProfession,
   getUserDetails,
@@ -66,6 +66,15 @@ export default function Userintro() {
   const [editProfession, setEditProfession] = useState(userInfo?.profession);
   const [appliedJobList,setAppliedJobList] = useState<any>([])
   const [savedJobList,setSavedJobList] = useState<any>([])
+  const router = useRouter()
+
+
+  useEffect(()=>{
+    if(!sessionStorage.getItem("userInfo")){
+      router.replace("/signing?sign=true")
+    }
+  },[])
+
 
   async function editProfssionClickHandler() {
     setProfessionEditable(false);
@@ -144,9 +153,7 @@ export default function Userintro() {
           setEditProfession(filtered?.profession);
           setUserInfo(filtered);
           setAppliedJobList(filtered.appliedJobs);
-          setSavedJobList(filtered.savedJobs)
-          console.log(filtered);
-          
+          setSavedJobList(filtered.savedJobs)          
         }catch(error){
           console.log(error);
           
