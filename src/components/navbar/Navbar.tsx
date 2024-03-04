@@ -7,12 +7,24 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/store/contextForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getUserDetails } from "@/lib/controller/userTask";
-import {
-  getPlacementUSerInfo,
-  getPlacementUserDetails,
-} from "@/lib/controller/placementAdmin";
+import { getPlacementUSerInfo } from "@/lib/controller/placementAdmin";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { IoMdNotifications } from "react-icons/io";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
+import Image from "next/image";
+import logoImg from '../../../public/Images/screen/logo.jpeg'
+import { ScrollArea } from "../ui/scroll-area";
+import ClickToMore from "./ClickToMore";
 
 export default function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
@@ -26,14 +38,34 @@ export default function Navbar() {
     profileUrl: "https://github.com/shadcn.png",
     name: "User Name",
   });
-  const containerRef = useRef(null)
 
-  useGSAP(()=>{
-    gsap.from(".navItem",{y:10,opacity:0,duration:0.5,stagger:{
-      each:0.2
-    },ease:"power2.inOut"})
-  },{scope:containerRef})
+const announcements = [
+  {
+    title: "Alert Dialog",
+    description:
+      "A modal dialog that interrupts the user with important content and expects a response.",
+  },
 
+
+]
+
+  const containerRef = useRef(null);
+
+  useGSAP(
+    () => {
+      gsap.from(".navItem", {
+        y: 10,
+        opacity: 0,
+        duration: 0.5,
+        stagger: {
+          each: 0.2,
+        },
+        ease: "power2.inOut",
+      });
+      gsap.from(".logo",{x:-100 ,opacity:0,duration:1.5,ease:"back",delay:1})
+    },
+    { scope: containerRef },
+  );
 
   async function userInfo(filtered: any) {
     if (filtered.type === "placement-cell") {
@@ -41,7 +73,9 @@ export default function Navbar() {
       if (response) {
         const filter = JSON.parse(response);
         setUserAvatar({
-          profileUrl: filter.profileUrl ? filter.profileUrl :"https://github.com/shadcn.png",
+          profileUrl: filter.profileUrl
+            ? filter.profileUrl
+            : "https://github.com/shadcn.png",
           name: filter.companyName,
         });
       }
@@ -51,7 +85,9 @@ export default function Navbar() {
       if (userResponse) {
         const userFilter = JSON.parse(userResponse);
         setUserAvatar({
-          profileUrl: userFilter.profileUrl ? userFilter.profileUrl :"https://github.com/shadcn.png",
+          profileUrl: userFilter.profileUrl
+            ? userFilter.profileUrl
+            : "https://github.com/shadcn.png",
           name: userFilter.name,
         });
       }
@@ -72,8 +108,6 @@ export default function Navbar() {
           userInfo(filter);
         }
         setUserId(filter?.userId);
-        console.log(filter);
-        
       } else {
         setIsUser(false);
         setIsLogin(false);
@@ -94,9 +128,12 @@ export default function Navbar() {
   }
 
   return (
-    <nav ref={containerRef} className="relative flex h-[10vh] w-[100%] items-center justify-between border-b-2 bg-[#2560a9] ">
-      <Link href="/" className="ml-8 font-bold ">
-        LOGO
+    <nav
+      ref={containerRef}
+      className="relative flex h-[10vh] w-[100%] items-center justify-between border-b-2 bg-[#2560a9]  "
+    >
+      <Link href="/" className="ml-8 font-bold w-[3.8rem] h-[3.9rem] logo">
+        <Image src={logoImg} alt="logo Image" className="object-cover"/>
       </Link>
       <ul className="flex w-[50%] items-center justify-around font-medium text-white">
         <li className="navItem">
@@ -132,6 +169,33 @@ export default function Navbar() {
             </Link>
           </li>
         )}
+            {isUser && (
+              <li className="text-white navItem">
+                <NavigationMenu>
+                  <NavigationMenuList >
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger className="bg-transparent hover:bg-transparent">
+                        <IoMdNotifications size={30} />
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent >
+
+                        <ul className="grid gap-3 p-4 w-[18rem] h-[20rem] ">
+                      <ScrollArea className=" h-[18rem]   w-full max-sm:w-[25rem]">
+                          {announcements.map((announce)=>(
+                            <li key={announce.title} title={announce.title} >
+                              <p className="font-extrabold">{announce.title}</p>
+                              <ClickToMore description={announce.description}/>
+                              
+                            </li>
+                          ))}
+                          </ScrollArea>
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </li>
+            )}
         {isUser && (
           <li className="navItem">
             <Link
@@ -147,13 +211,13 @@ export default function Navbar() {
           </li>
         )}
         {!isLogin && (
-          <li >
+          <li>
             <Link href="/signing?sign=false" className="navItem">
               <Button variant="outline" className="text-black">
                 Sign Up
               </Button>
             </Link>
-            <Link href="/signing?sign=true" className="ml-4 navItem">
+            <Link href="/signing?sign=true" className="navItem ml-4">
               <Button>Login</Button>
             </Link>
           </li>

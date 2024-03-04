@@ -32,7 +32,7 @@ export default function Partners() {
         start: "top bottom ",
         end: "bottom center",
         scrub: true,
-        markers: true,
+        // markers: true,
       }
     })
   },{})

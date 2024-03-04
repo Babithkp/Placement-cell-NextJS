@@ -5,6 +5,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import "swiper/css";
 import image1 from "../../../public/Images/profiles/michael.jpg";
+import student1 from '../../../public/Images/profiles/student1.jpg'
+import student2 from '../../../public/Images/profiles/student2.jpg'
+import student3 from '../../../public/Images/profiles/student3.jpg'
+import student4 from '../../../public/Images/profiles/student4.jpg'
+import student5 from '../../../public/Images/profiles/student5.jpg'
 import Image from "next/image";
 
 const students = [
@@ -14,39 +19,44 @@ const students = [
     package: "35",
     name: "Ashika N",
     sem: "8",
-    department: "BE-CSE",
+    department: "BE-ISE",
+    image: student1
   },
   {
     college: "East Point College of Engineering",
-    company: "Microsoft",
-    package: "35",
-    name: "Ashika N",
+    company: "Wipro",
+    package: "12",
+    name: "Divyanshi Dixit",
     sem: "8",
-    department: "BE-CSE",
+    department: "BE-ISE",
+    image: student2
   },
   {
     college: "East Point College of Engineering",
-    company: "Microsoft",
-    package: "35",
-    name: "Ashika N",
+    company: "Saleforce",
+    package: "8",
+    name: "Durgashree madhu",
     sem: "8",
     department: "BE-CSE",
+    image: student3
   },
   {
     college: "East Point College of Engineering",
-    company: "Microsoft",
-    package: "35",
-    name: "Ashika N",
+    company: "KPMG",
+    package: "5",
+    name: "Kalluri sai teja",
     sem: "8",
     department: "BE-CSE",
+    image: student4
   },
   {
     college: "East Point College of Engineering",
-    company: "Microsoft",
-    package: "35",
-    name: "Ashika N",
+    company: "Incadea",
+    package: "6",
+    name: "Amit reny",
     sem: "8",
     department: "BE-CSE",
+    image: student5
   },
 
 ];
@@ -73,7 +83,7 @@ export default function PlacedStudent() {
         className="mySwiper w-[90%] "
       >
         
-        {students.map((students, i) => (
+        {students?.map((students, i) => (
           <SwiperSlide key={i}>
             <div
               key={i}
@@ -83,11 +93,13 @@ export default function PlacedStudent() {
               <h4 className="font-semibold">{students.company}</h4>
               <p>{students.package}-LPA</p>
               <span className=" h-24 w-24">
-                <Image
-                  src={image1}
+                {students?.image && <Image
+                  src={students.image}
                   alt="image"
                   className=" h-full w-full rounded-full object-cover"
-                />
+                  width={100}
+                  height={100}
+                />}
               </span>
               <p className="text-lg font-medium uppercase">{students.name}</p>
               <p>

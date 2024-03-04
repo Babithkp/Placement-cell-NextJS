@@ -14,7 +14,7 @@ export default function AboutQuestions() {
   return (
     <section>
       <div>
-        <div className="my-10 flex flex-col items-center">
+        <div className="my-10 flex flex-col items-center" id="FAQ">
           <h2 className="my-6 text-4xl font-semibold">
             Explore latest opportunities
           </h2>

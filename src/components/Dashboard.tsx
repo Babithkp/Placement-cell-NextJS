@@ -12,28 +12,28 @@ export default function Dashboard({title}:any) {
           <div>
             <MdPeopleAlt size={30} />
           </div>
-          <span>10</span>
+          <span>18</span>
           <p>Placement drives</p>
         </div>
         <div className="rounded-lg bg-yellow-200 p-4 ">
           <div>
             <GrShop size={30} />
           </div>
-          <span>10</span>
+          <span>30</span>
           <p>Total Job Offers</p>
         </div>
         <div className="rounded-lg bg-orange-200 p-4">
           <div>
             <TbFileDescription size={30} />
           </div>
-          <span>10</span>
+          <span>154</span>
           <p>Students Resumes</p>
         </div>
         <div className="rounded-lg bg-violet-200 p-4">
           <div>
             <PiStudentBold size={30} />
           </div>
-          <span>10</span>
+          <span>85</span>
           <p>Placed Students</p>
         </div>
       </div>

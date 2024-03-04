@@ -6,27 +6,36 @@ import { GrPrevious } from "react-icons/gr";
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import image1 from "../../../public/Images/profiles/michael.jpg";
+import teamImg1 from '../../../public/Images/profiles/team1.jpg'
+import teamImg2 from '../../../public/Images/profiles/team2.jpg'
+import teamImg3 from '../../../public/Images/profiles/team3.jpeg'
+import teamImg4 from '../../../public/Images/profiles/team5.jpg'
 import Image from "next/image";
 const students = [
     {
-      name: "Ashika N",
+      name: "Priyanka A",
       role: "Co-ordinator",
+      image: teamImg1
     },
     {
-      name: "Ashika N",
-      role: "Co-ordinator"
+      name: "Babith K P",
+      role: "Co-ordinator",
+      image: teamImg3
     },
     {
-      name: "Ashika N",
-      role: "Co-ordinator"
+      name: "Pallavi M",
+      role: "Co-ordinator",
+      image: teamImg2
     },
     {
-      name: "Ashika N",
-      role: "Co-ordinator"
+      name: "Ankitha ",
+      role: "Co-ordinator",
+      image: image1
     },
     {
-      name: "Ashika N",
-      role: "Co-ordinator"
+      name: "SHIVA SHANKAR REDDY",
+      role: "Co-ordinator",
+      image: teamImg4
     },
   
   ];
@@ -35,7 +44,7 @@ export default function AboutOurTeam() {
   return (
     <section className="mt-32 flex h-full w-[100%] flex-col items-center  p-6 relative ">
     <h2 className="text-3xl font-medium mb-4">Our Team</h2>
-    <div className="button-prev-slide absolute bottom-[40%] hover:scale-125 transition right-2 active:scale-100"><GrNext size={40}/></div>
+    <div className="button-prev-slide absolute bottom-[40%] hover:scale-125 transition right-2 active:scale-100 cursor-pointer"><GrNext size={40}/></div>
     <Swiper
       loop={true}
       spaceBetween={20}
@@ -60,7 +69,7 @@ export default function AboutOurTeam() {
           >
             <span className=" h-52 w-52 rounded-full">
               <Image
-                src={image1}
+                src={students.image}
                 alt="image"
                 className=" h-full w-full rounded-full object-cover"
               />
@@ -72,7 +81,7 @@ export default function AboutOurTeam() {
       ))}
       
     </Swiper>
-      <div className="button-next-slide absolute bottom-[40%] hover:scale-125 transition left-0 active:scale-100"><GrPrevious size={40}/></div>
+      <div className="button-next-slide absolute bottom-[40%] hover:scale-125 transition left-0 active:scale-100 cursor-pointer"><GrPrevious size={40}/></div>
   </section>
   )
 }
