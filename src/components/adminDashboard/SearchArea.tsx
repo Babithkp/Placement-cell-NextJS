@@ -25,6 +25,8 @@ const SearchArea = forwardRef(({ getId, announcement }: any,ref)=> {
 
             setItems(filtered);
             getId(filtered[0]?._id);
+            console.log(filtered);
+            
           }
         } catch (error) {
           setError(

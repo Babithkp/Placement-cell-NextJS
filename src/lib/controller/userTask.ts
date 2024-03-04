@@ -1,12 +1,15 @@
 "use server";
 import UserInformations, { userInformations } from "../models/UserInformation";
-import PlacementUserInfo,{placementUserInfo} from "../models/placementUserDetail";
+import PlacementUserInfo, {
+  placementUserInfo,
+} from "../models/placementUserDetail";
 import { connectDB } from "../dbConnect";
 import { revalidatePath } from "next/cache";
 import User, { user } from "../models/user";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import NewJobs from '../models/jobs'
+import NewJobs from "../models/jobs";
+import Announcement from "../models/announcement";
 
 export const IsUserExists = async (email: string) => {
   try {
@@ -42,9 +45,9 @@ export const addNewUser = async (
     console.log("data saved!");
     revalidatePath("/");
     const userIndo = {
-      userData : userDetails._id,
-      type: newUser.type
-    }
+      userData: userDetails._id,
+      type: newUser.type,
+    };
     const filteredUser = JSON.stringify(userIndo);
     return filteredUser;
   } catch (error) {
@@ -70,11 +73,11 @@ export const addNewPlacementUser = async (
     console.log("data saved!");
     revalidatePath("/");
     const userIndo = {
-      userData : userDetails._id,
-      type: newUser.type
-    }
+      userData: userDetails._id,
+      type: newUser.type,
+    };
     const filteredUser = JSON.stringify(userIndo);
-    return filteredUser
+    return filteredUser;
   } catch (error) {
     console.log(error);
   }
@@ -83,10 +86,12 @@ export const addNewPlacementUser = async (
 export const getUserDetails = async (userId: string) => {
   try {
     await connectDB();
-    mongoose.model('NewJobs', NewJobs.schema);
+    mongoose.model("NewJobs", NewJobs.schema);
     if (userId) {
       const user = await UserInformations.findOne({ _id: userId })
-        .populate("user", "email").populate("appliedJobs","_id companyName jobtTitle").populate("savedJobs")
+        .populate("user", "email")
+        .populate("appliedJobs", "_id companyName jobtTitle")
+        .populate("savedJobs")
         .exec();
       if (user.length === 0) {
         return false;
@@ -110,9 +115,9 @@ export const userLogin = async (email: string, password: string) => {
     } else if (user.type === "user" && passwordCheck) {
       const userDetail = await UserInformations.findOne({ user: user._id });
       const userIndo = {
-        userData : userDetail._id,
-        type: user.type
-      }
+        userData: userDetail._id,
+        type: user.type,
+      };
       const filteredUser = JSON.stringify(userIndo);
       return filteredUser;
     }
@@ -140,127 +145,162 @@ export const setUserProfilePIc = async (
   }
 };
 
-export const edituserProfession = async (profession:string, userId:string)=>{
-  try{
-    const user = await UserInformations.findByIdAndUpdate(userId,{profession: profession});
-    if(user.length === 0) {
+export const edituserProfession = async (
+  profession: string,
+  userId: string,
+) => {
+  try {
+    const user = await UserInformations.findByIdAndUpdate(userId, {
+      profession: profession,
+    });
+    if (user.length === 0) {
       return false;
     }
     console.log("updated user details");
-    
-    return true
-  }catch(error){
-    console.log(error);
-    
-  }
-}
-export const edituserAddress = async (address:string, userId:string)=>{
-  try{
-    const user = await UserInformations.findByIdAndUpdate(userId,{address: address});
-    if(user.length === 0) {
-      return false;
-    }else{
-      console.log("updated user details");
-    }
-    
-    return true
-  }catch(error){
-    console.log(error);
-    
-  }
-}
-export const edituserCollege = async (collegeName:string, userId:string)=>{
-  try{
-    const user = await UserInformations.findByIdAndUpdate(userId,{collegeName: collegeName});
-    if(user.length === 0) {
-      return false;
-    }else{
-      console.log("updated user details");
-    }
-    
-    return true
-  }catch(error){
-    console.log(error);
-    
-  }
-}
-export const edituserBatch = async (batch:string, userId:string)=>{
-  try{
-    const user = await UserInformations.findByIdAndUpdate(userId,{batch: batch});
-    if(user.length === 0) {
-      return false;
-    }else{
-      console.log("updated user details");
-    }
-    
-    return true
-  }catch(error){
-    console.log(error);
-    
-  }
-}
-export const edituserPassOutYear = async (passOutYear:string, userId:string)=>{
-  try{
-    const user = await UserInformations.findByIdAndUpdate(userId,{passOutYear: passOutYear});
-    if(user.length === 0) {
-      return false;
-    }else{
-      console.log("updated user details");
-    }
-    
-    return true
-  }catch(error){
-    console.log(error);
-    
-  }
-}
 
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const edituserAddress = async (address: string, userId: string) => {
+  try {
+    const user = await UserInformations.findByIdAndUpdate(userId, {
+      address: address,
+    });
+    if (user.length === 0) {
+      return false;
+    } else {
+      console.log("updated user details");
+    }
 
-export const UpdateUserResume = async (resumeUrl:string,userId:string)=>{
-  try{
-    const user = await UserInformations.findByIdAndUpdate(userId,{resumeURL: resumeUrl});
-    if(user){
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const edituserCollege = async (collegeName: string, userId: string) => {
+  try {
+    const user = await UserInformations.findByIdAndUpdate(userId, {
+      collegeName: collegeName,
+    });
+    if (user.length === 0) {
+      return false;
+    } else {
+      console.log("updated user details");
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const edituserBatch = async (batch: string, userId: string) => {
+  try {
+    const user = await UserInformations.findByIdAndUpdate(userId, {
+      batch: batch,
+    });
+    if (user.length === 0) {
+      return false;
+    } else {
+      console.log("updated user details");
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const edituserPassOutYear = async (
+  passOutYear: string,
+  userId: string,
+) => {
+  try {
+    const user = await UserInformations.findByIdAndUpdate(userId, {
+      passOutYear: passOutYear,
+    });
+    if (user.length === 0) {
+      return false;
+    } else {
+      console.log("updated user details");
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const UpdateUserResume = async (resumeUrl: string, userId: string) => {
+  try {
+    const user = await UserInformations.findByIdAndUpdate(userId, {
+      resumeURL: resumeUrl,
+    });
+    if (user) {
       return true;
     }
     return false;
-  }catch(error){
+  } catch (error) {
     console.log(error);
-    
   }
-}
+};
 
-export const addToSavedList = async (userId:string,jobId:string)=>{
-  try{
+export const addToSavedList = async (userId: string, jobId: string) => {
+  try {
     const addToSaved = await UserInformations.findByIdAndUpdate(
       userId,
       {
-        $addToSet: { savedJobs: jobId }
+        $addToSet: { savedJobs: jobId },
       },
-      { new: true } 
+      { new: true },
     );
-    if(addToSaved){
+    if (addToSaved) {
       console.log("added to saved list");
       return true;
     }
-    return false
-  }catch(error){
+    return false;
+  } catch (error) {
     console.log(error);
   }
-}
-export const removeFromSavedList = async (userId:string,jobId:string)=>{
-  try{
-    const isCheck = await UserInformations.findById(userId,{savedJobs: jobId})
-    if(!isCheck){
+};
+export const removeFromSavedList = async (userId: string, jobId: string) => {
+  try {
+    const isCheck = await UserInformations.findById(userId, {
+      savedJobs: jobId,
+    });
+    if (!isCheck) {
       console.log("Job not Found");
-      return false
+      return false;
     }
-    const addToSaved = await UserInformations.findByIdAndUpdate(userId,{$pull:{savedJobs:jobId}});
-    if(addToSaved){
+    const addToSaved = await UserInformations.findByIdAndUpdate(userId, {
+      $pull: { savedJobs: jobId },
+    });
+    if (addToSaved) {
       console.log("Remove from saved list");
       return true;
     }
-    return false
-  }catch(error){
+    return false;
+  } catch (error) {
     console.log(error);
   }
-}
+};
+
+export const getAllAccouncerments = async (userId: string) => {
+  try {
+    mongoose.model("Announcement", Announcement.schema);
+    const userAnnouncement = await UserInformations.findById(userId).populate({
+      path: "appliedJobs",
+      populate: {
+        path: "announcement",
+        model: "Announcement"
+      },
+      select: "jobtTitle companyName announcement"
+    });
+    if(userAnnouncement){
+      return JSON.stringify(userAnnouncement);
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+  }
+};

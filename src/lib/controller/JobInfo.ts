@@ -62,19 +62,14 @@ export const addNewJobs = async (newJobs: newJob) => {
       }
       const checkJobList = await LastestJobs.findOne();
       if (!checkJobList) {
-        const createNewJobList = new LastestJobs();
+        const createNewJobList = new LastestJobs({
+          jobsList: [newjob._id] 
+        });
         await createNewJobList.save();
-        const newUpdatedInLastesJob = await LastestJobs.findByIdAndUpdate(
-          createNewJobList._id,
-          {
-            $push: { jobsList: newjob._id },
-          },
-        );
-        if (newUpdatedInLastesJob) {
           console.log("newly updated in leatest");
-        }
+        
       } else {
-        if (checkJobList.length > 4) {
+        if (checkJobList.jobsList.length > 4) {
           const popAndUpdatedInLastesJob = await LastestJobs.findByIdAndUpdate(
             checkJobList._id,
             {
@@ -86,7 +81,7 @@ export const addNewJobs = async (newJobs: newJob) => {
           }
         }
 
-        const updatedInLastesJob = await LastestJobs.updateOne(
+        const updatedInLastesJob = await LastestJobs.findByIdAndUpdate(
           checkJobList._id,
           {
             $push: { jobsList: newjob._id },
@@ -125,6 +120,7 @@ export const getAllJobInfo = async () => {
     const admin = await NewJobs.find();
     const serializedData = JSON.stringify(admin);
     return serializedData;
+    
   } catch (err) {
     console.log(err);
   }

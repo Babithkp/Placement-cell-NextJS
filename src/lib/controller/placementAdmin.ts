@@ -60,6 +60,7 @@ export const setPlacementUserProfilePic = async (
       $set: { profileUrl: url },
     });
     if (user) {
+      revalidatePath("/userDetails");
       return true;
     } else {
       return false;

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/deleteDailog";
 import { Button } from "../ui/button";
 import defaultImage from '../../../public/Images/profiles/deafultProfile.jpg'
-import { UpdateUserResume, getUserDetails } from "@/lib/controller/userTask";
+import { UpdateUserResume, appyForJob, getUserDetails } from "@/lib/controller/userTask";
 import { FcOk } from "react-icons/fc";
 import { IoMdAdd } from "react-icons/io";
 import { storage } from "@/lib/firebase";
@@ -19,7 +19,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { VscLoading } from "react-icons/vsc";
 import { usePathname } from "next/navigation";
-import { appyForJob } from "@/lib/controller/JobInfo";
 import Link from "next/link";
 import { BiSolidFilePdf } from "react-icons/bi";
 import Image from "next/image";
