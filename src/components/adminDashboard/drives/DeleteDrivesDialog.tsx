@@ -13,13 +13,15 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { MdDelete } from "react-icons/md";
 import { deleteJobInfo } from "@/lib/controller/JobInfo";
+import { useGlobalContext } from "@/store/contextForm";
 
 export default function DeleteDrivesDialog({ jobid }: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const router = useRouter();
+  const deleteCtx = useGlobalContext()
 
-  async function deleteAnnoucement() {
+  async function deleteJob() {
     try {
       if (jobid) {
         setIsLoading(true);
@@ -72,7 +74,7 @@ export default function DeleteDrivesDialog({ jobid }: any) {
                   <Button
                     className="rounded-lg bg-[#00448E] "
                     type="button"
-                    onClick={() => deleteAnnoucement()}
+                    onClick={() => deleteJob()}
                   >
                     {isLoading ? "Deleting" : "Delete"}
                   </Button>

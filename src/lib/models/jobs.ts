@@ -15,7 +15,7 @@ export interface jobs extends mongoose.Document {
   department: string;
   roleCategory: string;
   education: string;
-  skills: string[];
+  skills: [string];
   package: string;
   openings: number;
   jobDescription: string;

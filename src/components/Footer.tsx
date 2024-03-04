@@ -13,7 +13,7 @@ export default function Footer() {
           </Link>
           <ul className="flex gap-8">
             <li>
-              <Link href="/contactUs">Contact US</Link>
+              <Link href="/contactUs">Contact Us</Link>
             </li>
             <li>FAQ&apos;s</li>
             <li>Support</li>

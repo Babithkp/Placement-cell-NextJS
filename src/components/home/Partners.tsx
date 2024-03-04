@@ -14,10 +14,32 @@ const AllImages = [image1, image2, image3, image4, image5, image6, image7];
 // Import Swiper styles
 import "swiper/css";
 import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 export default function Partners() {
+  const containerRef = useRef(null)
+  gsap.registerPlugin(ScrollTrigger);
+  
+  useGSAP(()=>{
+    gsap.from(".section",{
+      y:100,opacity:0,duration:5, ease:"elastic",
+      scrollTrigger:{
+        toggleActions: "play none none none",
+        trigger: ".section",
+        start: "top bottom ",
+        end: "bottom center",
+        scrub: true,
+        markers: true,
+      }
+    })
+  },{})
+
+
   return (
-    <section className="h-12 w-[100%]">
+    <section className="h-12 w-[100%] section " ref={containerRef}>
       <h2 className="mb-4 text-center text-3xl font-medium">
         Our Recruitment Partnrs
       </h2>

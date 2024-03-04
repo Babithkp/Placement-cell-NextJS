@@ -91,9 +91,7 @@ export default function PlacementContainer() {
         const response = await getPlacementUSerInfo(path)
         if(response){
           const filtered = JSON.parse(response)
-          setUserDetails(filtered)
-          console.log(filtered);
-          
+          setUserDetails(filtered)          
         }
       }catch(error){
         console.log(error);

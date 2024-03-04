@@ -8,6 +8,7 @@ import { revalidatePath } from "next/cache";
 import { announcement } from "../models/announcement";
 import Admin, { admin } from "../models/admin";
 import UserInformations from "../models/UserInformation";
+import LastestJobs from "../models/lastestJobs";
 
 interface newJob {
   _id: string;
@@ -59,6 +60,43 @@ export const addNewJobs = async (newJobs: newJob) => {
           console.log("Job have updated to placement cell user");
         }
       }
+      const checkJobList = await LastestJobs.findOne();
+      if (!checkJobList) {
+        const createNewJobList = new LastestJobs();
+        await createNewJobList.save();
+        const newUpdatedInLastesJob = await LastestJobs.findByIdAndUpdate(
+          createNewJobList._id,
+          {
+            $push: { jobsList: newjob._id },
+          },
+        );
+        if (newUpdatedInLastesJob) {
+          console.log("newly updated in leatest");
+        }
+      } else {
+        if (checkJobList.length > 4) {
+          const popAndUpdatedInLastesJob = await LastestJobs.findByIdAndUpdate(
+            checkJobList._id,
+            {
+              $pop: { jobsList: -1 },
+            },
+          );
+          if (popAndUpdatedInLastesJob) {
+            console.log("Poped old job list and updated leatest job");
+          }
+        }
+
+        const updatedInLastesJob = await LastestJobs.updateOne(
+          checkJobList._id,
+          {
+            $push: { jobsList: newjob._id },
+          },
+        );
+        if (updatedInLastesJob) {
+          console.log("updated in leatest");
+        }
+      }
+
       const admin = await Admin.findOne({
         email: "admin@gmail.com",
         password: "admin@123",
@@ -139,6 +177,9 @@ export const deleteJobInfo = async (jobId: string) => {
   let job;
   try {
     const owners = await Admin.updateMany({ $pull: { jobs: jobId } });
+    const leatest = await LastestJobs.updateMany({
+      $pull: { jobsList: jobId },
+    });
     job = await NewJobs.findByIdAndDelete(jobId);
     console.log("Job deatils have deleted");
     revalidatePath("/adminDashboard");
@@ -182,6 +223,24 @@ export const appyForJob = async (userId: string, jobId: string) => {
   }
 };
 
+export const removeJobFromAppliedList = async (
+  jobId: string,
+  userId: string,
+) => {
+  try {
+    const userInfo = await UserInformations.findByIdAndUpdate(userId, {
+      $pull: { appliedJobs: jobId },
+    });
+    if (userInfo) {
+      console.log("removed job from users applied collection");
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const checkIsSavedJobToUser = async (jobId: string, userId: string) => {
   try {
     const user = await UserInformations.findOne({
@@ -190,6 +249,19 @@ export const checkIsSavedJobToUser = async (jobId: string, userId: string) => {
     });
     if (user) {
       return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getleatestJob = async () => {
+  try {
+    const jobs = await LastestJobs.find().populate("jobsList");
+    if (jobs) {
+      const filter = JSON.stringify(jobs);
+      return filter;
     }
     return false;
   } catch (error) {

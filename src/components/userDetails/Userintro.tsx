@@ -18,6 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   edituserProfession,
   getUserDetails,
+  removeFromSavedList,
   setUserProfilePIc,
 } from "@/lib/controller/userTask";
 import { storage } from "@/lib/firebase";
@@ -26,6 +27,8 @@ import { VscLoading } from "react-icons/vsc";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import Link from "next/link";
+import { MdDelete } from "react-icons/md";
+import { removeJobFromAppliedList } from "@/lib/controller/JobInfo";
 
 interface userDetailsProps {
   _id: string;
@@ -42,13 +45,13 @@ interface userDetailsProps {
   historyBacklogs: number;
   profileUrl: string | undefined;
   batch: string;
-  resumeURL:string;
+  resumeURL: string;
   user: {
     email: string;
   };
 }
 
-interface job{
+interface job {
   _id: string;
   companyName: string;
   jobtTitle: string;
@@ -64,17 +67,15 @@ export default function Userintro() {
   const [isProfessionEditable, setProfessionEditable] =
     useState<boolean>(false);
   const [editProfession, setEditProfession] = useState(userInfo?.profession);
-  const [appliedJobList,setAppliedJobList] = useState<any>([])
-  const [savedJobList,setSavedJobList] = useState<any>([])
-  const router = useRouter()
+  const [appliedJobList, setAppliedJobList] = useState<any>([]);
+  const [savedJobList, setSavedJobList] = useState<any>([]);
+  const router = useRouter();
 
-
-  useEffect(()=>{
-    if(!sessionStorage.getItem("userInfo")){
-      router.replace("/signing?sign=true")
+  useEffect(() => {
+    if (!sessionStorage.getItem("userInfo")) {
+      router.replace("/signing?sign=true");
     }
-  },[])
-
+  }, []);
 
   async function editProfssionClickHandler() {
     setProfessionEditable(false);
@@ -144,25 +145,45 @@ export default function Userintro() {
       }
     }
   }
-  useEffect(() => {
-    async function fetch() {
-      if (path) {
-        try{
-          const response: any = await getUserDetails(path);
-          const filtered = JSON.parse(response);
-          setEditProfession(filtered?.profession);
-          setUserInfo(filtered);
-          setAppliedJobList(filtered.appliedJobs);
-          setSavedJobList(filtered.savedJobs)          
-        }catch(error){
-          console.log(error);
-          
-        }
-        
+  async function fetch() {
+    if (path) {
+      try {
+        const response: any = await getUserDetails(path);
+        const filtered = JSON.parse(response);
+        setEditProfession(filtered?.profession);
+        setUserInfo(filtered);
+        setAppliedJobList(filtered.appliedJobs);
+        setSavedJobList(filtered.savedJobs);
+      } catch (error) {
+        console.log(error);
       }
     }
+  }
+  useEffect(() => {
     fetch();
   }, [path]);
+
+  async function removeAppiledJob(jobId: string) {
+    if (userInfo) {
+      const response = await removeJobFromAppliedList(jobId, userInfo._id);
+      if (!response) {
+        setError("Could not remove, please try again");
+      }else{
+        fetch()
+      }
+    }
+  }
+  async function removeSavedJob(jobId: string) {
+    if (userInfo) {
+      const response = await removeFromSavedList(userInfo._id,jobId );
+      if (!response) {
+        setError("Could not remove, please try again");
+      }else{
+        fetch()
+      }
+    }
+  }
+
   return (
     <div className="flex w-[90%] flex-col ">
       <section className="flex items-center gap-16 py-8">
@@ -262,11 +283,10 @@ export default function Userintro() {
                 DOB={userInfo?.date_of_birth}
                 gender={userInfo?.gender}
                 id={userInfo?._id}
-                resumeURL= {userInfo?.resumeURL}
+                resumeURL={userInfo?.resumeURL}
               />
             )}
           </div>
-          
         </div>
       </section>
       <section className="flex items-start gap-16 rounded-lg border border-blue-400 bg-white px-6 pb-4   drop-shadow-lg">
@@ -280,60 +300,81 @@ export default function Userintro() {
             id={userInfo?._id}
           />
         )}
-        
+
         <div>
-          {appliedJobList &&<Accordion type="single" collapsible className="w-[20rem] ">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Applied Jobs</AccordionTrigger>
-              <AccordionContent className="flex items-center justify-between border-b p-0">
-                <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
-                  {appliedJobList.map((job:job)=>(
-                  <div key={job._id} className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        {job.jobtTitle}
-                      </p>
-                      <p>{job.companyName}</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">
-                      <Link href={`/detailedPage/${job._id}`}>
-                      View Details
-                      </Link>
-                      </Button>
-                  </div>
-                  ))}
-                </ScrollArea>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>}
+          {appliedJobList && (
+            <Accordion type="single" collapsible className="w-[20rem] ">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Applied Jobs</AccordionTrigger>
+                <AccordionContent className="flex items-center justify-between border-b p-0">
+                  <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
+                    {appliedJobList.map((job: job) => (
+                      <div
+                        key={job._id}
+                        className="flex items-center justify-between border-b p-0"
+                      >
+                        <div>
+                          <p className="text-base font-semibold">
+                            {job.jobtTitle}
+                          </p>
+                          <p>{job.companyName}</p>
+                        </div>
+                        <Button className="mr-4 h-fit p-1">
+                          <Link href={`/detailedPage/${job._id}`}>
+                            View Details
+                          </Link>
+                        </Button>
+                        <Button
+                          className="h-fit bg-transparent p-0 text-red-500 hover:bg-transparent hover:scale-105"
+                          onClick={() => removeAppiledJob(job._id)}
+                        >
+                          <MdDelete size={30} />
+                        </Button>
+                      </div>
+                    ))}
+                  </ScrollArea>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
         </div>
         <div>
-          {savedJobList &&<Accordion type="single" collapsible className="w-[20rem] ">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Saved Jobs</AccordionTrigger>
-              <AccordionContent className="flex items-center justify-between border-b p-0">
-                <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
-                  {savedJobList.map((job:job)=>(
-                  <div key={job._id} className="flex items-center justify-between border-b p-0">
-                    <div>
-                      <p className="text-base font-semibold">
-                        {job.jobtTitle}
-                      </p>
-                      <p>{job.companyName}</p>
-                    </div>
-                    <Button className="mr-4 h-fit p-1">
-                      <Link href={`/detailedPage/${job._id}`}>
-                      View Details
-                      </Link>
-                      </Button>
-                  </div>
-                  ))}
-                </ScrollArea>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>}
+          {savedJobList && (
+            <Accordion type="single" collapsible className="w-[20rem] ">
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Saved Jobs</AccordionTrigger>
+                <AccordionContent className="flex items-center justify-between border-b p-0">
+                  <ScrollArea className=" h-[9rem]   w-full max-sm:w-[25rem]">
+                    {savedJobList.map((job: job) => (
+                      <div
+                        key={job._id}
+                        className="flex items-center justify-between border-b p-0"
+                      >
+                        <div>
+                          <p className="text-base font-semibold">
+                            {job.jobtTitle}
+                          </p>
+                          <p>{job.companyName}</p>
+                        </div>
+                        <Button className="mr-4 h-fit p-1">
+                          <Link href={`/detailedPage/${job._id}`}>
+                            View Details
+                          </Link>
+                        </Button>
+                        <Button
+                          className="h-fit bg-transparent p-0 text-red-500 hover:bg-transparent hover:scale-105"
+                          onClick={() => removeSavedJob(job._id)}
+                        >
+                          <MdDelete size={30} />
+                        </Button>
+                      </div>
+                    ))}
+                  </ScrollArea>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
         </div>
-        
       </section>
     </div>
   );

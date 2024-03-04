@@ -27,3 +27,17 @@ export const addAdmin = async()=>{
         
     }
 }
+
+export const adminLogin = async(email:string,password:string)=>{
+    try{
+        const admin = await Admin.findOne({email: email, password: password})
+        if(admin){
+            const filter = JSON.stringify(admin)
+            return filter
+        }
+        return false
+    }catch(error){
+        console.log(error);
+        
+    }
+}

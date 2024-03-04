@@ -17,7 +17,7 @@ export default interface FormContextProps {
   LoginWithUser:()=>void
   storeToSession: (userInfo:object) => void
 
-  
+  reFetchAfterDelete: ()=>void
 }
 
 export const FormContext = createContext<FormContextProps | undefined>(
@@ -83,8 +83,12 @@ export const FormContextProvider = ({
     const value = sessionStorage.setItem("userInfo",convert)
   }
 
+  async function reFetchAfterDelete(){
+    
+  }
 
   const value: FormContextProps = {
+    reFetchAfterDelete,
     storeToSession,
     LoginWithUser,
     userId:newUserId,
