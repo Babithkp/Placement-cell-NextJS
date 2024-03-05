@@ -89,6 +89,10 @@ export default function PlacementContainer() {
         viewDrives={viewDriversHandler}
         viewApplicents={viewApplicantsHandler}
         selectedApplicents={selectedApplicantsHandler}
+        addDrivesCom={addDrives}
+        viewDrivesCom={viewDrives}
+        viewApplicantsCom={viewApplicants}
+        selectedApplicants={selectedApplicants}
       />
         {addDrives && userInfo &&(
           <div className="mt-4 ">

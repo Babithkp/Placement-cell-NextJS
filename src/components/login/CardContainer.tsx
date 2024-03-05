@@ -19,7 +19,7 @@ export default function CardContainer() {
   }
 
   return (
-    <div className="relative w-[80%] rounded-3xl h-[100vh]  flex flex-col justify-center ">
+    <div className="relative w-[80%] rounded-3xl h-[100vh]  flex flex-col justify-center -mt-5">
       <div
         className={clsx(
           " absolute left-0   w-[99%] overflow-hidden rounded-lg bg-slate-200  duration-1000 ",
@@ -39,7 +39,6 @@ export default function CardContainer() {
       >
         <SiginContainer onclicks={onFlipHandler}/>
       </div>
-      <Button onClick={() => setFlip(!flip)} className="w-fit">flip</Button>
     </div>
   );
 }

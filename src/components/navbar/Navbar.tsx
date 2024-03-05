@@ -226,7 +226,7 @@ export default function Navbar() {
                             <p className="font-extrabold">
                               {Company.companyName}
                             </p>
-                            <p className="text-sm text-slate-400">
+                            <p className="text-sm text-slate-400 font-bold">
                               {Company.jobtTitle}
                             </p>
                             {Company.announcement.map(
