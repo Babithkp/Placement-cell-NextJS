@@ -1,15 +1,19 @@
+import React, { Suspense } from "react";
 import Filters from "@/components/jobListing/Filters";
-import Results from "@/components/jobListing/Results";
+const Results = React.lazy(() => import("@/components/jobListing/Results"));
 import SearchSection from "@/components/jobListing/SearchSection";
+import Loading from "./loading";
 
 export default function page() {
   return (
-    <div className="flex w-full flex-col justify-center p-8 items-center max-sm:p-0 ">
+    <div className="flex w-full flex-col items-center justify-center p-8 max-sm:p-0 ">
       <SearchSection />
-      <div className="flex w-[90%] justify-between mt-8  max-sm:flex-col max-sm:gap-4 max-sm:w-full ">
-        <Filters /> 
+      <div className="mt-8 flex w-[90%] justify-between  max-sm:w-full max-sm:flex-col max-sm:gap-4 ">
+        <Filters />
         <div className="w-[70%] text-[1rem] max-sm:w-full ">
-        <Results />
+          <Suspense fallback={<Loading/>}>
+            <Results />
+          </Suspense>
         </div>
       </div>
     </div>

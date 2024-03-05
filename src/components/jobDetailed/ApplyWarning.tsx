@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/deleteDailog";
 import { Button } from "../ui/button";
 import defaultImage from '../../../public/Images/profiles/deafultProfile.jpg'
-import { UpdateUserResume, appyForJob, getUserDetails } from "@/lib/controller/userTask";
+import { UpdateUserResume, getUserDetails } from "@/lib/controller/userTask";
 import { FcOk } from "react-icons/fc";
 import { IoMdAdd } from "react-icons/io";
 import { storage } from "@/lib/firebase";
@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { BiSolidFilePdf } from "react-icons/bi";
 import Image from "next/image";
+import { appyForJob } from "@/lib/controller/JobInfo";
 
 interface userProps {
   _id: string;
